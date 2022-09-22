@@ -70,15 +70,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var curso in Model)
+                        @foreach (var obj in Model)
                         {
                             <tr>
-                                <td>@curso.nombre</td>
-                                <td>@curso.modalidad</td>
-                                <td>@curso.lugar</td>
-                                <td>@curso.horas horas</td>
-                                <td>$@curso.costo</td>
-                                <td><a href="@curso.urlTemario"></a></td>
+                                <td>@obj.nombre</td>
+                                <td>@obj.modalidad1.modalidad1</td>
+                                <td>@obj.lugar</td>
+                                <td>@obj.horas horas</td>
+                                <td>$@obj.costo</td>
+                                <td><a href="@obj.urlTemario"></a></td>
                                 <td>
                                     <a href="@Url.Action("EditaCurso", "Cursos")" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                                     <a href="#deleteCurso" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Borrar">&#xE872;</i></a>

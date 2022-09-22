@@ -199,6 +199,7 @@
     <Content Include="Views\Admin\TablasUsuarios.cshtml" />
     <Content Include="Views\Admin\InsertaUsuario.cshtml" />
     <Content Include="Views\Cursos\RegistrarCurso.cshtml" />
+    <Content Include="Views\Cursos\EditaCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

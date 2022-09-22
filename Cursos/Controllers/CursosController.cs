@@ -87,6 +87,7 @@ namespace Cursos.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult EditaCurso(cursos cursosInfo)
         {
             bool editado;

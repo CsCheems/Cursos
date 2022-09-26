@@ -39,89 +39,50 @@ namespace Cursos.Controllers
             return View(mod);
         }
 
-        public ActionResult EditaCurso()
+        public ActionResult EditaCurso(int id)
         {
-            return View();
+            cursos c = new cursos();
+            return View(c.getCursos().Find(cmodel => cmodel.id == id));
         }
 
         //Metodo para registrar un curso
         [HttpPost]
-        public ActionResult RegistrarCurso(cursos cursosInfo)
+        public ActionResult RegistrarCurso(cursos cmodel)
         {
-            bool registrado;
-            string mensaje;
-
-            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            try
             {
-                SqlCommand cmd = new SqlCommand("SP_registraCurso", cn);
-                cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
-                cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
-                cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
-                cmd.Parameters.AddWithValue("Horas", cursosInfo.horas);
-                cmd.Parameters.AddWithValue("Costo", cursosInfo.costo);
-                cmd.Parameters.AddWithValue("CostoPref", cursosInfo.costoPref);
-                cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
-                cmd.Parameters.AddWithValue("Requisitos", cursosInfo.requisitos);
-                cmd.Parameters.AddWithValue("CriterioEval", cursosInfo.criterioEval);
-                cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
-                cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-
-                registrado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
-                mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                if (ModelState.IsValid)
+                {
+                    cursos cdb = new cursos();
+                    if (cdb.agregarCurso(cmodel))
+                    {
+                        ViewBag.Message = "Se agrego el curso";
+                        ModelState.Clear();
+                    }
+                }
+                return View("Tablas", "Admin");
             }
-
-            ViewData["Mensaje"] = mensaje;
-
-            if (registrado)
-            {
-                return RedirectToAction("Tablas", "Admin");
-            }
-            else
+            catch 
             {
                 return View();
             }
         }
 
         [HttpPost]
-        public ActionResult EditaCurso(cursos cursosInfo)
+        public ActionResult EditaCurso(int id, cursos cmodel)
         {
-            bool editado;
-            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            try
             {
-                SqlCommand cmd = new SqlCommand("SP_editaCurso", cn);
-                cmd.Parameters.AddWithValue("Id", cursosInfo.id);
-                cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
-                cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
-                cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
-                cmd.Parameters.AddWithValue("Horas", cursosInfo.horas);
-                cmd.Parameters.AddWithValue("Costo", cursosInfo.costo);
-                cmd.Parameters.AddWithValue("CostoPref", cursosInfo.costoPref);
-                cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
-                cmd.Parameters.AddWithValue("Requisitos", cursosInfo.requisitos);
-                cmd.Parameters.AddWithValue("CriterioEval", cursosInfo.criterioEval);
-                cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
-                cmd.Parameters.Add("Editado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cn.Open();
-                cmd.ExecuteNonQuery();
-
-                editado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
+                cursos cdb = new cursos();
+                cdb.editaCurso(cmodel);
+                return RedirectToAction("Tablas", "Admin");
             }
-
-            if (editado)
-            {
-                return RedirectToAction("Admin", "Cursos");
-            }
-            else
+            catch
             {
                 return View();
             }
+             
+            
         }
     }
 }

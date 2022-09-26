@@ -1,4 +1,4 @@
-﻿@model List<Cursos.Models.modalidad>
+﻿@model List<Cursos.Models.cursos>
 
 
 <html>
@@ -37,16 +37,20 @@
 
                     <form action="@Url.Action("EditarCurso", "Cursos")" method="post">
 
+                        <!-- ID input -->
+                        <div class="form-outline mb-4">
+                            <input type="hidden" name="id" id="id" class="form-control" value="" />
+                        </div>
+
 
                         <!-- Name input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Nombre" id="Nombre" class="form-control" />
+                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="" />
                             <label class="form-label" for="Nombre">Nombre</label>
                         </div>
 
                         <!-- Role input -->
                         <select class="form-select" name="modalidad" aria-label="Default select example">
-                            
                         </select>
 
                         <br />

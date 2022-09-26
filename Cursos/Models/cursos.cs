@@ -55,30 +55,30 @@ namespace Cursos.Models
             {
                 SqlCommand cmd = new SqlCommand("SP_obtenCurso", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter sd = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-
+                
                 cn.Open();
-                sd.Fill(dt);
-                cn.Close();
 
-                foreach(DataRow dr in dt.Rows)
+                using (SqlDataReader dr = cmd.ExecuteReader())
                 {
-                    listCursos.Add(
-                        new cursos
-                        {
-                            id = Convert.ToInt32(dr["id"]),
-                            nombre = Convert.ToString(dr["nombre"]),
-                            modalidad = Convert.ToInt32(dr["modalidad"]),
-                            lugar = Convert.ToString(dr["lugar"]),
-                            horas = Convert.ToInt32(dr["horas"]),
-                            costo = Convert.ToInt32(dr["costo"]),
-                            costoPref = Convert.ToInt32(dr["costoPref"]),
-                            urlTemario = Convert.ToString(dr["urlTemario"]),
-                            requisitos = Convert.ToString(dr["requisitos"]),
-                            criterioEval = Convert.ToString(dr["criterioEval"]),
-                            imgUrl = Convert.ToString(dr["imgUrl"])
-                        });
+                    while (dr.Read())
+                    {
+                        cursos c = new cursos();
+                        modalidad m = new modalidad();
+                        c.id = dr.GetInt32(0);
+                        c.nombre = dr.GetString(1);
+                        c.modalidad = dr.GetInt32(2);
+                        m.id = dr.GetInt32(3);
+                        m.modalidad1 = dr.GetString(4);
+                        c.modalidad1 = m;
+                        c.lugar = dr.GetString(5);
+                        c.horas = dr.GetInt32(6);
+                        c.costo = dr.GetDecimal(7);
+                        c.costoPref = dr.GetDecimal(8);
+                        c.urlTemario = dr.GetString(9);
+                        c.requisitos = dr.GetString(10);
+                        c.criterioEval = dr.GetString(11);
+                        listCursos.Add(c);
+                    }
                 }
                 return listCursos;
                 

@@ -43,19 +43,18 @@ namespace Cursos.Models
         public virtual modalidad modalidad1 { get; set; }
 
         //Metodos
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
+        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
 
         //Metodo para obtener datos del curso
-        public List<cursos> getCursos()
+        public List<cursos> GetCursos()
         {
             List<cursos> listCursos = new List<cursos>();
             List<modalidad> listModalidad = new List<modalidad>();
+            string sql = "select cursos.id, cursos.nombre, cursos.modalidad, modalidad.id, modalidad.modalidad, cursos.lugar, cursos.horas, cursos.costo, cursos.costoPref, cursos.urlTemario, cursos.requisitos, cursos.criterioEval, cursos.imgUrl from cursos inner join modalidad on modalidad.id = cursos.modalidad;";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
-                SqlCommand cmd = new SqlCommand("SP_obtenCurso", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                
+                SqlCommand cmd = new SqlCommand(sql, cn);      
                 cn.Open();
 
                 using (SqlDataReader dr = cmd.ExecuteReader())
@@ -80,11 +79,9 @@ namespace Cursos.Models
                         listCursos.Add(c);
                     }
                 }
-                return listCursos;
                 
             }
-
-           
+            return listCursos;
         }
 
         //Metodo para agregar cursos
@@ -96,6 +93,7 @@ namespace Cursos.Models
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand("SP_registraCurso", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
                 cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
                 cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
@@ -108,7 +106,7 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
                 cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-                cmd.CommandType = CommandType.StoredProcedure;
+                
 
                 cn.Open();
                 i = cmd.ExecuteNonQuery();
@@ -137,6 +135,7 @@ namespace Cursos.Models
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand("SP_editaCurso", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("Id", cursosInfo.id);
                 cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
                 cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
@@ -150,13 +149,13 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
                 cmd.Parameters.Add("Editado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-                cmd.CommandType = CommandType.StoredProcedure;
 
                 cn.Open();
                 i = cmd.ExecuteNonQuery();
 
                 editado = Convert.ToBoolean(cmd.Parameters["Editado"].Value);
                 mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                cn.Close();
             }
 
             if (i >= 1)
@@ -170,14 +169,15 @@ namespace Cursos.Models
         }
 
         //Metodo para eliminar curso
-        public bool eliminarCurso(cursos cursosInfo)
+        public bool eliminarCurso(int id)
         {
             int i;
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand("SP_eliminaCurso", cn);
-                cmd.Parameters.AddWithValue("Id", cursosInfo.id);
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("Id", id);
+                
 
                 cn.Open();
                 i = cmd.ExecuteNonQuery();

@@ -38,13 +38,31 @@
                 <!-- Pills content -->
                 <div class="tab-content">
 
-                    <form action="@Url.Action("InsertaUsuario", "Admin")" method="post">
+                    <form action="@Url.Action("InsertaUsuario", "Usuario")" method="post">
 
                         <!-- Role input -->
                         <select class="form-select" name="rol" aria-label="Default select example">
-                            @foreach (var r in Model)
+                            @{ 
+                                bool IsPostBack()
+                                {
+                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+                                    if (Request.UrlReferrer == null) return false;
+
+                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
+                                       Request.UrlReferrer.AbsolutePath,
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+
+                                    return isPost && isSameUrl;
+                                }
+                            }
+
+                            @if (!IsPostBack())
                             {
-                                <option value="@r.id">@r.rolUser</option>
+                                foreach (var r in Model)
+                                {
+                                    <option value="@r.id">@r.rolUser</option>
+                                }
                             }
                         </select>
 

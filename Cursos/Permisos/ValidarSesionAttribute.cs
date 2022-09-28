@@ -13,7 +13,7 @@ namespace Cursos.Permisos
         {
             if (HttpContext.Current.Session["usuario"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Admin/Login");
+                filterContext.Result = new RedirectResult("~/Acceso/Login");
             }
             base.OnActionExecuting(filterContext);
         }

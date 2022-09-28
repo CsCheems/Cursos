@@ -11,14 +11,15 @@ namespace Cursos.Controllers
 {
     public class CursosController : Controller
     {
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
+        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+
+        //*****************REGISTRA CURSO****************************
 
         public ActionResult RegistrarCurso()
         {
             List<modalidad> mod = new List<modalidad>();
             string sql = "select * from modalidad;";
-
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 using (SqlCommand cmd = new SqlCommand(sql, cn))
@@ -39,13 +40,6 @@ namespace Cursos.Controllers
             return View(mod);
         }
 
-        public ActionResult EditaCurso(int id)
-        {
-            cursos c = new cursos();
-            return View(c.getCursos().Find(cmodel => cmodel.id == id));
-        }
-
-        //Metodo para registrar un curso
         [HttpPost]
         public ActionResult RegistrarCurso(cursos cmodel)
         {
@@ -60,12 +54,21 @@ namespace Cursos.Controllers
                         ModelState.Clear();
                     }
                 }
-                return View("Tablas", "Admin");
+                return View();
             }
             catch 
             {
                 return View();
             }
+        }
+
+        //*****************EDITA CURSO****************************
+
+        [HttpGet]
+        public ActionResult EditaCurso(int id)
+        {
+            cursos c = new cursos();
+            return View(c.GetCursos().Find(cmodel => cmodel.id == id));
         }
 
         [HttpPost]
@@ -80,9 +83,26 @@ namespace Cursos.Controllers
             catch
             {
                 return View();
+            }  
+        }
+
+        //*****************ELIMINA CURSO****************************
+
+        public ActionResult EliminaCurso(int id)
+        {
+            try
+            {
+                cursos c = new cursos();
+                if (c.eliminarCurso(id))
+                {
+                    ViewBag.AlertMsg = "El cursos se ha eliminado";
+                }
+                return RedirectToAction("Tablas", "Admin");
             }
-             
-            
+            catch
+            {
+                return View();
+            }
         }
     }
 }

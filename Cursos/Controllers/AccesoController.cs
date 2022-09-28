@@ -13,8 +13,8 @@ namespace Cursos.Controllers
 {
     public class AccesoController : Controller
     {
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
+        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
 
         public ActionResult Login()
         {
@@ -25,6 +25,7 @@ namespace Cursos.Controllers
         [HttpPost]
         public ActionResult Login(usuarios credenciales)
         {
+            List<usuarios> usuarios = new List<usuarios>();
             credenciales.pass = EncriptarSha256(credenciales.pass);
 
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
@@ -36,8 +37,18 @@ namespace Cursos.Controllers
 
                 cn.Open();
 
-                credenciales.id = Convert.ToInt32(cmd.ExecuteScalar().ToString());
-
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        credenciales.id = dr.GetInt32(0);
+                        credenciales.rol = dr.GetInt32(1);
+                        credenciales.nombre = dr.GetString(2);
+                        credenciales.apellido = dr.GetString(3);
+                        credenciales.email = dr.GetString(4);
+                        usuarios.Add(credenciales);
+                    }
+                }
             }
 
             if (credenciales.id != 0)

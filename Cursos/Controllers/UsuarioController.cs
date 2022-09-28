@@ -14,12 +14,18 @@ namespace Cursos.Controllers
 {
     public class UsuarioController : Controller
     {
-        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq;Integrated Security=true;";
-        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Database=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
+        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
 
 
         //*****************REGISTRA USUARIO****************************
         public ActionResult InsertaUsuario()
+        {
+            var r = ModeloRol();
+            return View(r);
+        }
+
+        public List<rol> ModeloRol()
         {
             List<rol> role = new List<rol>();
             string sql = "select * from rol";
@@ -41,7 +47,7 @@ namespace Cursos.Controllers
                     }
                 }
             }
-            return View(role);
+            return role;
         }
         
         [HttpPost]
@@ -58,7 +64,15 @@ namespace Cursos.Controllers
                         ModelState.Clear();
                     }
                 }
-                return View();
+                if (Session["usuario"] == null)
+                {
+                    return RedirectToAction("Login", "Acceso");
+                }
+                else
+                {
+                    return RedirectToAction("TablasUsuarios", "Admin");
+                }
+               
             }
             catch
             {
@@ -99,7 +113,7 @@ namespace Cursos.Controllers
                 usuarios u = new usuarios();
                 if (u.eliminarUsuario(id))
                 {
-                    ViewBag.AlertMsg = "El cursos se ha eliminado";
+                    ViewBag.AlertMsg = "El usuario se ha eliminado";
                 }
                 return RedirectToAction("TablasUsuarios", "Admin");
             }

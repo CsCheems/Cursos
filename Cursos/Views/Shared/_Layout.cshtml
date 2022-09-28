@@ -1,10 +1,12 @@
-﻿@{
+﻿@model List<Cursos.Models.usuarios>
+
+@{
     bool isLogged = true;
-    if (HttpContext.Current.Session["usuario"] == null)
+    Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+    if (credenciales == null)
     {
         isLogged = false;
     }
-
 }
 
 <!DOCTYPE html>
@@ -32,11 +34,16 @@
     <div class="container">
         <ul>
             @{
-                if (isLogged)
+                if (isLogged && credenciales.rol == 2)
                 {
                     <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
-                    <li id="menu"><a href="">Bienvenido </a></li>
+                    <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
                     <li id="menu"><a href="@Url.Action("Tablas","Admin")">Administrador</a></li>
+                }
+                else if (isLogged)
+                {
+                    <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
+                    <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
                 }
                 else
                 {

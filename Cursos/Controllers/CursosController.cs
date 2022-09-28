@@ -37,7 +37,7 @@ namespace Cursos.Controllers
                     }
                 }
             }
-            return View(mod);
+            return View(mod); 
         }
 
         [HttpPost]

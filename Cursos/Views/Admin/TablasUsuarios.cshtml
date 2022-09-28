@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Tablas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <html>
@@ -79,7 +80,7 @@
                                 <td>@usuario.rol1.rolUser</td>
                                 <td>
                                     <a href="@Url.Action("EditaUsuario", "Usuario", new {id = usuario.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="@Url.Action("EliminaUsuario", "Usuario", new {id = usuario.id})" onclick="return confirm('Seguro quiere borrar este curso?')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="@Url.Action("EliminaUsuario", "Usuario", new {id = usuario.id})" onclick="return confirm('Seguro quiere borrar este usuario?')" class="delete" ><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
                         }

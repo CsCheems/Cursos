@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Cursos.Models.cursos>
 
 
 <html>
@@ -39,22 +39,22 @@
 
                         <!-- ID input -->
                         <div class="form-outline mb-4">
-                            <input type="hidden" name="id" id="id" class="form-control" value="model => model.id" />
+                            <input type="hidden" name="id" id="id" class="form-control" value="" />
                         </div>
 
 
                         <!-- Name input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="model => model.nombre" />
+                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="" />
                             <label class="form-label" for="Nombre">Nombre</label>
                         </div>
 
                         <!-- Role input -->
-                        <select class="form-select" name="modalidad" aria-label="Default select example">
-                            <option value="" selected></option>
+                        <select class="form-select" name="Modalidad" aria-label="Default select example">
+                            
                             @foreach (var c in Model)
                             {
-
+                                
                             }
                         </select>
 
@@ -62,43 +62,43 @@
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Lugar" id="Lugar" class="form-control" />
+                            <input type="text" name="Lugar" id="Lugar" class="form-control" value=""/>
                             <label class="form-label" for="Lugar">Lugar</label>
                         </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Horas" id="Horas" class="form-control" />
+                            <input type="number" name="Horas" id="Horas" class="form-control" value=""/>
                             <label class="form-label" for="Horas">Horas</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Costo" id="Costo" class="form-control" />
+                            <input type="number" name="Costo" id="Costo" class="form-control" value=""/>
                             <label class="form-label" for="Costo">Costo</label>
                         </div>
 
                         <!-- Confirm Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" />
+                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" value=""/>
                             <label class="form-label" for="CostoPref">Costo Preferencial</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" />
+                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value=""/>
                             <label class="form-label" for="UrlTemario">Temario</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" />
+                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" value=""/>
                             <label class="form-label" for="Requisitos">Requisitos</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" />
+                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value=""/>
                             <label class="form-label" for="CriterioEval">Criterio de Evaluacion</label>
                         </div>
 
@@ -124,6 +124,7 @@
         </div>
     </div>
 </body>
+
 
 <!-- MDB -->
 <script type="text/javascript"

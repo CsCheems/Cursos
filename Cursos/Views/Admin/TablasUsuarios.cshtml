@@ -52,7 +52,7 @@
                             <h2>Administar <b>Usuarios</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="@Url.Action("InsertaUsuario", "Admin")" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo usuario</span></a>
+                            <a href="@Url.Action("InsertaUsuario", "Usuario")" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo usuario</span></a>
                         </div>
                     </div>
                 </div>
@@ -78,8 +78,8 @@
                                 <td>@usuario.email</td>
                                 <td>@usuario.rol1.rolUser</td>
                                 <td>
-                                    <a href="" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#deleteCurso" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    <a href="@Url.Action("EditaUsuario", "Usuario", new {id = usuario.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                    <a href="@Url.Action("EliminaUsuario", "Usuario", new {id = usuario.id})" onclick="return confirm('Seguro quiere borrar este curso?')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                 </td>
                             </tr>
                         }
@@ -93,30 +93,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Delete Modal HTML -->
-        <div id="deleteUsuario" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form>
-                        <div class="modal-header">
-                            <h4 class="modal-title">Eliminar usuario</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <p>¿Seguro que desea eliminar este usuario?</p>
-                            <p class="text-warning"><small>Esta accion no se puede deshacer.</small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-danger" value="Delete">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
 </body>
 
 <!-- MDB -->

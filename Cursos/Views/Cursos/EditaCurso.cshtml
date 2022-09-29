@@ -1,4 +1,5 @@
-﻿@model List<Cursos.Models.cursos>
+﻿@model dynamic
+
 
 
 <html>
@@ -35,70 +36,70 @@
                 <!-- Pills content -->
                 <div class="tab-content">
 
-                    <form action="@Url.Action("EditarCurso", "Cursos")" method="post">
+                    <form action="@Url.Action("EditaCurso", "Cursos")" method="post">
 
                         <!-- ID input -->
                         <div class="form-outline mb-4">
-                            <input type="hidden" name="id" id="id" class="form-control" value="" />
+                            <input type="hidden" name="id" id="id" class="form-control" value="@Model.curso.id" />
                         </div>
 
 
                         <!-- Name input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="" />
+                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="@Model.curso.nombre" />
                             <label class="form-label" for="Nombre">Nombre</label>
                         </div>
 
                         <!-- Role input -->
-                        <select class="form-select" name="Modalidad" aria-label="Default select example">
-                            
-                            @foreach (var c in Model)
-                            {
-                                
-                            }
+                        <select class="form-select" name="Modalidad" aria-label="Default select example">  
+                        <option value="@Model.curso.modalidad" selected>@Model.curso.modalidad1.modalidad1</option>
+                        @foreach(var mod in Model.modalidad) 
+                        { 
+                            <option value="@mod.id">@mod.modalidad1</option>
+                        } 
                         </select>
 
                         <br />
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Lugar" id="Lugar" class="form-control" value=""/>
+                            <input type="text" name="Lugar" id="Lugar" class="form-control" value="@Model.curso.lugar" />
                             <label class="form-label" for="Lugar">Lugar</label>
                         </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Horas" id="Horas" class="form-control" value=""/>
+                            <input type="number" name="Horas" id="Horas" class="form-control" value="@Model.curso.horas" />
                             <label class="form-label" for="Horas">Horas</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Costo" id="Costo" class="form-control" value=""/>
+                            <input type="number" name="Costo" id="Costo" class="form-control" value="@Model.curso.costo" />
                             <label class="form-label" for="Costo">Costo</label>
                         </div>
 
                         <!-- Confirm Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" value=""/>
+                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" value="@Model.curso.costoPref" />
                             <label class="form-label" for="CostoPref">Costo Preferencial</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value=""/>
+                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value="@Model.curso.urlTemario" />
                             <label class="form-label" for="UrlTemario">Temario</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" value=""/>
+                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" value="@Model.curso.requisitos" />
                             <label class="form-label" for="Requisitos">Requisitos</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value=""/>
+                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value="@Model.curso.criterioEval" />
                             <label class="form-label" for="CriterioEval">Criterio de Evaluacion</label>
                         </div>
 
@@ -115,7 +116,9 @@
                         }
 
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block mb-3">Registrar Curso</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Actualizar Curso</button>
+
+                        <button type="button" class="btn btn-danger btn-block mb-3"><a href="@Url.Action("Tablas", "Admin")">Cancelar</a></button>
                     </form>
 
                 </div>

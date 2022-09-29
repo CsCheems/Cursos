@@ -153,6 +153,8 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\rol.cs" />
     <Compile Include="Models\usuarios.cs" />
+    <Compile Include="Models\ViewModelCurso.cs" />
+    <Compile Include="Models\ViewModelUsuario.cs" />
     <Compile Include="Permisos\ValidarSesionAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -77,6 +77,7 @@ namespace Cursos.Models
         {
             bool registrado;
             string mensaje;
+            int i;
             if (usuarioInfo.pass == usuarioInfo.passConfirm)
             {
                 usuarioInfo.pass = EncriptarSha256(usuarioInfo.pass);
@@ -100,13 +101,13 @@ namespace Cursos.Models
                 
 
                 cn.Open();
-                cmd.ExecuteNonQuery();
+                i = cmd.ExecuteNonQuery();
                 registrado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
                 mensaje = cmd.Parameters["Mensaje"].Value.ToString();
                 cn.Close();
             }
 
-            if (registrado)
+            if (i >= 1)
             {
                 return true;
             }
@@ -134,8 +135,9 @@ namespace Cursos.Models
         //Metodo para editar usuario
         public bool EditarUsuario(usuarios usuarioInfo)
         {
-            bool registrado;
+            bool editado;
             string mensaje;
+            int i;
             if (usuarioInfo.pass == usuarioInfo.passConfirm)
             {
                 usuarioInfo.pass = EncriptarSha256(usuarioInfo.pass);
@@ -160,13 +162,13 @@ namespace Cursos.Models
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
               
                 cn.Open();
-                cmd.ExecuteNonQuery();
-                registrado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
+                i = cmd.ExecuteNonQuery();
+                editado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
                 mensaje = cmd.Parameters["Mensaje"].Value.ToString();
                 cn.Close();
             }
 
-            if (registrado)
+            if (i >= 1)
             {
                 return true;
             }

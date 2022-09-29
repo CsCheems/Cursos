@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Cursos.Models;
+using System.Dynamic;
 
 namespace Cursos.Controllers
 {
@@ -17,6 +18,12 @@ namespace Cursos.Controllers
         //*****************REGISTRA CURSO****************************
 
         public ActionResult RegistrarCurso()
+        {
+            var mod = ModeloMod();
+            return View(mod); 
+        }
+
+        public List<modalidad> ModeloMod()
         {
             List<modalidad> mod = new List<modalidad>();
             string sql = "select * from modalidad;";
@@ -37,7 +44,7 @@ namespace Cursos.Controllers
                     }
                 }
             }
-            return View(mod); 
+            return mod;
         }
 
         [HttpPost]
@@ -54,7 +61,7 @@ namespace Cursos.Controllers
                         ModelState.Clear();
                     }
                 }
-                return View();
+                return RedirectToAction("Tablas", "Admin");
             }
             catch 
             {
@@ -67,8 +74,12 @@ namespace Cursos.Controllers
         [HttpGet]
         public ActionResult EditaCurso(int id)
         {
-            cursos c = new cursos();
-            return View(c.GetCursos().Find(cmodel => cmodel.id == id));
+            ViewModelCurso vm = new ViewModelCurso();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
+            dynModel.modalidad = vm.GetMod();
+
+            return View(dynModel);
         }
 
         [HttpPost]

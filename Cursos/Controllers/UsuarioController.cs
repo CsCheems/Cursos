@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 using System.Data.Entity.Infrastructure;
+using System.Dynamic;
 
 namespace Cursos.Controllers
 {
@@ -84,8 +85,11 @@ namespace Cursos.Controllers
         
         public ActionResult EditaUsuario(int id)
         {
-            usuarios u = new usuarios();
-            return View(u.GetUsuarios().Find(umodel => umodel.id == id));
+            ViewModelUsuario vm = new ViewModelUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.usuario = vm.GetUsuarios().Find(umodel => umodel.id == id);
+            dynModel.roles = vm.GetRoles();
+            return View(dynModel);
         }
 
         [HttpPost]

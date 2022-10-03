@@ -1,4 +1,4 @@
-﻿@model List <Cursos.Models.modalidad>
+﻿@model List<Cursos.Models.modalidad>
 
 
 <html>
@@ -119,6 +119,7 @@
                         <div class="form-outline mb-4">
                             <label for="img">Seleccione una imagen:</label>
                             <input type="file" id="ImgUrl" name="ImgUrl" accept="image/*">
+                            <input type="button" id="upload" value="Guardar Imagen"/>
                         </div>
 
                         @if (ViewData["Mensaje"] != null)
@@ -137,10 +138,44 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#upload").click(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $("#ImgUrl").get(0);
+                    var files = fileUpload.files;
+
+                    var fileData = new FormData();
+                    for (var i = 0; i < files.length; i++) {
+                        fileData.append(files[i].name, files[i]);
+                    }
+
+                    $.ajax({
+                        url: '@Url.Action("CargaArchivo", "Cursos")',
+                        type: "POST",
+                        contentType: false,
+                        processData: false,
+                        data: fileData,
+                        success: function (result) {
+                            alert(result);
+                        },
+                        error: function (err) {
+                            alert(err.statusText);
+                        }
+                    });
+                } else {
+                    alert("Form data is not supported");
+                }
+            });
+        });
+    </script>
+
+    <!-- MDB -->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+    </script>
+</html>
+
 </body>
 
-<!-- MDB -->
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
-</script>
-</html>

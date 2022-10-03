@@ -167,6 +167,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Recursos\bootstrap\bootstrap.min.css" />
+    <Content Include="Recursos\bootstrap\glightbox.min.css" />
+    <Content Include="Recursos\bootstrap\LineIcons.3.0.css" />
+    <Content Include="Recursos\bootstrap\main.css" />
+    <Content Include="Recursos\bootstrap\tiny-slider.css" />
     <Content Include="Recursos\CSS\EstilosForm.css" />
     <Content Include="Recursos\CSS\FooterStyle.css" />
     <Content Include="Recursos\CSS\NavStyle.css" />
@@ -203,6 +208,7 @@
     <Content Include="Views\Cursos\EditaCurso.cshtml" />
     <Content Include="Views\Usuario\InsertaUsuario.cshtml" />
     <Content Include="Views\Usuario\EditaUsuario.cshtml" />
+    <Content Include="Views\Home\CursoDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

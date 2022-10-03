@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Mvc;
 using Cursos.Models;
 using System.Dynamic;
+using System.IO;
+using System.Web.UI.WebControls;
 
 namespace Cursos.Controllers
 {
@@ -50,6 +52,10 @@ namespace Cursos.Controllers
         [HttpPost]
         public ActionResult RegistrarCurso(cursos cmodel)
         {
+            string path;
+            
+
+
             try
             {
                 if (ModelState.IsValid)
@@ -68,6 +74,44 @@ namespace Cursos.Controllers
                 return View();
             }
         }
+
+        public void DirectorioExistente()
+        {
+
+            // si el directorio \Recursos\imgs no existe - create it. 
+            if (!System.IO.Directory.Exists(Server.MapPath(@"~/Recursos/imgs")))
+            {
+                System.IO.Directory.CreateDirectory(Server.MapPath(@"~/Recursos/imgs"));
+            }
+        }
+
+        public ActionResult CargaArchivo()
+        {
+            DirectorioExistente();
+            if(Request.Files.Count > 0)
+            {
+                try
+                {
+                    HttpFileCollectionBase files = Request.Files;
+                    for(int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFileBase file = files[i];
+                        string fname = file.FileName;
+                        fname = Path.Combine(Server.MapPath("~/Recursos/imgs"), fname);
+                        file.SaveAs(fname);
+                    }
+                    return Json("Se cargo correctamente");
+                }catch(Exception ex)
+                {
+                    return Json("Ocurrio un error. Detalles: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No se cargo ningun archivo");
+            }
+        }
+
 
         //*****************EDITA CURSO****************************
 

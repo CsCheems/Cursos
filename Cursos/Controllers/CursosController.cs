@@ -14,8 +14,8 @@ namespace Cursos.Controllers
 {
     public class CursosController : Controller
     {
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
+        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
 
         //*****************REGISTRA CURSO****************************
 
@@ -52,10 +52,7 @@ namespace Cursos.Controllers
         [HttpPost]
         public ActionResult RegistrarCurso(cursos cmodel)
         {
-            string path;
             
-
-
             try
             {
                 if (ModelState.IsValid)
@@ -88,6 +85,7 @@ namespace Cursos.Controllers
         public ActionResult CargaArchivo()
         {
             DirectorioExistente();
+            String fname;
             if(Request.Files.Count > 0)
             {
                 try
@@ -96,7 +94,7 @@ namespace Cursos.Controllers
                     for(int i = 0; i < files.Count; i++)
                     {
                         HttpPostedFileBase file = files[i];
-                        string fname = file.FileName;
+                        fname = file.FileName;
                         fname = Path.Combine(Server.MapPath("~/Recursos/imgs"), fname);
                         file.SaveAs(fname);
                     }

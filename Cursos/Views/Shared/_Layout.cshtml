@@ -36,21 +36,21 @@
             @{
                 if (isLogged && credenciales.rol == 2)
                 {
-                    <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
-                    <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
-                    <li id="menu"><a href="@Url.Action("Tablas","Admin")">Administrador</a></li>
+                <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
+                <li id="menu"><a href="@Url.Action("Tablas","Admin")">Administrador</a></li>
+                <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
                 }
                 else if (isLogged)
                 {
-                    <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
-                    <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
+                <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
+                <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
+                <li id="menu"><a href="">Mis Cursos</a></li>
                 }
                 else
                 {
-                    <li id="menu"><a href="@Url.Action("Login", "Acceso")">Ingresar</a></li>
+                <li id="menu"><a href="@Url.Action("Login", "Acceso")">Ingresar</a></li>
                 }
             }
-            <li id="menu"><a href="">Cursos</a></li>
             <li id="menu"><a href="@Url.Action("Index", "Home")">Inicio</a></li>
             <li><img src="https://www.uteq.edu.mx/Images/Logo%20UTEQ%20blanco.png" alt="uteq_logo" /></li>
         </ul>

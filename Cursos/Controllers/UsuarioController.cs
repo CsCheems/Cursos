@@ -123,7 +123,10 @@ namespace Cursos.Controllers
         //*****************CURSOS USUARIO****************************
         public ActionResult CursosUsuario()
         {
-
+            ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.cursos = vmcu.GetMisCursos();
+            return View(dynModel);
         }
 
     }

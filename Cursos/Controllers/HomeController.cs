@@ -35,6 +35,10 @@ namespace Cursos.Controllers
             return View(dynModel);
         }
 
+        public ActionResult CursoFormulario()
+        {
+            return View();
+        }
         
     }
 }

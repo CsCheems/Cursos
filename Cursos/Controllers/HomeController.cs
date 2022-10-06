@@ -37,7 +37,10 @@ namespace Cursos.Controllers
 
         public ActionResult CursoFormulario()
         {
-            return View();
+            ViewModelCurso vmc = new ViewModelCurso();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.modalidad = vmc.GetMod();
+            return View(dynModel);
         }
         
     }

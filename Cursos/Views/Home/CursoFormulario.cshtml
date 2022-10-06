@@ -1,4 +1,5 @@
-﻿
+﻿@model dynamic
+
 @{
     ViewBag.Title = "CursoFormulario";
 }
@@ -111,7 +112,8 @@
                         </div>
 
                         <!-- Role input -->
-                        <select class="form-select" name="Modalidad" aria-label="Default select example">
+                        <select id="modalidades" onchange="modSelect()" class="form-select" name="Modalidad" aria-label="Default select example">
+                            <option selected>Seleccione una modalidad...</option>
                             @{
                                 bool IsPostBack()
                                 {
@@ -130,12 +132,21 @@
                             @if (!IsPostBack())
                             {
 
+                                foreach (var mod in @Model.modalidad)
+                                {
+                                    <option value="@mod.id">@mod.modalidad1</option>
+                                }
                             }
 
                         </select>
 
                         <br />
 
+                        <!-- Place input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Lugar" id="Lugar" class="form-control" />
+                            <label class="form-label" for="Lugar">Lugar del Curso</label>
+                        </div>
 
                         <!-- Role input -->
                         <select class="form-select" name="Horas" aria-label="Default select example">
@@ -166,6 +177,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function modSelect() {
+            var value = $("#modalidades").val();
+            var div = 
+        }
+
+    </script>
 
     <!-- MDB -->
     <script type="text/javascript"

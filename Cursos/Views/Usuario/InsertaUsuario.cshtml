@@ -1,8 +1,4 @@
-﻿@model List<Cursos.Models.rol>
-
-@{
-    ViewBag.Title = "InsertaUsuario";
-}
+﻿@model dynamic
 
 <html>
 <head>
@@ -42,7 +38,7 @@
 
                         <!-- Role input -->
                         <select class="form-select" name="rol" aria-label="Default select example">
-                            @{ 
+                            @{
                                 bool IsPostBack()
                                 {
                                     bool isPost = string.Compare(Request.HttpMethod, "POST",
@@ -57,11 +53,13 @@
                                 }
                             }
 
-                            @if (!IsPostBack())
-                            {
-                                foreach (var r in Model)
+                            @{
+                                if (!IsPostBack())
                                 {
-                                    <option value="@r.id">@r.rolUser</option>
+                                    foreach (var r in Model.roles)
+                                    {
+                                        <option value="@r.id">@r.rolUser</option>
+                                    }
                                 }
                             }
                         </select>
@@ -114,10 +112,11 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+    </script>
 </body>
 
 <!-- MDB -->
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
-</script>
+
 </html>

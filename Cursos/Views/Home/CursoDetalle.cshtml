@@ -26,7 +26,7 @@
                     <div class="product-images">
                         <main id="gallery">
                             <div class="main-img">
-                                <img src="" id="current" alt="#">
+                                <img src="" id="current" alt="Imagen de Curso">
                             </div>
                         </main>
                     </div>
@@ -38,16 +38,17 @@
                         <p class="info-text">
                             
                         </p>
-                        
-                        <div class="bottom-content">
-                            <div class="row align-items-end">
-                                <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="button cart-button">
-                                        <button class="btn" style="width: 100%;">Registrarse</button>
+                        <form action="@Url.Action("RegistraCursoUsuario", "Cursos", new {id = Model.curso.id})">
+                            <div class="bottom-content">
+                                <div class="row align-items-end">
+                                    <div class="col-lg-4 col-md-4 col-12">
+                                        <div class="button cart-button">
+                                            <button type="submit" class="btn btn-primary btn-block mb-3" style="width: 100%;" >Registrarse</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

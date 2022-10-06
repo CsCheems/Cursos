@@ -9,14 +9,14 @@ namespace Cursos.Models
 {
     public class ViewModelCursoUsuario
     {
-        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
-        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
+        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
 
         public IEnumerable<usuarios> usuario { get; set; }
         public IEnumerable<cursos> curso { get; set; }
 
 
-        //Metodo para un usuario al curso
+        //Metodo para registrar un usuario al curso
         public bool registraCursoUsuario(int cid)
         {
             int i;
@@ -48,6 +48,39 @@ namespace Cursos.Models
                     return false;
                 }
             } 
+        }
+
+        //Metodo para despligar cursos adquiridos por usuario
+        public List<cursos> GetMisCursos()
+        {
+            List<cursos> listCursos = new List<cursos>();
+            usuarios u = (usuarios)HttpContext.Current.Session["usuario"];
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            {
+                SqlCommand cmd = new SqlCommand("SP_obtenCursosUsuario", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("IdUsuario", u.id);
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        cursos c = new cursos();
+                        modalidad m = new modalidad();
+                        c.id = dr.GetInt32(0);
+                        c.nombre = dr.GetString(1);
+                        m.modalidad1 = dr.GetString(2);
+                        c.modalidad1 = m;
+                        c.lugar = dr.GetString(3);
+                        c.horas = dr.GetInt32(4);
+                        c.urlTemario = dr.GetString(5);
+                        listCursos.Add(c);
+                    }
+                }
+
+            }
+            return listCursos;
         }
 
     }

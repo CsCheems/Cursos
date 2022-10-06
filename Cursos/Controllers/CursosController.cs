@@ -157,5 +157,20 @@ namespace Cursos.Controllers
                 return View();
             }
         }
+
+        //*****************REGISTRA USUARIO A CURSO****************************
+
+        [HttpGet]
+        public ActionResult RegistraCursoUsuario(int id)
+        {
+            ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
+            if (vmcu.registraCursoUsuario(id))
+            {
+                ViewBag.AlertMsg = "El usuario se ha registrado al curso";
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login", "Acceso");
+        }
+
     }
 }

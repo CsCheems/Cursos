@@ -15,42 +15,17 @@ namespace Cursos.Controllers
 {
     public class UsuarioController : Controller
     {
-        //static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Database=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
-        static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
-
 
         //*****************REGISTRA USUARIO****************************
+
         public ActionResult InsertaUsuario()
         {
-            var r = ModeloRol();
-            return View(r);
+            ViewModelUsuario vmu = new ViewModelUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.roles = vmu.GetRoles();
+            return View(dynModel);
         }
 
-        public List<rol> ModeloRol()
-        {
-            List<rol> role = new List<rol>();
-            string sql = "select * from rol";
-
-            using (SqlConnection cn = new SqlConnection(cadenaConexion))
-            {
-                using (SqlCommand cmd = new SqlCommand(sql, cn))
-                {
-                    cn.Open();
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            rol r = new rol();
-                            r.id = dr.GetInt32(0);
-                            r.rolUser = dr.GetString(1);
-                            role.Add(r);
-                        }
-                    }
-                }
-            }
-            return role;
-        }
-        
         [HttpPost]
         public ActionResult InsertaUsuario(usuarios umodel)
         {
@@ -80,6 +55,8 @@ namespace Cursos.Controllers
                 return View();
             }
         }
+
+
 
         //*****************EDITA USUARIO****************************
         
@@ -142,5 +119,12 @@ namespace Cursos.Controllers
             }
             return sb.ToString();
         }
+
+        //*****************CURSOS USUARIO****************************
+        public ActionResult CursosUsuario()
+        {
+
+        }
+
     }
 }

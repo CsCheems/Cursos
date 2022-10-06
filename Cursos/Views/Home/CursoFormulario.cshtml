@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "CursoFormulario";
+}
+
+<html>
+<head>
+
+    <title>Solicitud de Curso</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
+          rel="stylesheet" />
+    <link href="~/Recursos/CSS/EstilosForm.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="wrapper">
+            <div class="formcontent">
+                <!-- Pills content -->
+                <div class="tab-content">
+
+                    <form action="" method="post">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Name input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control" />
+                                    <label class="form-label" for="Nombre">Nombre</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Lastname input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="Apellido" id="Apellido" class="form-control" />
+                                    <label class="form-label" for="Apellido">Apellido</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Enterprise input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Empresa" id="Empresa" class="form-control" />
+                            <label class="form-label" for="Empresa">Empresa o Institución</label>
+                        </div>
+
+                        <!-- Position input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Cargo" id="Cargo" class="form-control" />
+                            <label class="form-label" for="Cargo">Cargo</label>
+                        </div>
+
+                        <!-- Department input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Area" id="Area" class="form-control" />
+                            <label class="form-label" for="Area">Area o Departamento</label>
+                        </div>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" name="Email" id="Email" class="form-control" />
+                            <label class="form-label" for="Email">Email</label>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- Phone input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="Telefono" id="Telefono" class="form-control" />
+                                    <label class="form-label" for="Telefono">Telefono</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- Cellphone input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="Celular" id="Celular" class="form-control" />
+                                    <label class="form-label" for="Celular">Celular</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Course input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Curso" id="Curso" class="form-control" />
+                            <label class="form-label" for="Curso">Curso solicitado</label>
+                        </div>
+
+                        <!-- Objective input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Objetivo" id="Objetico" class="form-control" />
+                            <label class="form-label" for="Objetico">Objetivo de Curso</label>
+                        </div>
+
+                        <!-- Role input -->
+                        <select class="form-select" name="Modalidad" aria-label="Default select example">
+                            @{
+                                bool IsPostBack()
+                                {
+                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+                                    if (Request.UrlReferrer == null) return false;
+
+                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
+                                       Request.UrlReferrer.AbsolutePath,
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+
+                                    return isPost && isSameUrl;
+                                }
+                            }
+
+                            @if (!IsPostBack())
+                            {
+
+                            }
+
+                        </select>
+
+                        <br />
+
+
+                        <!-- Role input -->
+                        <select class="form-select" name="Horas" aria-label="Default select example">
+                            <option selected>Selecciona un horario...</option>
+                            <option value="1">De 4 a 10 Horas</option>
+                            <option value="2">De 11 a 20 Horas</option>
+                            <option value="3">Mas de 20 Horas</option>
+
+                        </select>
+
+                        <br />
+
+
+
+                        @if (ViewData["Mensaje"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewData["Mensaje"]
+                            </div>
+                        }
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Solicitar Curso</button>
+                    </form>
+
+                </div>
+                <!-- Pills content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MDB -->
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+    </script>
+</html>
+
+</body>
+

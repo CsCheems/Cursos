@@ -162,7 +162,7 @@ namespace Cursos.Controllers
         public ActionResult RegistraCursoUsuario(int id)
         {
             ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
-            if (vmcu.registraCursoUsuario(id))
+            if (vmcu.setPendientePago(id))
             {
                 ViewBag.AlertMsg = "El usuario se ha registrado al curso";
                 return RedirectToAction("Index", "Home");

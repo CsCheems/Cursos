@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Security.Cryptography;
+using System.Web.Services.Description;
 
 namespace Cursos.Models
 {
@@ -14,13 +16,14 @@ namespace Cursos.Models
 
         public IEnumerable<usuarios> usuario { get; set; }
         public IEnumerable<cursos> curso { get; set; }
+        public IEnumerable<estatus> estado { get; set; }
 
-
-        //Metodo para registrar un usuario al curso
-        public bool registraCursoUsuario(int cid)
+        public bool setPendientePago(int cid)
         {
+            bool registrado;
+            string mensaje;
             int i;
-            if(HttpContext.Current.Session["usuario"] == null)
+            if (HttpContext.Current.Session["usuario"] == null)
             {
                 return false;
             }
@@ -34,10 +37,16 @@ namespace Cursos.Models
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("IdUsuario", u.id);
                     cmd.Parameters.AddWithValue("IdCurso", cid);
+                    cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+
 
                     cn.Open();
                     i = cmd.ExecuteNonQuery();
+                    registrado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
+                    mensaje = cmd.Parameters["Mensaje"].Value.ToString();
                     cn.Close();
+
                 }
                 if (i >= 1)
                 {
@@ -47,7 +56,7 @@ namespace Cursos.Models
                 {
                     return false;
                 }
-            } 
+            }
         }
 
         //Metodo para despligar cursos adquiridos por usuario

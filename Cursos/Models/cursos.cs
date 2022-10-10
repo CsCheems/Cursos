@@ -50,7 +50,6 @@ namespace Cursos.Models
         public List<cursos> GetCursos()
         {
             List<cursos> listCursos = new List<cursos>();
-            List<modalidad> listModalidad = new List<modalidad>();
             string sql = "select cursos.id, cursos.nombre, cursos.modalidad, modalidad.id, modalidad.modalidad, cursos.lugar, cursos.horas, cursos.costo, cursos.costoPref, cursos.urlTemario, cursos.requisitos, cursos.criterioEval, cursos.imgUrl from cursos inner join modalidad on modalidad.id = cursos.modalidad;";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {

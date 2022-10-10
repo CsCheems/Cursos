@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
+using System.Dynamic;
+using System.Data.Entity.Infrastructure;
 
 namespace Cursos.Controllers
 {
@@ -88,6 +90,29 @@ namespace Cursos.Controllers
                 }
             }
             return View(usuario);
+        }
+
+        public ActionResult Pagos()
+        {
+            cursosUsuario cu = new cursosUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.curso = cu.getPendientePago();
+            return View(dynModel);
+        }
+
+        [HttpPost]
+        public ActionResult Pagos(int id)
+        {
+            try
+            {
+                cursosUsuario cu = new cursosUsuario();
+                cu.validarPago(id);
+                return View();
+            }
+            catch
+            {
+                return View();
+            }
         }
     }
 }

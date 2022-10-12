@@ -112,7 +112,7 @@
                         </div>
 
                         <!-- Role input -->
-                        <select id="modalidades" onchange="modSelect()" class="form-select" name="Modalidad" aria-label="Default select example">
+                        <select onchange="modSelect('showLugar', this)" class="form-select" name="Modalidad" aria-label="Default select example">
                             <option selected>Seleccione una modalidad...</option>
                             @{
                                 bool IsPostBack()
@@ -143,7 +143,7 @@
                         <br />
 
                         <!-- Place input -->
-                        <div class="form-outline mb-4">
+                        <div style="display:none" class="form-outline mb-4" id="showLugar">
                             <input type="text" name="Lugar" id="Lugar" class="form-control" />
                             <label class="form-label" for="Lugar">Lugar del Curso</label>
                         </div>
@@ -179,9 +179,15 @@
     </div>
 
     <script>
-        function modSelect() {
-            var value = $("#modalidades").val();
-            //var div = 
+        function modSelect(id, elementValue) {
+            var elemento = document.getElementById(id);
+            /*if (elementValue == 1) {
+                elemento.removeAttribute("hidden");
+            } else {
+                elemento.setAttribute("hidden");
+            }*/
+
+            document.getElementById(id).style.display = elementValue.value == 1 ? 'block' : 'none';
         }
 
     </script>

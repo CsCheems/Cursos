@@ -83,7 +83,7 @@
                                 <td><a href="@obj.urlTemario">Recurso</a></td>
                                 <td>
                                     <a href="@Url.Action("EditaCurso", "Cursos", new {id = obj.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
-                                    <a href="@Url.Action("EliminaCurso", "Cursos", new {id = obj.id})" onclick="return confirm('Seguro quiere borrar este curso?')" class="delete"><i class="material-icons" data-toggle="tooltip" title="Borrar">&#xE872;</i></a>
+                                    <a href="@Url.Action("EliminaCurso", "Cursos", new {id = obj.id})" onclick="return confirm('¿Seguro quiere borrar este curso?')" class="delete"><i class="material-icons" data-toggle="tooltip" title="Borrar">&#xE872;</i></a>
                                 </td>
                             </tr>
                         }

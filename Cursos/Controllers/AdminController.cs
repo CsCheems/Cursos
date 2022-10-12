@@ -107,7 +107,7 @@ namespace Cursos.Controllers
             {
                 cursosUsuario cu = new cursosUsuario();
                 cu.validarPago(id);
-                return View();
+                return RedirectToAction("Pagos", "Admin");
             }
             catch
             {

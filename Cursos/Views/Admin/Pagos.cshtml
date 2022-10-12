@@ -58,7 +58,7 @@
                                 <td>@obj.usuario.email</td>
                                 <td>@obj.estado1.estatus1</td>
                                 <td>
-                                    <a href="@Url.Action("", "")" class="check"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></a>
+                                    <a href="" class="edit" onclick="pendiente(@obj.id)"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></a>
                                 </td>
                             </tr>
                         }
@@ -72,7 +72,27 @@
             </div>
         </div>
 
+        <script type="text/javascript">
+            function pendiente(idp) {
+                //console.log(id);
 
+                
+
+               //var url = $('.ajax-url').attr('href');
+                var url = window.location.pathname;
+                var fullurl = url + "/" + idp;
+
+               console.log(fullurl);
+               $.ajax({
+                   url: fullurl,
+                   type: 'POST',
+                   error: function (result) {
+                       alert(err.statusText);
+                   }
+               });
+                window.open(url);
+            }
+        </script>
 
 
 

@@ -10,9 +10,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Data.Entity.Infrastructure;
 using System.Dynamic;
+using Cursos.Permisos;
 
 namespace Cursos.Controllers
 {
+    [ValidarSesionAttribute]
     public class UsuarioController : Controller
     {
 
@@ -26,6 +28,7 @@ namespace Cursos.Controllers
             return View(dynModel);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult InsertaUsuario(usuarios umodel)
         {

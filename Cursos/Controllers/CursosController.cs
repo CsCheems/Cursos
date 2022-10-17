@@ -9,9 +9,11 @@ using Cursos.Models;
 using System.Dynamic;
 using System.IO;
 using System.Web.UI.WebControls;
+using Cursos.Permisos;
 
 namespace Cursos.Controllers
 {
+    [ValidarSesionAttribute]
     public class CursosController : Controller
     {
         static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";

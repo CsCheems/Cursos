@@ -84,5 +84,10 @@ namespace Cursos.Controllers
             }
             return sb.ToString();
         }
+
+        public ActionResult Error()
+        {
+            return View();
+        }
     }
 }

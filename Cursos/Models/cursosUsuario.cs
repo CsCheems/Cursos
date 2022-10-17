@@ -118,7 +118,5 @@ namespace Cursos.Models
             }
 
         }
-
-
     }
 }

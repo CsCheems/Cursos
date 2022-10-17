@@ -172,5 +172,14 @@ namespace Cursos.Controllers
             return RedirectToAction("Login", "Acceso");
         }
 
+        //*****************FICHA DE PAGO****************************
+
+        public ActionResult FichaDePago(int id)
+        {
+            
+
+            return View();
+        }
+
     }
 }

@@ -158,7 +158,8 @@
     <Compile Include="Models\ViewModelCurso.cs" />
     <Compile Include="Models\ViewModelCursoUsuario.cs" />
     <Compile Include="Models\ViewModelUsuario.cs" />
-    <Compile Include="Permisos\ValidarSesionAttribute.cs" />
+    <Compile Include="Permisos\ValidarSesion.cs" />
+    <Compile Include="Permisos\ValidarSesionAdmin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

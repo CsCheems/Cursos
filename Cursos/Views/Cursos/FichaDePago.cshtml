@@ -1,10 +1,6 @@
 ﻿@model dynamic
 
 
-@{
-    ViewBag.Title = "FichaDePago";
-}
-
 <html>
 <head>
 
@@ -48,14 +44,14 @@
                             <div class="col-md-6">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Nombre" id="Nombre" class="form-control" />
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control" value="@Model.usuario.nombre" disabled/>
                                     <label class="form-label" for="Nombre">Nombre</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <!-- Lastname input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Apellido" id="Apellido" class="form-control" />
+                                    <input type="text" name="Apellido" id="Apellido" class="form-control" value="" disabled/>
                                     <label class="form-label" for="Apellido">Apellido</label>
                                 </div>
                             </div>
@@ -65,21 +61,21 @@
                             <div class="col-md-4">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Curso" id="Curso" class="form-control" />
+                                    <input type="text" name="Curso" id="Curso" class="form-control" disabled/>
                                     <label class="form-label" for="Curso">Curso</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <!-- Lastname input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" />
+                                    <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" disabled/>
                                     <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <!-- Lastname input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" />
+                                    <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" disabled/>
                                     <label class="form-label" for="fechaVenc">Fecha de Vencimiento</label>
                                 </div>
                             </div>
@@ -93,26 +89,16 @@
                                     <th>Descripcion</th>
                                     <th>Monto</th>
                                     <th>Total</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var obj in Model)
-                                {
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                }
                             </tbody>
                         </table>
 
                         <!-- Role input -->
                         <select onchange="modSelect('showFacturaInfo', this)" class="form-select" name="Modalidad" aria-label="Default select example">
-                            <option selected>Seleccione una modalidad...</option>
+                            <option selected>¿Requiere Factura?</option>
                             <option value="1">Si</option>
                             <option value="2">No</option>
                         </select>
@@ -164,7 +150,7 @@
                             <label class="form-label" for="Lugar">Lugar del Curso</label>
                         </div>
 
-                       
+
 
                         <br />
 
@@ -205,6 +191,6 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
     </script>
+</body>
 </html>
 
-</body>

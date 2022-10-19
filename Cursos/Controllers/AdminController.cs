@@ -14,7 +14,7 @@ using Cursos.Permisos;
 
 namespace Cursos.Controllers
 {
-    [ValidarSesionAttribute]
+    [ValidarSesionAdmin]
     public class AdminController : Controller
     {
         static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";

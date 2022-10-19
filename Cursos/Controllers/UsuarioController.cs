@@ -14,11 +14,12 @@ using Cursos.Permisos;
 
 namespace Cursos.Controllers
 {
-    [ValidarSesionAttribute]
+    
     public class UsuarioController : Controller
     {
 
         //*****************REGISTRA USUARIO****************************
+
 
         public ActionResult InsertaUsuario()
         {
@@ -28,7 +29,7 @@ namespace Cursos.Controllers
             return View(dynModel);
         }
 
-        [AllowAnonymous]
+        
         [HttpPost]
         public ActionResult InsertaUsuario(usuarios umodel)
         {
@@ -62,7 +63,7 @@ namespace Cursos.Controllers
 
 
         //*****************EDITA USUARIO****************************
-        
+        [ValidarSesionAdmin]
         public ActionResult EditaUsuario(int id)
         {
             ViewModelUsuario vm = new ViewModelUsuario();
@@ -89,7 +90,7 @@ namespace Cursos.Controllers
 
 
         //*****************ELIMINA USUARIO****************************
-
+        [ValidarSesionAdmin]
         public ActionResult EliminaUsuario(int id)
         {
             try

@@ -13,7 +13,7 @@ using Cursos.Permisos;
 
 namespace Cursos.Controllers
 {
-    [ValidarSesionAttribute]
+   
     public class CursosController : Controller
     {
         static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
@@ -21,6 +21,7 @@ namespace Cursos.Controllers
 
         //*****************REGISTRA CURSO****************************
 
+        [ValidarSesionAdmin]
         public ActionResult RegistrarCurso()
         {
             var mod = ModeloMod();
@@ -51,6 +52,7 @@ namespace Cursos.Controllers
             return mod;
         }
 
+        
         [HttpPost]
         public ActionResult RegistrarCurso(cursos cmodel)
         {
@@ -114,7 +116,7 @@ namespace Cursos.Controllers
 
 
         //*****************EDITA CURSO****************************
-
+        [ValidarSesionAdmin]
         [HttpGet]
         public ActionResult EditaCurso(int id)
         {
@@ -142,7 +144,7 @@ namespace Cursos.Controllers
         }
 
         //*****************ELIMINA CURSO****************************
-
+        [ValidarSesionAdmin]
         public ActionResult EliminaCurso(int id)
         {
             try
@@ -161,6 +163,8 @@ namespace Cursos.Controllers
         }
 
         //*****************REGISTRA USUARIO A CURSO****************************
+
+
         public ActionResult RegistraCursoUsuario(int id)
         {
             ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
@@ -173,12 +177,15 @@ namespace Cursos.Controllers
         }
 
         //*****************FICHA DE PAGO****************************
-
+        [ValidarSesion]
         public ActionResult FichaDePago(int id)
         {
-            
-
-            return View();
+            ViewModelCurso vc = new ViewModelCurso();
+            usuarios u = new usuarios();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
+            dynModel.usuario = u.GetCurrentUsuario();
+            return View(dynModel);
         }
 
     }

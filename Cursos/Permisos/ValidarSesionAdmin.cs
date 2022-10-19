@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Cursos.Permisos
 {
-    public class ValidarSesionAttribute : ActionFilterAttribute
+    public class ValidarSesionAdmin : ActionFilterAttribute
     {
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)

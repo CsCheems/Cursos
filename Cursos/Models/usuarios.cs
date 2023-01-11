@@ -165,8 +165,9 @@ namespace Cursos.Models
         }
 
         //Metodo para editar usuario
-        public bool EditarUsuario(usuarios usuarioInfo)
+        public bool EditarUsuario(usuarios usuarioInfo) 
         {
+
             bool editado;
             string mensaje;
             int i;

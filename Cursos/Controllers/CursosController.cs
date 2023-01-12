@@ -16,7 +16,7 @@ namespace Cursos.Controllers
    
     public class CursosController : Controller
     {
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
+        static string cadenaConexion = "Data Source=mssql-104991-0.cloudclusters.net,19262;Initial Catalog=edcouteq; user id=cheems; pwd=9Gag94lol";
         //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
 
         //*****************REGISTRA CURSO****************************

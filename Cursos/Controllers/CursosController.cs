@@ -177,16 +177,16 @@ namespace Cursos.Controllers
         }
 
         //*****************FICHA DE PAGO****************************
-        /*[ValidarSesion]
+        [ValidarSesion]
         public ActionResult FichaDePago(int id)
         {
             ViewModelCurso vc = new ViewModelCurso();
             usuarios u = new usuarios();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
-            dynModel.usuario = u.GetCurrentUsuario();
+            //dynModel.usuario = u.GetCurrentUsuario();
             return View(dynModel);
-        }*/
+        }
 
     }
 }

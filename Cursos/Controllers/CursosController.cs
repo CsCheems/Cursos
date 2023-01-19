@@ -184,7 +184,7 @@ namespace Cursos.Controllers
             usuarios u = new usuarios();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
-            //dynModel.usuario = u.GetCurrentUsuario();
+            dynModel.usuario = u.GetUsuario();
             return View(dynModel);
         }
 

@@ -5,13 +5,13 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Web;
+using Cursos.BDConnection;
 
 namespace Cursos.Models
 {
     public class cursosUsuario
     {
-        static string cadenaConexion = "Data Source=mssql-104991-0.cloudclusters.net,19262;Initial Catalog=edcouteq; user id=cheems; pwd=9Gag94lol";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
 
         public int id { get; set; }
 
@@ -63,7 +63,7 @@ namespace Cursos.Models
         public List<cursosUsuario> getPendientePago()
         {
             List<cursosUsuario> lcu = new List<cursosUsuario>();
-            int i;
+            //int i;
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand("SP_obtenPendientePago", cn);

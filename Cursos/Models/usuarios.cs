@@ -1,5 +1,6 @@
 namespace Cursos.Models
 {
+    using Cursos.BDConnection;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -37,8 +38,7 @@ namespace Cursos.Models
 
 
         //Metodos
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
-        static string cadenaConexion = "Data Source=mssql-104991-0.cloudclusters.net,19262;Initial Catalog=edcouteq; user id=cheems; pwd=9Gag94lol";
+        static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
 
         //Metodo para obtener datos del usuario
         public List<usuarios> GetUsuarios()
@@ -73,7 +73,7 @@ namespace Cursos.Models
             return usuarios;
         }
 
-        public List<usuarios> GetCurrentUsuario()
+        /*public List<usuarios> GetCurrentUsuario()
         {
             public List<usuarios> usu = new List<usuarios>();
             usuarios usuario = (usuarios)HttpContext.Current.Session["usuario"];
@@ -102,7 +102,7 @@ namespace Cursos.Models
                 }
             }
             return usu;
-        }
+        }*/
 
         //Metodo para agregar usuarios
         public bool InsertaUsuario(usuarios usuarioInfo)

@@ -10,14 +10,14 @@ using System.Dynamic;
 using System.IO;
 using System.Web.UI.WebControls;
 using Cursos.Permisos;
+using Cursos.BDConnection;
 
 namespace Cursos.Controllers
 {
    
     public class CursosController : Controller
     {
-        static string cadenaConexion = "Data Source=mssql-104991-0.cloudclusters.net,19262;Initial Catalog=edcouteq; user id=cheems; pwd=9Gag94lol";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
 
         //*****************REGISTRA CURSO****************************
 
@@ -177,7 +177,7 @@ namespace Cursos.Controllers
         }
 
         //*****************FICHA DE PAGO****************************
-        [ValidarSesion]
+        /*[ValidarSesion]
         public ActionResult FichaDePago(int id)
         {
             ViewModelCurso vc = new ViewModelCurso();
@@ -186,7 +186,7 @@ namespace Cursos.Controllers
             dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
             dynModel.usuario = u.GetCurrentUsuario();
             return View(dynModel);
-        }
+        }*/
 
     }
 }

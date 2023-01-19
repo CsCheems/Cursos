@@ -6,13 +6,13 @@ using System.Linq;
 using System.Web;
 using System.Security.Cryptography;
 using System.Web.Services.Description;
+using Cursos.BDConnection;
 
 namespace Cursos.Models
 {
     public class ViewModelCursoUsuario
     {
-        static string cadenaConexion = "Data Source=mssql-104991-0.cloudclusters.net,19262;Initial Catalog=edcouteq; user id=cheems; pwd=9Gag94lol";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
 
         public IEnumerable<usuarios> usuario { get; set; }
         public IEnumerable<cursos> curso { get; set; }

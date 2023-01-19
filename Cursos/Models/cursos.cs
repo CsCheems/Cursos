@@ -1,5 +1,6 @@
 namespace Cursos.Models
 {
+    using Cursos.BDConnection;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -43,8 +44,7 @@ namespace Cursos.Models
         public virtual modalidad modalidad1 { get; set; }
 
         //Metodos
-        static string cadenaConexion = "Data Source=DESKTOP-RDBRQG8;Initial Catalog=edcouteq; user id=adminedco; pwd=edco_uteq_2022**";
-        //static string cadenaConexion = "Data Source=DESKTOP-ADDCRJO;Initial Catalog=edcouteq;Integrated Security=true; user id=sa; pwd=123";
+        static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
 
         //Metodo para obtener datos del curso
         public List<cursos> GetCursos()

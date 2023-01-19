@@ -44,14 +44,14 @@
                             <div class="col-md-6">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Nombre" id="Nombre" class="form-control" value="@Model.usuario.nombre" disabled/>
+                                    <input type="text" name="Nombre" id="Nombre" class="form-control" value="" disabled/>
                                     <label class="form-label" for="Nombre">Nombre</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <!-- Lastname input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Apellido" id="Apellido" class="form-control" value="@Model.usuario.apellido" disabled/>
+                                    <input type="text" name="Apellido" id="Apellido" class="form-control" value="" disabled/>
                                     <label class="form-label" for="Apellido">Apellido</label>
                                 </div>
                             </div>
@@ -93,6 +93,14 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <th>@Model.curso.nombre</th>
+                                    <th>@Model.curso.modalidad.modalidad1</th>
+                                    <th>@Model.curso.costo</th>
+                                    <th>@Model.curso.costo</th>
+
+                                </tr>
                             </tbody>
                         </table>
 

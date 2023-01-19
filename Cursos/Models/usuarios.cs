@@ -73,9 +73,9 @@ namespace Cursos.Models
             return usuarios;
         }
 
-        /*public List<usuarios> GetCurrentUsuario()
+        public List<usuarios> GetUsuario()
         {
-            public List<usuarios> usu = new List<usuarios>();
+            List<usuarios> usu = new List<usuarios>();
             usuarios usuario = (usuarios)HttpContext.Current.Session["usuario"];
             string sql = "select usuarios.id, usuarios.nombre, usuarios.apellido, rol.id, rol.rolUser, usuarios.email, usuarios.pass from usuarios inner join rol on rol.id = usuarios.rol where usuarios.id = " + usuario.id + ";";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
@@ -102,7 +102,7 @@ namespace Cursos.Models
                 }
             }
             return usu;
-        }*/
+        }
 
         //Metodo para agregar usuarios
         public bool InsertaUsuario(usuarios usuarioInfo)

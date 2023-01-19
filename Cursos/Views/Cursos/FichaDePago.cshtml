@@ -61,7 +61,7 @@
                             <div class="col-md-4">
                                 <!-- Name input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="Curso" id="Curso" class="form-control" disabled/>
+                                    <input type="text" name="Curso" id="Curso" class="form-control" value="@Model.curso.nombre" disabled/>
                                     <label class="form-label" for="Curso">Curso</label>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                 <tr>
                                     <th>1</th>
                                     <th>@Model.curso.nombre</th>
-                                    <th>@Model.curso.modalidad.modalidad1</th>
+                                    <th>@Model.curso.modalidad</th>
                                     <th>@Model.curso.costo</th>
                                     <th>@Model.curso.costo</th>
 

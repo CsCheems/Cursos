@@ -129,7 +129,7 @@ namespace Cursos.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditaCurso(int id, cursos cmodel)
+        public ActionResult EditaCurso(cursos cmodel)
         {
             try
             {

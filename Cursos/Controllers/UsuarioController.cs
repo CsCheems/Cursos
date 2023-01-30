@@ -11,6 +11,7 @@ using System.Text;
 using System.Data.Entity.Infrastructure;
 using System.Dynamic;
 using Cursos.Permisos;
+using System.Net;
 
 namespace Cursos.Controllers
 {
@@ -66,15 +67,22 @@ namespace Cursos.Controllers
         [ValidarSesionAdmin]
         public ActionResult EditaUsuario(int id)
         {
-            ViewModelUsuario vm = new ViewModelUsuario();
-            dynamic dynModel = new ExpandoObject();
-            dynModel.usuario = vm.GetUsuarios().Find(umodel => umodel.id == id);
-            dynModel.roles = vm.GetRoles();
-            return View(dynModel);
+            if(id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            else
+            {
+                ViewModelUsuario vm = new ViewModelUsuario();
+                dynamic dynModel = new ExpandoObject();
+                dynModel.usuario = vm.GetUsuarios().Find(umodel => umodel.id == id);
+                dynModel.roles = vm.GetRoles();
+                return View(dynModel);
+            } 
         }
 
         [HttpPost]
-        public ActionResult EditaUsuario(int id, usuarios umodel)
+        public ActionResult EditaUsuario(usuarios umodel)
         {
             try
             {

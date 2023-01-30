@@ -41,7 +41,7 @@
                         <input type="hidden" name="id" id="id" class="form-control" value="@Model.usuario.id" />
 
                         <!-- Role input -->
-                        <select class="form-select" name="rol" aria-label="Default select example">
+                        <select class="form-select" name="rol" aria-label="Default select example" required>
                             @{
                                 bool IsPostBack()
                                 {
@@ -59,7 +59,7 @@
                             @{
                                 if (!IsPostBack())
                                 {
-                                    <option value="@Model.usuario.rol">@Model.usuario.rol1.rolUser</option>
+                                    <option value="@Model.usuario.rol1.id">@Model.usuario.rol1.rolUser</option>
                                     foreach (var r in Model.roles)
                                     {
                                         <option value="@r.id">@r.rolUser</option>

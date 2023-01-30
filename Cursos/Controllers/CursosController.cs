@@ -122,7 +122,7 @@ namespace Cursos.Controllers
         {
             ViewModelCurso vm = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
-            dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
+            dynModel.curso = vm.GetCursos().Where(cmodel => cmodel.id == id).Single();
             dynModel.modalidad = vm.GetMod();
 
             return View(dynModel);

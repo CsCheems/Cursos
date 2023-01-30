@@ -51,33 +51,14 @@
                         </div>
 
                         <!-- Mod input -->
-                        <select class="form-select" name="Modalidad" aria-label="Default select example" required>
-                            @{
-                                bool IsPostBack()
+                        <fieldset>
+                            <select class="form-select" name="Modalidad" aria-label="Default select example" required>
+                                @foreach (var mod in Model.modalidad)
                                 {
-                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-                                    if (Request.UrlReferrer == null) return false;
-
-                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
-                                       Request.UrlReferrer.AbsolutePath,
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-
-                                    return isPost && isSameUrl;
+                                    <option value="@mod.id">@mod.modalidad1</option>
                                 }
-                            }
-                            @{
-                                if (!IsPostBack())
-                                {
-                                    <option value="@Model.curso.modalidad1.id" selected>@Model.curso.modalidad1.modalidad1</option>
-                                    foreach (var mod in Model.modalidad)
-                                    {
-                                        <option value="@mod.id">@mod.modalidad1</option>
-                                    }
-                                }
-                            }
-                        </select>
-
+                            </select>
+                        </fieldset>
                         <br />
 
                         <!-- Username input -->

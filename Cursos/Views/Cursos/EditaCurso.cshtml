@@ -50,15 +50,13 @@
                             <label class="form-label" for="Nombre">Nombre</label>
                         </div>
 
-                        <!-- Mod input -->
-                        <fieldset>
+                        <!-- Mod input -->                     
                             <select class="form-select" name="Modalidad" aria-label="Default select example" required>
                                 @foreach (var mod in Model.modalidad)
                                 {
                                     <option value="@mod.id">@mod.modalidad1</option>
                                 }
                             </select>
-                        </fieldset>
                         <br />
 
                         <!-- Username input -->

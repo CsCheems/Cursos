@@ -43,10 +43,14 @@ namespace Cursos.Controllers
                     while (dr.Read())
                     {
                         credenciales.id = dr.GetInt32(0);
-                        credenciales.rol = dr.GetInt32(1);
+                        credenciales.rol = dr.GetString(1);
                         credenciales.nombre = dr.GetString(2);
                         credenciales.apellido = dr.GetString(3);
                         credenciales.email = dr.GetString(4);
+                        //credenciales.pass = dr.GetString(5);
+                        credenciales.matricula= dr.GetString(6);
+                        credenciales.carrera= dr.GetString(7);
+                        credenciales.estudios= dr.GetString(8);
                         usuarios.Add(credenciales);
                     }
                 }

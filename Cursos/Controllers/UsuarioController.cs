@@ -24,10 +24,7 @@ namespace Cursos.Controllers
 
         public ActionResult InsertaUsuario()
         {
-            ViewModelUsuario vmu = new ViewModelUsuario();
-            dynamic dynModel = new ExpandoObject();
-            dynModel.roles = vmu.GetRoles();
-            return View(dynModel);
+            return View();
         }
 
         
@@ -36,14 +33,11 @@ namespace Cursos.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                usuarios udb = new usuarios();
+                if (udb.InsertaUsuario(umodel))
                 {
-                    usuarios udb = new usuarios();
-                    if (udb.InsertaUsuario(umodel))
-                    {
-                        ViewBag.Message = "Se agrego el usuario";
-                        ModelState.Clear();
-                    }
+                    ViewBag.Message = "Se agrego el usuario";
+                    ModelState.Clear();
                 }
                 if (Session["usuario"] == null)
                 {
@@ -76,7 +70,6 @@ namespace Cursos.Controllers
                 ViewModelUsuario vm = new ViewModelUsuario();
                 dynamic dynModel = new ExpandoObject();
                 dynModel.usuario = vm.GetUsuarios().Find(umodel => umodel.id == id);
-                dynModel.roles = vm.GetRoles();
                 return View(dynModel);
             } 
         }

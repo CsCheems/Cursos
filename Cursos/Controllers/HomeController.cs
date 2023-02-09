@@ -20,8 +20,6 @@ namespace Cursos.Controllers
             ViewModelCurso vm = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos();
-            dynModel.modalidad = vm.GetMod();
-
             return View(dynModel);
         }
 
@@ -30,8 +28,6 @@ namespace Cursos.Controllers
             ViewModelCurso vm = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
-            dynModel.modalidad = vm.GetMod();
-
             return View(dynModel);
         }
 
@@ -39,7 +35,6 @@ namespace Cursos.Controllers
         {
             ViewModelCurso vmc = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
-            dynModel.modalidad = vmc.GetMod();
             return View(dynModel);
         }
         

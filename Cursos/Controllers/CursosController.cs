@@ -123,7 +123,6 @@ namespace Cursos.Controllers
             ViewModelCurso vm = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
-            dynModel.modalidad = vm.GetMod();
 
             return View(dynModel);
         }
@@ -134,7 +133,10 @@ namespace Cursos.Controllers
             try
             {
                 cursos cdb = new cursos();
-                cdb.editaCurso(cmodel);
+                if (cdb.editaCurso(cmodel))
+                {
+                    ViewBag.AlertMsg = "El curso ha sido editado";
+                }
                 return RedirectToAction("Tablas", "Admin");
             }
             catch

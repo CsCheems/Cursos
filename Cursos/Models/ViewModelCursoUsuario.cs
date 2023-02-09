@@ -79,11 +79,15 @@ namespace Cursos.Models
                         modalidad m = new modalidad();
                         c.id = dr.GetInt32(0);
                         c.nombre = dr.GetString(1);
-                        m.modalidad1 = dr.GetString(2);
-                        c.modalidad1 = m;
+                        c.modalidad = dr.GetString(2);
                         c.lugar = dr.GetString(3);
                         c.horas = dr.GetInt32(4);
-                        c.urlTemario = dr.GetString(5);
+                        c.costo = dr.GetDecimal(5);
+                        c.costoPref = dr.GetDecimal(6);
+                        c.urlTemario = dr.GetString(7);
+                        c.requisitos = dr.GetString(8);
+                        c.criterioEval = dr.GetString(9);
+                        c.imgUrl = dr.GetString(10);
                         listCursos.Add(c);
                     }
                 }

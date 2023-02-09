@@ -24,6 +24,10 @@ namespace Cursos.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<cursos>()
+                .Property(e => e.modalidad)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<cursos>()
                 .Property(e => e.nombre)
                 .IsUnicode(false);
 
@@ -55,25 +59,9 @@ namespace Cursos.Models
                 .Property(e => e.imgUrl)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<modalidad>()
-                .Property(e => e.modalidad1)
+            modelBuilder.Entity<usuarios>()
+                .Property(e => e.rol)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<modalidad>()
-                .HasMany(e => e.cursos)
-                .WithRequired(e => e.modalidad1)
-                .HasForeignKey(e => e.modalidad)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<rol>()
-                .Property(e => e.rolUser)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<rol>()
-                .HasMany(e => e.usuarios)
-                .WithRequired(e => e.rol1)
-                .HasForeignKey(e => e.rol)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<usuarios>()
                 .Property(e => e.nombre)

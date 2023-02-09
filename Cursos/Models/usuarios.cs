@@ -17,7 +17,8 @@ namespace Cursos.Models
     {
         public int id { get; set; }
 
-        public int rol { get; set; }
+        [StringLength(20)]
+        public string rol { get; set; }
 
         [StringLength(50)]
         public string nombre { get; set; }
@@ -34,8 +35,18 @@ namespace Cursos.Models
         [StringLength(20)]
         public string passConfirm { get; set; }
 
-        public virtual rol rol1 { get; set; }
+        [StringLength(20)]
+        public string matricula { get; set; }
 
+        [StringLength(50)]
+        public string carrera { get; set; }
+
+        [StringLength(20)]
+        public string estudios { get; set; }
+
+        //public virtual rol rol1 { get; set; }
+
+       
 
         //Metodos
         static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
@@ -44,9 +55,8 @@ namespace Cursos.Models
         public List<usuarios> GetUsuarios()
         {
             List<usuarios> usuarios = new List<usuarios>();
-            List<rol> rol = new List<rol>();
 
-            string sql = "select usuarios.id, usuarios.nombre, usuarios.apellido, rol.id, rol.rolUser, usuarios.email, usuarios.pass from usuarios inner join rol on rol.id = usuarios.rol;";
+            string sql = "select * from usuarios";
             using(SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand(sql, cn);
@@ -59,13 +69,14 @@ namespace Cursos.Models
                         usuarios u = new usuarios();
                         rol r = new rol();
                         u.id = dr.GetInt32(0);
-                        u.nombre = dr.GetString(1);
-                        u.apellido = dr.GetString(2);
-                        r.id = dr.GetInt32(3);
-                        r.rolUser = dr.GetString(4);
-                        u.rol1 = r;
-                        u.email = dr.GetString(5);
-                        u.pass = dr.GetString(6);
+                        u.rol = dr.GetString(1);
+                        u.nombre = dr.GetString(2);
+                        u.apellido = dr.GetString(3);
+                        u.email = dr.GetString(4);
+                        u.pass = dr.GetString(5);
+                        u.matricula= dr.GetString(6);
+                        u.carrera= dr.GetString(7);
+                        u.estudios= dr.GetString(8);
                         usuarios.Add(u);
                     }
                 }
@@ -77,7 +88,7 @@ namespace Cursos.Models
         {
             List<usuarios> usu = new List<usuarios>();
             usuarios usuario = (usuarios)HttpContext.Current.Session["usuario"];
-            string sql = "select usuarios.id, usuarios.nombre, usuarios.apellido, rol.id, rol.rolUser, usuarios.email, usuarios.pass from usuarios inner join rol on rol.id = usuarios.rol where usuarios.id = " + usuario.id + ";";
+            string sql = "select * from usuarios where usuarios.id = " + usuario.id + ";";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand(sql, cn);
@@ -88,15 +99,15 @@ namespace Cursos.Models
                     while (dr.Read())
                     {
                         usuarios u = new usuarios();
-                        rol r = new rol();
                         u.id = dr.GetInt32(0);
-                        u.nombre = dr.GetString(1);
-                        u.apellido = dr.GetString(2);
-                        r.id = dr.GetInt32(3);
-                        r.rolUser = dr.GetString(4);
-                        u.rol1 = r;
-                        u.email = dr.GetString(5);
-                        u.pass = dr.GetString(6);
+                        u.rol = dr.GetString(1);
+                        u.nombre = dr.GetString(2);
+                        u.apellido = dr.GetString(3);
+                        u.email = dr.GetString(4);
+                        u.pass = dr.GetString(5);
+                        u.matricula = dr.GetString(6);
+                        u.carrera = dr.GetString(7);
+                        u.estudios = dr.GetString(8);
                         usu.Add(u);
                     }
                 }
@@ -128,6 +139,9 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("Apellido", usuarioInfo.apellido);
                 cmd.Parameters.AddWithValue("Email", usuarioInfo.email);
                 cmd.Parameters.AddWithValue("Pass", usuarioInfo.pass);
+                cmd.Parameters.AddWithValue("Matricula", usuarioInfo.matricula);
+                cmd.Parameters.AddWithValue("Carrera", usuarioInfo.carrera);
+                cmd.Parameters.AddWithValue("Estudios", usuarioInfo.estudios);
                 cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
                 

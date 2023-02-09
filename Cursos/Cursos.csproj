@@ -149,6 +149,7 @@
     <Compile Include="Models\cursos.cs" />
     <Compile Include="Models\cursosUsuario.cs" />
     <Compile Include="Models\estatus.cs" />
+    <Compile Include="Models\estudios.cs" />
     <Compile Include="Models\modalidad.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\rol.cs" />
@@ -207,7 +208,6 @@
     <Content Include="Views\Acceso\Login.cshtml" />
     <Content Include="Views\Admin\TablasUsuarios.cshtml" />
     <Content Include="Views\Cursos\RegistrarCurso.cshtml" />
-    <Content Include="Views\Cursos\EditaCurso.cshtml" />
     <Content Include="Views\Usuario\InsertaUsuario.cshtml" />
     <Content Include="Views\Usuario\EditaUsuario.cshtml" />
     <Content Include="Views\Home\CursoDetalle.cshtml" />
@@ -215,6 +215,7 @@
     <Content Include="Views\Home\CursoFormulario.cshtml" />
     <Content Include="Views\Admin\Pagos.cshtml" />
     <Content Include="Views\Cursos\FichaDePago.cshtml" />
+    <Content Include="Views\Cursos\EditaCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

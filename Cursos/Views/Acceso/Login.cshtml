@@ -83,11 +83,11 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
-                        <form action="@Url.Action("InsertaUsuario", "Usuario")" method="post">
+                        <form action="@Url.Action("InsertaUsuario", "Usuario")" method="POST">
 
                             <!-- Role input -->
                             <div class="form-outline mb-4">
-                                <input type="hidden" name="rol" id="rol" class="form-control" value="1" />
+                                <input type="hidden" name="rol" id="rol" class="form-control" value="CLIENTE" />
                             </div>
 
                             <!-- Name input -->
@@ -120,6 +120,41 @@
                                 <label class="form-label" for="passConfirm">Confirmar Password</label>
                             </div>
 
+                            <!-- Role input -->
+                            <label class="form-label" for="egresado">¿Eres egresado de la UTEQ?</label>
+                            <select onchange="modSelect('showEgresadoInfo', this)" class="form-select" name="egresado" aria-label="Default select example">
+                                <option value="1">No</option>
+                                <option value="2">Si</option>
+                            </select>
+
+                            <br />
+
+                            <div style="display:none" id="showEgresadoInfo">
+                                <!-- Place input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="matricula" id="matricula" class="form-control" />
+                                    <label class="form-label" for="matricula">Matricula</label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <!-- Name input -->
+                                        <div class="form-outline mb-4">
+                                            <input type="text" name="carrera" id="carrera" class="form-control" />
+                                            <label class="form-label" for="carrera">Carrera o Programa</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Lastname input -->
+                                        <select class="form-select" name="estudios" aria-label="Default select example">
+                                            <option value="">--ESCOGE UNA OPCION--</option>
+                                            <option value="TSU">TSU</option>
+                                            <option value="INGENIERIA">INGENIERIA</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
                             @if (ViewData["Mensaje"] != null)
                             {
                                 <div class="alert alert-danger" role="alert">
@@ -137,9 +172,25 @@
         </div>
     </div>
 
+    <script>
+        function modSelect(id, elementValue) {
+            var elemento = document.getElementById(id);
+            /*if (elementValue == 1) {
+                elemento.removeAttribute("hidden");
+            } else {
+                elemento.setAttribute("hidden");
+            }*/
+
+            document.getElementById(id).style.display = elementValue.value == 2 ? 'block' : 'none';
+        }
+
+    </script>
+
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
     </script>
+
+
 </body>
 
 <!-- MDB -->

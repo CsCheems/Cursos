@@ -34,7 +34,7 @@
     <div class="container">
         <ul>
             @{
-                if (isLogged && credenciales.rol == 2)
+                if (isLogged && credenciales.rol == "ADMIN")
                 {
                     <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
                     <li id="menu"><a href="@Url.Action("Pagos","Admin")">Pagos</a></li>

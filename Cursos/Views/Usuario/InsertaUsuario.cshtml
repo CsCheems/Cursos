@@ -38,30 +38,8 @@
 
                         <!-- Role input -->
                         <select class="form-select" name="rol" aria-label="Default select example">
-                            @{
-                                bool IsPostBack()
-                                {
-                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-                                    if (Request.UrlReferrer == null) return false;
-
-                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
-                                       Request.UrlReferrer.AbsolutePath,
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-
-                                    return isPost && isSameUrl;
-                                }
-                            }
-
-                            @{
-                                if (!IsPostBack())
-                                {
-                                    foreach (var r in Model.roles)
-                                    {
-                                        <option value="@r.id">@r.rolUser</option>
-                                    }
-                                }
-                            }
+                            <option value="CLIENTE">CLIENTE</option>
+                            <option value="ADMIN">ADMIN</option>
                         </select>
 
                         <br />
@@ -94,6 +72,40 @@
                         <div class="form-outline mb-4">
                             <input type="password" name="passConfirm" id="passConfirm" class="form-control" />
                             <label class="form-label" for="passConfirm">Confirmar Password</label>
+                        </div>
+
+                        <!-- Role input -->
+                        <label class="form-label" for="egresado">¿Eres egresado de la UTEQ?</label>
+                        <select onchange="modSelect('showEgresadoInfo', this)" class="form-select" name="egresado" aria-label="Default select example">
+                            <option value="1">No</option>
+                            <option value="2">Si</option>
+                        </select>
+
+                        <br />
+
+                        <div style="display:none" id="showEgresadoInfo">
+                            <!-- Place input -->
+                            <div class="form-outline mb-4">
+                                <input type="text" name="matricula" id="matricula" class="form-control" />
+                                <label class="form-label" for="matricula">Matricula</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <!-- Name input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="carrera" id="carrera" class="form-control" />
+                                        <label class="form-label" for="carrera">Carrera o Programa</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- Lastname input -->
+                                    <select class="form-select" name="estudios" aria-label="Default select example">
+                                        <option value="TSU">TSU</option>
+                                        <option value="INGENIERIA">INGENIERIA</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         @if (ViewData["Mensaje"] != null)

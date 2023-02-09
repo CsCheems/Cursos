@@ -1,7 +1,4 @@
 ﻿@model dynamic
-
-
-
 <html>
 <head>
 
@@ -50,76 +47,93 @@
                             <label class="form-label" for="Nombre">Nombre</label>
                         </div>
 
-                        <!-- Mod input --> 
-                       
-                            <select class="form-select" name="Modalidad" aria-label="Default select example" required>
-                                @foreach (var mod in Model.modalidad)
+                        <!-- Mod input -->
+                        <select class="form-select" name="Modalidad" aria-label="Default select example">
+                            @{
+                                bool IsPostBack()
+                                {
+                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+                                    if (Request.UrlReferrer == null) return false;
+
+                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
+                                       Request.UrlReferrer.AbsolutePath,
+                                       StringComparison.CurrentCultureIgnoreCase) == 0;
+
+                                    return isPost && isSameUrl;
+                                }
+                            }
+
+                            @if (!IsPostBack())
+                            {
+                                <option value="@Model.curso.modalidad1.id">@Model.curso.modalidad1.modalidad1</option>
+                                foreach (var mod in Model.modalidad)
                                 {
                                     <option value="@mod.id">@mod.modalidad1</option>
                                 }
-                            </select>
-                        
+                            }
+                        </select>
                         <br />
 
-                            <!-- Username input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" name="Lugar" id="Lugar" class="form-control" value="@Model.curso.lugar" />
-                                <label class="form-label" for="Lugar">Lugar</label>
+                        <!-- Username input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Lugar" id="Lugar" class="form-control" value="@Model.curso.lugar" />
+                            <label class="form-label" for="Lugar">Lugar</label>
+                        </div>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="number" name="Horas" id="Horas" class="form-control" value="@Model.curso.horas" />
+                            <label class="form-label" for="Horas">Horas</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="number" name="Costo" id="Costo" class="form-control" value="@Model.curso.costo" />
+                            <label class="form-label" for="Costo">Costo</label>
+                        </div>
+
+                        <!-- Confirm Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" value="@Model.curso.costoPref" />
+                            <label class="form-label" for="CostoPref">Costo Preferencial</label>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-outline mb-4">
+                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value="@Model.curso.urlTemario" />
+                            <label class="form-label" for="UrlTemario">Temario</label>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" value="@Model.curso.requisitos" />
+                            <label class="form-label" for="Requisitos">Requisitos</label>
+                        </div>
+
+                        <!-- Username input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value="@Model.curso.criterioEval" />
+                            <label class="form-label" for="CriterioEval">Criterio de Evaluacion</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <label for="img">Seleccione una imagen:</label>
+                            <input type="file" id="ImgUrl" name="ImgUrl" accept="image/*">
+                        </div>
+
+                        @if (ViewData["Mensaje"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @ViewData["Mensaje"]
                             </div>
+                        }
 
-                            <!-- Email input -->
-                            <div class="form-outline mb-4">
-                                <input type="number" name="Horas" id="Horas" class="form-control" value="@Model.curso.horas" />
-                                <label class="form-label" for="Horas">Horas</label>
-                            </div>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-3">Actualizar Curso</button>
 
-                            <!-- Password input -->
-                            <div class="form-outline mb-4">
-                                <input type="number" name="Costo" id="Costo" class="form-control" value="@Model.curso.costo" />
-                                <label class="form-label" for="Costo">Costo</label>
-                            </div>
-
-                            <!-- Confirm Password input -->
-                            <div class="form-outline mb-4">
-                                <input type="number" name="CostoPref" id="CostoPref" class="form-control" value="@Model.curso.costoPref" />
-                                <label class="form-label" for="CostoPref">Costo Preferencial</label>
-                            </div>
-
-                            <!-- Username input -->
-                            <div class="form-outline mb-4">
-                                <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value="@Model.curso.urlTemario" />
-                                <label class="form-label" for="UrlTemario">Temario</label>
-                            </div>
-
-                            <!-- Username input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" name="Requisitos" id="Requisitos" class="form-control" value="@Model.curso.requisitos" />
-                                <label class="form-label" for="Requisitos">Requisitos</label>
-                            </div>
-
-                            <!-- Username input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value="@Model.curso.criterioEval" />
-                                <label class="form-label" for="CriterioEval">Criterio de Evaluacion</label>
-                            </div>
-
-                            <div class="form-outline mb-4">
-                                <label for="img">Seleccione una imagen:</label>
-                                <input type="file" id="ImgUrl" name="ImgUrl" accept="image/*">
-                            </div>
-
-                            @if (ViewData["Mensaje"] != null)
-                            {
-                                <div class="alert alert-danger" role="alert">
-                                    @ViewData["Mensaje"]
-                                </div>
-                            }
-
-                            <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-3">Actualizar Curso</button>
-
-                            <button type="button" class="btn btn-danger btn-block mb-3"><a href="@Url.Action("Tablas", "Admin")">Cancelar</a></button>
-</form>
+                        <button type="button" class="btn btn-danger btn-block mb-3"><a href="@Url.Action("Tablas", "Admin")">Cancelar</a></button>
+                    </form>
 
                 </div>
                 <!-- Pills content -->
@@ -127,8 +141,6 @@
         </div>
     </div>
 </body>
-
-
 <!-- MDB -->
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">

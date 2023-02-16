@@ -178,6 +178,7 @@
     <Content Include="Recursos\CSS\EstilosForm.css" />
     <Content Include="Recursos\CSS\FooterStyle.css" />
     <Content Include="Recursos\CSS\NavStyle.css" />
+    <Content Include="Recursos\CSS\reel.css" />
     <Content Include="Recursos\CSS\tableStyle.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -216,9 +217,12 @@
     <Content Include="Views\Admin\Pagos.cshtml" />
     <Content Include="Views\Cursos\FichaDePago.cshtml" />
     <Content Include="Views\Cursos\EditaCurso.cshtml" />
+    <Content Include="Views\Cursos\VerCursosDetalles.cshtml" />
+    <Content Include="Views\Cursos\VerUsuariosCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Recursos\imagenes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

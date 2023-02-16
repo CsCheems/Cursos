@@ -42,32 +42,9 @@
 
                         <!-- Role input -->
                         <select class="form-select" name="rol" aria-label="Default select example" required>
-                            @{
-                                bool IsPostBack()
-                                {
-                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-                                    if (Request.UrlReferrer == null) return false;
-
-                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
-                                       Request.UrlReferrer.AbsolutePath,
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-
-                                    return isPost && isSameUrl;
-                                }
-                            }
-                            @{
-                                if (!IsPostBack())
-                                {
-                                    <option value="@Model.usuario.rol1.id">@Model.usuario.rol1.rolUser</option>
-                                    foreach (var r in Model.roles)
-                                    {
-                                        <option value="@r.id">@r.rolUser</option>
-                                    }
-                                }
-                            }
-
-
+                            <option value="@Model.usuario.rol">@Model.usuario.rol</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="CLIENTE">CLIENTE</option>
                         </select>
 
                         <br />

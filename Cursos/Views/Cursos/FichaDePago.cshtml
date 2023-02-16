@@ -35,135 +35,153 @@
                 <!-- Pills content -->
                 <div class="tab-content">
 
-                    <form action="" method="post">
 
-                        <h3>Universidad Tecnológica de Querétaro</h3>
-                        <h4>Resumen de solicitud de pago.</h4>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- Name input -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" name="Nombre" id="Nombre" class="form-control" value="" disabled/>
-                                    <label class="form-label" for="Nombre">Nombre</label>
+
+
+                    <form action="@Url.Action("RegistraCursoUsuario", "Cursos", new { id = Model.curso.id })" method="post">
+
+                        @{
+                            bool isLogged = true;
+                            Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+                            if (credenciales == null)
+                            {
+                                isLogged = false;
+                            }
+
+                            <h3>Universidad Tecnológica de Querétaro</h3>
+                            <h4>Resumen de solicitud de pago.</h4>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <!-- Name input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="Nombre" id="Nombre" class="form-control" value="@credenciales.nombre" disabled />
+                                        <label class="form-label" for="Nombre">Nombre</label>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <!-- Lastname input -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" name="Apellido" id="Apellido" class="form-control" value="" disabled/>
-                                    <label class="form-label" for="Apellido">Apellido</label>
+                                <div class="col-md-6">
+                                    <!-- Lastname input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" name="Apellido" id="Apellido" class="form-control" value="@credenciales.apellido" disabled />
+                                        <label class="form-label" for="Apellido">Apellido</label>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <!-- Name input -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" name="Curso" id="Curso" class="form-control" value="@Model.curso.nombre" disabled/>
-                                    <label class="form-label" for="Curso">Curso</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Lastname input -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" disabled/>
-                                    <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Lastname input -->
-                                <div class="form-outline mb-4">
-                                    <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" disabled/>
-                                    <label class="form-label" for="fechaVenc">Fecha de Vencimiento</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <table class="table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Cantidad</th>
-                                    <th>Concepto</th>
-                                    <th>Modalidad</th>
-                                    <th>Monto</th>
-                                    <th>Total</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>1</th>
-                                    <th>@Model.curso.nombre</th>
-                                    <th>@Model.curso.modalidad</th>
-                                    <th>@Model.curso.costo</th>
-                                    <th>@Model.curso.costo</th>
-
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <!-- Role input -->
-                        <select onchange="modSelect('showFacturaInfo', this)" class="form-select" name="Modalidad" aria-label="Default select example">
-                            <option selected>¿Requiere Factura?</option>
-                            <option value="1">Si</option>
-                            <option value="2">No</option>
-                        </select>
-
-                        <br />
-
-                        <div style="display:none" id="showFacturaInfo">
-                            <!-- Place input -->
-                            <div class="form-outline mb-4">
-                                <input type="text" name="RFC" id="RFC" class="form-control" />
-                                <label class="form-label" for="RFC">RFC</label>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4">
                                     <!-- Name input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="codigoPostal" id="codigoPostal" class="form-control" />
-                                        <label class="form-label" for="codigoPostal">Codigo Postal</label>
+                                        <input type="text" name="Curso" id="Curso" class="form-control" value="@Model.curso.nombre" disabled />
+                                        <label class="form-label" for="Curso">Curso</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Lastname input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="email" id="email" class="form-control" />
-                                        <label class="form-label" for="email">Email</label>
+                                        <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" value="" disabled />
+                                        <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Lastname input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="confirmaEmail" id="confirmaEmail" class="form-control" />
-                                        <label class="form-label" for="confirmaEmail">Confirmar Email</label>
+                                        <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" value="" disabled />
+                                        <label class="form-label" for="fechaVenc">Fecha de Vencimiento</label>
                                     </div>
                                 </div>
+                            </div>
+
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Concepto</th>
+                                        <th>Modalidad</th>
+                                        <th>Total</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>@Model.curso.nombre</th>
+                                        <th>@Model.curso.modalidad</th>
+                                        @if (isLogged && credenciales.matricula != null)
+                                        {
+                                            <th>$@Model.curso.costoPref</th>
+                                        }
+                                        else if (isLogged)
+                                        {
+                                            <th>$@Model.curso.costo</th>
+                                        }
+                                        else
+                                        {
+                                            <th>$@Model.curso.costo</th>
+                                        }
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Role input -->
+                            <select onchange="modSelect('showFacturaInfo', this)" class="form-select" name="Modalidad" aria-label="Default select example">
+                                <option selected>¿Requiere Factura?</option>
+                                <option value="1">Si</option>
+                                <option value="2">No</option>
+                            </select>
+
+                            <br />
+
+                            <div style="display:none" id="showFacturaInfo">
+                                <!-- Place input -->
+                                <div class="form-outline mb-4">
+                                    <input type="text" name="RFC" id="RFC" class="form-control" />
+                                    <label class="form-label" for="RFC">RFC</label>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- Name input -->
+                                        <div class="form-outline mb-4">
+                                            <input type="text" name="codigoPostal" id="codigoPostal" class="form-control" />
+                                            <label class="form-label" for="codigoPostal">Codigo Postal</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Lastname input -->
+                                        <div class="form-outline mb-4">
+                                            <input type="text" name="email" id="email" class="form-control" />
+                                            <label class="form-label" for="email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <!-- Lastname input -->
+                                        <div class="form-outline mb-4">
+                                            <input type="text" name="confirmaEmail" id="confirmaEmail" class="form-control" />
+                                            <label class="form-label" for="confirmaEmail">Confirmar Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Place input -->
+                                <div style="display:none" class="form-outline mb-4" id="showLugar">
+                                    <input type="number" name="telefono" id="telefono" class="form-control" />
+                                    <label class="form-label" for="telefono">Telefono de Contato (10 digitos - Solo numeros)</label>
+                                </div>
+
                             </div>
 
                             <!-- Place input -->
                             <div style="display:none" class="form-outline mb-4" id="showLugar">
-                                <input type="number" name="telefono" id="telefono" class="form-control" />
-                                <label class="form-label" for="telefono">Telefono de Contato (10 digitos - Solo numeros)</label>
+                                <input type="text" name="Lugar" id="Lugar" class="form-control" />
+                                <label class="form-label" for="Lugar">Lugar del Curso</label>
                             </div>
 
-                        </div>
-
-                        <!-- Place input -->
-                        <div style="display:none" class="form-outline mb-4" id="showLugar">
-                            <input type="text" name="Lugar" id="Lugar" class="form-control" />
-                            <label class="form-label" for="Lugar">Lugar del Curso</label>
-                        </div>
 
 
+                            <br />
 
-                        <br />
-
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block mb-3">Solicitar Curso</button>
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary btn-block mb-3">Solicitar Curso</button>
+                        }
                     </form>
 
                 </div>
@@ -184,6 +202,20 @@
             document.getElementById(id).style.display = elementValue.value == 1 ? 'block' : 'none';
         }
 
+    </script>
+
+    <script>
+        // Get today's date
+        var today = new Date();
+
+        // Display today's date
+        document.getElementById("fechaSolicitud").value = today.toDateString();
+
+        // Add three days to today's date
+        var future = new Date(today.getTime() + (3 * 24 * 60 * 60 * 1000));
+
+        // Display the date three days from now
+        document.getElementById("fechaVenc").value = future.toDateString();
     </script>
 
     <!-- MDB -->

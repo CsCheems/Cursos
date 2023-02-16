@@ -48,10 +48,15 @@
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <h2>Administar <b>Cursos</b></h2>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-5">
+
+                            <a href="@Url.Action("VerCursosDetalles", "Cursos")" class="btn btn-warning"><i class="material-icons">&#xef42;</i> <span>Detalles de cursos</span></a>
+
+                        </div>
+                        <div class="col-sm-3">
                             <a href="@Url.Action("RegistrarCurso", "Cursos")" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo curso</span></a>
 
                         </div>
@@ -66,6 +71,7 @@
                             <th>Lugar</th>
                             <th>Horas</th>
                             <th>Costo</th>
+                            <th>Costo Preferencial</th>
                             <th>Temario</th>
                             <th>Actions</th>
                         </tr>
@@ -76,10 +82,11 @@
                             <tr>
                                 <td>@obj.id</td>
                                 <td>@obj.nombre</td>
-                                <td>@obj.modalidad1.modalidad1</td>
+                                <td>@obj.modalidad</td>
                                 <td>@obj.lugar</td>
                                 <td>@obj.horas horas</td>
                                 <td>$@obj.costo</td>
+                                <td>$@obj.costoPref</td>
                                 <td><a href="@obj.urlTemario">Recurso</a></td>
                                 <td>
                                     <a href="@Url.Action("EditaCurso", "Cursos", new {id = obj.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>

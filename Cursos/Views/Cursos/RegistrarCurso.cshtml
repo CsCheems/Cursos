@@ -46,30 +46,8 @@
 
                         <!-- Role input -->
                         <select class="form-select" name="Modalidad" aria-label="Default select example">
-                            @{
-                                bool IsPostBack()
-                                {
-                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-                                    if (Request.UrlReferrer == null) return false;
-
-                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
-                                       Request.UrlReferrer.AbsolutePath,
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-
-                                    return isPost && isSameUrl;
-                                }
-                            }
-
-                            @if (!IsPostBack())
-                            {
-                                foreach (var c in Model)
-                                {
-                                    <option value="@c.id">@c.modalidad1</option>
-                                }
-                            }
-
-
+                            <option value="PRESENCIAL">PRESENCIAL</option>
+                            <option value="REMOTO">REMOTO</option>
                         </select>
 
                         <br />
@@ -84,6 +62,16 @@
                         <div class="form-outline mb-4">
                             <input type="number" name="Horas" id="Horas" class="form-control" />
                             <label class="form-label" for="Horas">Horas</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="date" name="fechaIni" id="fechaIni" class="form-control" />
+                            <label class="form-label" for="fechaIni">Fecha de Inicio</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="date" name="fechaTer" id="fechaTer" class="form-control" />
+                            <label class="form-label" for="fechaTer">Fecha de Conclusion</label>
                         </div>
 
                         <!-- Password input -->
@@ -119,7 +107,7 @@
                         <div class="form-outline mb-4">
                             <label for="img">Seleccione una imagen:</label>
                             <input type="file" id="ImgUrl" name="ImgUrl" accept="image/*">
-                            <input type="button" id="upload" value="Guardar Imagen"/>
+                            <input type="button" id="upload" value="Guardar Imagen" />
                         </div>
 
                         @if (ViewData["Mensaje"] != null)
@@ -169,6 +157,11 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        var hoy = new Date().toISOString().substr(0, 10);
+        document.getElementById("fechaIni").setAttribute("min", hoy);
     </script>
 
     <!-- MDB -->

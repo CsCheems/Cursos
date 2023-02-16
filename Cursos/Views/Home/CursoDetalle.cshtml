@@ -31,27 +31,54 @@
                         </main>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-12 col-12">
-                    <div class="product-info">
-                        <h2 class="title">@Model.curso.nombre</h2>
-                        <h3 class="price">$@Model.curso.costo<span>$@Model.curso.costoPref</span></h3>
-                        <p class="info-text">
-                            
-                        </p>
-                        <form action="@Url.Action("FichaDePago", "Cursos", new {id = @Model.curso.id})">
-                            <div class="bottom-content">
-                                <div class="row align-items-end">
-                                    <div class="col-lg-4 col-md-4 col-12">
-                                        <div class="button cart-button">
-                                            <button type="submit" class="btn btn-primary btn-block mb-3" style="width: 100%;" >Registrarse</button>
+                @{
+
+                    bool isLogged = true;
+                    Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+                    if (credenciales == null)
+                    {
+                        isLogged = false;
+                    }
+
+                    <div class="col-lg-6 col-md-12 col-12">
+                                        <div class="product-info">
+                                            <h2 class="title">@Model.curso.nombre</h2>
+                                            @if (isLogged && credenciales.matricula != null)
+                                            {
+                                                <h3 class="price">$@Model.curso.costoPref</h3>
+                                            }
+                                            else if (isLogged && credenciales.matricula == null)
+                                            {
+                                                <h3 class="price">$@Model.curso.costo</h3>
+                                            }
+                                            else
+                                            {
+                                                <h3 class="price">$@Model.curso.costo</h3>
+                                            }
+                                            <p class="info-text">
+                                                <p>Modalidad:  <b>@Model.curso.modalidad</b> </p>
+                                                <p>Horas:  <b>@Model.curso.horas</b> Horas </p>
+                                                <p>Fecha de Inicio:  <b>@Model.curso.fechaIni</b>  </p>
+                                                <p>Fecha de Conclusion:  <b>@Model.curso.fechaTer</b>  </p>
+                                            </p>
+                                            <form action="@Url.Action("FichaDePago", "Cursos", new { id = @Model.curso.id })">
+                                                <div class="bottom-content">
+                                                    <div class="row align-items-end">
+                                                        <div class="col-lg-4 col-md-4 col-12">
+                                                            <div class="button cart-button">
+                                                                <button type="submit" class="btn btn-primary btn-block mb-3" style="width: 100%;">Registrarse</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
                     </div>
+
+                 }
+
+
                 </div>
-            </div>
         </div>
     </div>
 </section>

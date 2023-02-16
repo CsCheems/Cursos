@@ -49,29 +49,9 @@
 
                         <!-- Mod input -->
                         <select class="form-select" name="Modalidad" aria-label="Default select example">
-                            @{
-                                bool IsPostBack()
-                                {
-                                    bool isPost = string.Compare(Request.HttpMethod, "POST",
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-                                    if (Request.UrlReferrer == null) return false;
-
-                                    bool isSameUrl = string.Compare(Request.Url.AbsolutePath,
-                                       Request.UrlReferrer.AbsolutePath,
-                                       StringComparison.CurrentCultureIgnoreCase) == 0;
-
-                                    return isPost && isSameUrl;
-                                }
-                            }
-
-                            @if (!IsPostBack())
-                            {
-                                <option value="@Model.curso.modalidad1.id">@Model.curso.modalidad1.modalidad1</option>
-                                foreach (var mod in Model.modalidad)
-                                {
-                                    <option value="@mod.id">@mod.modalidad1</option>
-                                }
-                            }
+                            <option value="@Model.curso.modalidad">@Model.curso.modalidad</option>
+                            <option value="PRESEMCIAL">PRESENCIAL</option>
+                            <option value="REMOTO">REMOTO</option>
                         </select>
                         <br />
 

@@ -1,9 +1,5 @@
 ﻿@model dynamic
 
-@{
-    ViewBag.Title = "CursosUsuario";
-}
-
 <html>
 <head>
     <title>Administrador</title>
@@ -49,21 +45,22 @@
                             <th>Id</th>
                             <th>Nombre</th>
                             <th>Modalidad</th>
-                            <th>Lugar</th>
-                            <th>Horas</th>
-                            <th>Temario</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Termina</th>
+                            <th>Usuarios Inscritos</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var obj in Model.cursos)
+                        @foreach (var obj in Model.cursoDet)
                         {
                             <tr>
                                 <td>@obj.id</td>
                                 <td>@obj.nombre</td>
                                 <td>@obj.modalidad</td>
-                                <td>@obj.lugar</td>
-                                <td>@obj.horas horas</td>
-                                <td><a href="@obj.urlTemario">Recurso</a></td>
+                                <td>@obj.fechaIni</td>
+                                <td>@obj.fechaTer</td>
+
+                                <td><a href="@Url.Action("verUsuariosCurso", "Cursos", new {id = obj.id})"><i class="material-icons" data-toggle="tooltip" title="Usuarios">&#xf22e;</i></a></td>
                             </tr>
                         }
                     </tbody>
@@ -75,15 +72,15 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
 
 
 
 
-        <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
-        </script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+    </script>
 
 </body>
 
@@ -92,4 +89,3 @@
 
 
 </html>
-

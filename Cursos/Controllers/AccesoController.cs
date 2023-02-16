@@ -48,9 +48,12 @@ namespace Cursos.Controllers
                         credenciales.apellido = dr.GetString(3);
                         credenciales.email = dr.GetString(4);
                         //credenciales.pass = dr.GetString(5);
-                        credenciales.matricula= dr.GetString(6);
-                        credenciales.carrera= dr.GetString(7);
-                        credenciales.estudios= dr.GetString(8);
+                        credenciales.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
+                        //credenciales.matricula= dr.GetString(6);
+                        credenciales.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        //credenciales.carrera= dr.GetString(7);
+                        credenciales.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
+                        //credenciales.estudios= dr.GetString(8);
                         usuarios.Add(credenciales);
                     }
                 }

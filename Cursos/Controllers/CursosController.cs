@@ -24,11 +24,10 @@ namespace Cursos.Controllers
         [ValidarSesionAdmin]
         public ActionResult RegistrarCurso()
         {
-            var mod = ModeloMod();
-            return View(mod); 
+            return View(); 
         }
 
-        public List<modalidad> ModeloMod()
+        /*public List<modalidad> ModeloMod()
         {
             List<modalidad> mod = new List<modalidad>();
             string sql = "select * from modalidad;";
@@ -50,7 +49,7 @@ namespace Cursos.Controllers
                 }
             }
             return mod;
-        }
+        }*/
 
         
         [HttpPost]
@@ -182,7 +181,7 @@ namespace Cursos.Controllers
         [ValidarSesion]
         public ActionResult FichaDePago(int id)
         {
-            ViewModelCurso vc = new ViewModelCurso();
+            cursos vc = new cursos();
             usuarios u = new usuarios();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
@@ -190,5 +189,26 @@ namespace Cursos.Controllers
             return View(dynModel);
         }
 
+        //******************VER DETALLES DE CURSO*******************
+        [ValidarSesionAdmin]
+        [HttpGet]
+        public ActionResult VerCursosDetalles()
+        {
+            cursos c = new cursos();
+            ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.cursoDet = c.GetCursos();
+            return View(dynModel);
+        }
+
+        [ValidarSesionAdmin]
+        public ActionResult VerUsuariosCurso(int id)
+        {
+            cursos c = new cursos();
+            ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
+            dynamic dynModel = new ExpandoObject();
+            dynModel.usuariosDet = vmcu.getUsuariosXCursos();
+            return View(dynModel);
+        }
     }
 }

@@ -42,12 +42,14 @@ namespace Cursos.Controllers
                             c.modalidad = dr.GetString(2);
                             c.lugar = dr.GetString(3);
                             c.horas = dr.GetInt32(4);
-                            c.costo = dr.GetDecimal(5);
-                            c.costoPref = dr.GetDecimal(6);
-                            c.urlTemario = dr.GetString(7);
-                            c.requisitos = dr.GetString(8);
-                            c.criterioEval = dr.GetString(9);
-                            c.imgUrl = dr.GetString(10);
+                            c.fechaIni = dr.GetDateTime(5);
+                            c.fechaTer = dr.GetDateTime(6);
+                            c.costo = dr.GetDecimal(7);
+                            c.costoPref = dr.GetDecimal(8);
+                            c.urlTemario = dr.GetString(9);
+                            c.requisitos = dr.GetString(10);
+                            c.criterioEval = dr.GetString(11);
+                            c.imgUrl = dr.GetString(12);
                             obj.Add(c);
                              
                         }
@@ -80,9 +82,9 @@ namespace Cursos.Controllers
                             u.apellido = dr.GetString(3);
                             u.email = dr.GetString(4);
                             u.pass = dr.GetString(5);
-                            u.matricula = dr.GetString(6);
-                            u.carrera = dr.GetString(7);
-                            u.estudios = dr.GetString(8);
+                            u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
+                            u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
+                            u.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
                             usuario.Add(u);
                         }
                     }

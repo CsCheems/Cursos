@@ -105,9 +105,9 @@ namespace Cursos.Models
                         u.apellido = dr.GetString(3);
                         u.email = dr.GetString(4);
                         u.pass = dr.GetString(5);
-                        u.matricula = dr.GetString(6);
-                        u.carrera = dr.GetString(7);
-                        u.estudios = dr.GetString(8);
+                        u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
+                        u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        u.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
                         usu.Add(u);
                     }
                 }

@@ -17,7 +17,6 @@ namespace Cursos.Models
         public List<cursos> GetCursos()
         {
             List<cursos> listCursos = new List<cursos>();
-            List<modalidad> listModalidad = new List<modalidad>();
             string sql = "select * from cursos;";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
@@ -29,18 +28,19 @@ namespace Cursos.Models
                     while (dr.Read())
                     {
                         cursos c = new cursos();
-                        modalidad m = new modalidad();
                         c.id = dr.GetInt32(0);
                         c.nombre = dr.GetString(1);
                         c.modalidad = dr.GetString(2);
                         c.lugar = dr.GetString(3);
                         c.horas = dr.GetInt32(4);
-                        c.costo = dr.GetDecimal(5);
-                        c.costoPref = dr.GetDecimal(6);
-                        c.urlTemario = dr.GetString(7);
-                        c.requisitos = dr.GetString(8);
-                        c.criterioEval = dr.GetString(9);
-                        c.imgUrl = dr.GetString(10);
+                        c.fechaIni = dr.GetDateTime(5);
+                        c.fechaTer = dr.GetDateTime(6);
+                        c.costo = dr.GetDecimal(7);
+                        c.costoPref = dr.GetDecimal(8);
+                        c.urlTemario = dr.GetString(9);
+                        c.requisitos = dr.GetString(10);
+                        c.criterioEval = dr.GetString(11);
+                        c.imgUrl = dr.GetString(12);
                         listCursos.Add(c);
                     }
                 }

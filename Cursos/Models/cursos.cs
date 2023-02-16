@@ -26,6 +26,10 @@ namespace Cursos.Models
 
         public int? horas { get; set; }
 
+        public DateTime fechaIni { get; set; }
+
+        public DateTime fechaTer { get; set; }
+
         public decimal? costo { get; set; }
 
         public decimal? costoPref { get; set; }
@@ -65,12 +69,14 @@ namespace Cursos.Models
                         c.modalidad = dr.GetString(2);
                         c.lugar = dr.GetString(3);
                         c.horas = dr.GetInt32(4);
-                        c.costo = dr.GetDecimal(5);
-                        c.costoPref = dr.GetDecimal(6);
-                        c.urlTemario = dr.GetString(7);
-                        c.requisitos = dr.GetString(8);
-                        c.criterioEval = dr.GetString(9);
-                        c.imgUrl = dr.GetString(10);
+                        c.fechaIni = dr.GetDateTime(5);
+                        c.fechaTer = dr.GetDateTime(6);
+                        c.costo = dr.GetDecimal(7);
+                        c.costoPref = dr.GetDecimal(8);
+                        c.urlTemario = dr.GetString(9);
+                        c.requisitos = dr.GetString(10);
+                        c.criterioEval = dr.GetString(11);
+                        c.imgUrl = dr.GetString(12);
                         listCursos.Add(c);
                     }
                 }
@@ -93,6 +99,8 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
                 cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
                 cmd.Parameters.AddWithValue("Horas", cursosInfo.horas);
+                cmd.Parameters.AddWithValue("FechaIni", cursosInfo.fechaIni);
+                cmd.Parameters.AddWithValue("FechaTer", cursosInfo.fechaTer);
                 cmd.Parameters.AddWithValue("Costo", cursosInfo.costo);
                 cmd.Parameters.AddWithValue("CostoPref", cursosInfo.costoPref);
                 cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
@@ -131,11 +139,12 @@ namespace Cursos.Models
             {
                 SqlCommand cmd = new SqlCommand("SP_editaCurso", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("Id", cursosInfo.id);
                 cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
                 cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
                 cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
                 cmd.Parameters.AddWithValue("Horas", cursosInfo.horas);
+                cmd.Parameters.AddWithValue("FechaIni", cursosInfo.fechaIni);
+                cmd.Parameters.AddWithValue("FechaTer", cursosInfo.fechaTer);
                 cmd.Parameters.AddWithValue("Costo", cursosInfo.costo);
                 cmd.Parameters.AddWithValue("CostoPref", cursosInfo.costoPref);
                 cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
@@ -189,6 +198,7 @@ namespace Cursos.Models
             }
         }
 
+        
        
     }
 }

@@ -32,9 +32,9 @@ namespace Cursos.Models
                         u.apellido = dr.GetString(3);
                         u.email = dr.GetString(4);
                         u.pass = dr.GetString(5);
-                        u.matricula = dr.GetString(6);
-                        u.carrera = dr.GetString(7);
-                        u.estudios = dr.GetString(8);
+                        u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
+                        u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        u.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
                         usuarios.Add(u);
                     }
                 }
@@ -58,16 +58,15 @@ namespace Cursos.Models
                     while (dr.Read())
                     {
                         usuarios u = new usuarios();
-                        rol r = new rol();
                         u.id = dr.GetInt32(0);
                         u.rol = dr.GetString(1);
                         u.nombre = dr.GetString(2);
                         u.apellido = dr.GetString(3);
                         u.email = dr.GetString(4);
                         u.pass = dr.GetString(5);
-                        u.matricula = dr.GetString(6);
-                        u.carrera = dr.GetString(7);
-                        u.estudios = dr.GetString(8);
+                        u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
+                        u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        u.estudios =  dr.IsDBNull(8) ? null : dr.GetString(8);
                         usuarios.Add(u);
                     }
                 }

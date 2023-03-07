@@ -13,13 +13,13 @@ namespace Cursos.Models
     public class ViewModelCursoUsuario
     {
         static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
-        private int numUsuarios;
+        //private int numUsuarios;
 
-        public IEnumerable<usuarios> usuario { get; set; }
-        public IEnumerable<cursos> curso { get; set; }
+        public IEnumerable<usuario> usuario { get; set; }
+        public IEnumerable<curso> curso { get; set; }
         public IEnumerable<estatus> estado { get; set; }
 
-        public bool setPendientePago(int cid)
+        public bool setPendientePago()
         {
             bool registrado;
             string mensaje;
@@ -30,16 +30,17 @@ namespace Cursos.Models
             }
             else
             {
-                usuarios u = (usuarios)HttpContext.Current.Session["usuario"];
+                usuario u = (usuario)HttpContext.Current.Session["usuario"];
                 using (SqlConnection cn = new SqlConnection(cadenaConexion))
                 {
 
                     SqlCommand cmd = new SqlCommand("SP_registraCursoUsuario", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    /*cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("IdUsuario", u.id);
                     cmd.Parameters.AddWithValue("IdCurso", cid);
+                    cmd.Parameters.AddWithValue("factura", )
                     cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
-                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;*/
 
 
                     cn.Open();
@@ -62,9 +63,9 @@ namespace Cursos.Models
 
 
 
-        public List<usuarios> getUsuariosXCursos()
+        public List<usuario> getUsuariosXCursos()
         { 
-            List<usuarios> listUsus= new List<usuarios>();
+            List<usuario> listUsus= new List<usuario>();
             string sql = "SELECT cursosUsuario.idUsuario, usuarios.nombre, usuarios.apellido, usuarios.email, usuarios.matricula, usuarios.carrera, usuarios.estudios FROM cursosUsuario INNER JOIN usuarios ON usuarios.id = cursosUsuario.idUsuario";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
@@ -73,14 +74,12 @@ namespace Cursos.Models
                 using(SqlDataReader dr = cmd.ExecuteReader()){
                     while (dr.Read())
                     {
-                        usuarios u = new usuarios();
+                        usuario u = new usuario();
                         u.id = dr.GetInt32(0);
                         u.nombre = dr.GetString(1);
                         u.apellido= dr.GetString(2);
                         u.email = dr.GetString(3);
-                        u.matricula= dr.IsDBNull(4) ? null : dr.GetString(4);
-                        u.carrera = dr.IsDBNull(5) ? null : dr.GetString(5);
-                        u.estudios = dr.IsDBNull(6) ? null : dr.GetString(6);
+                        
                         listUsus.Add(u);
                     }
                     cn.Close();
@@ -91,10 +90,10 @@ namespace Cursos.Models
         }
 
         //Metodo para despligar cursos adquiridos por usuario
-        public List<cursos> GetMisCursos()
+        public List<curso> GetMisCursos()
         {
-            List<cursos> listCursos = new List<cursos>();
-            usuarios u = (usuarios)HttpContext.Current.Session["usuario"];
+            List<curso> listCursos = new List<curso>();
+            usuario u = (usuario)HttpContext.Current.Session["usuario"];
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand("SP_obtenCursosUsuario", cn);
@@ -106,20 +105,24 @@ namespace Cursos.Models
                 {
                     while (dr.Read())
                     {
-                        cursos c = new cursos();
+                        curso c = new curso();
+                        modalidad m = new modalidad();
                         c.id = dr.GetInt32(0);
                         c.nombre = dr.GetString(1);
-                        c.modalidad = dr.GetString(2);
-                        c.lugar = dr.GetString(3);
-                        c.horas = dr.GetInt32(4);
-                        c.fechaIni = dr.GetDateTime(5);
-                        c.fechaTer = dr.GetDateTime(6);
-                        c.costo = dr.GetDecimal(7);
-                        c.costoPref = dr.GetDecimal(8);
-                        c.urlTemario = dr.GetString(9);
-                        c.requisitos = dr.GetString(10);
-                        c.criterioEval = dr.GetString(11);
-                        c.imgUrl = dr.GetString(12);
+                        c.idModalidad = dr.GetInt32(2);
+                        m.id = dr.GetInt32(3);
+                        m.modalidad1 = dr.GetString(4);
+                        c.modalidad = m;
+                        c.lugar = dr.GetString(5);
+                        c.horas = dr.GetInt32(6);
+                        c.fechaIni = dr.GetDateTime(7);
+                        c.fechaTer = dr.GetDateTime(8);
+                        c.costo = dr.GetDecimal(9);
+                        c.costoPref = dr.GetDecimal(10);
+                        c.urlTemario = dr.GetString(11);
+                        c.requisitos = dr.GetString(12);
+                        c.criterioEval = dr.GetString(13);
+                        c.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
                         listCursos.Add(c);
                     }
                 }

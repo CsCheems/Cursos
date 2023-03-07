@@ -24,14 +24,14 @@ namespace Cursos.Controllers
 
         //Metodo de inicio de sesion
         [HttpPost]
-        public ActionResult Login(usuarios credenciales)
+        public ActionResult Login(usuario credenciales)
         {
-            List<usuarios> usuarios = new List<usuarios>();
+            List<usuario> user = new List<usuario>();
             credenciales.pass = EncriptarSha256(credenciales.pass);
 
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
-                SqlCommand cmd = new SqlCommand("SP_validaUsuario", cn);
+                SqlCommand cmd = new SqlCommand("SP_validaUsuario2", cn);
                 cmd.Parameters.AddWithValue("Email", credenciales.email);
                 cmd.Parameters.AddWithValue("Pass", credenciales.pass);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -42,19 +42,34 @@ namespace Cursos.Controllers
                 {
                     while (dr.Read())
                     {
+                        
                         credenciales.id = dr.GetInt32(0);
-                        credenciales.rol = dr.GetString(1);
-                        credenciales.nombre = dr.GetString(2);
-                        credenciales.apellido = dr.GetString(3);
+                        credenciales.nombre = dr.GetString(1);
+                        credenciales.apellido = dr.GetString(2);
+                        credenciales.telefono= dr.GetString(3);
                         credenciales.email = dr.GetString(4);
-                        //credenciales.pass = dr.GetString(5);
-                        credenciales.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
-                        //credenciales.matricula= dr.GetString(6);
-                        credenciales.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
-                        //credenciales.carrera= dr.GetString(7);
-                        credenciales.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
-                        //credenciales.estudios= dr.GetString(8);
-                        usuarios.Add(credenciales);
+                        credenciales.pass = dr.GetString(5);
+                        credenciales.estudiante = dr.GetBoolean(6);
+                        //credenciales.documento
+                        credenciales.sexo_id= dr.GetInt32(8);
+                        credenciales.rol_id= dr.GetInt32(9);
+                        /*sexo s = new sexo();
+                        s.id = dr.GetInt32(10);
+                        s.sexo1 = dr.GetString(11);
+                        credenciales.sexo = s;
+                        roles r = new roles();
+                        r.id = dr.GetInt32(12);
+                        r.rol = dr.GetString(13);
+                        credenciales.roles = r;
+                        if (credenciales.estudiante == true)
+                        {
+                            estudiante e = new estudiante();
+                            e.matricula = dr.IsDBNull(14) ? null : dr.GetString(14);
+                            e.carrera = dr.IsDBNull(15) ? null : dr.GetString(15);
+                            e.nivelEstudios = dr.IsDBNull(16) ? null : dr.GetString(16);
+                            credenciales.estudiante1 = (ICollection<estudiante>)e;
+                        }*/
+                        user.Add(credenciales);
                     }
                 }
             }

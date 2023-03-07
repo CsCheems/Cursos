@@ -46,11 +46,13 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th hidden>Id</th>
                             <th>Nombre</th>
                             <th>Modalidad</th>
                             <th>Lugar</th>
                             <th>Horas</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Concluye</th>
                             <th>Temario</th>
                         </tr>
                     </thead>
@@ -58,11 +60,13 @@
                         @foreach (var obj in Model.cursos)
                         {
                             <tr>
-                                <td>@obj.id</td>
+                                <td hidden>@obj.id</td>
                                 <td>@obj.nombre</td>
-                                <td>@obj.modalidad</td>
+                                <td>@obj.modalidad.modalidad1</td>
                                 <td>@obj.lugar</td>
                                 <td>@obj.horas horas</td>
+                                <td>@obj.fechaIni</td>
+                                <td>@obj.fechaTer</td>
                                 <td><a href="@obj.urlTemario">Recurso</a></td>
                             </tr>
                         }

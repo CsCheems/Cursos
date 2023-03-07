@@ -37,23 +37,37 @@
                     <form action="@Url.Action("InsertaUsuario", "Usuario")" method="post">
 
                         <!-- Role input -->
-                        <select class="form-select" name="rol" aria-label="Default select example">
-                            <option value="CLIENTE">CLIENTE</option>
-                            <option value="ADMIN">ADMIN</option>
+                        <select class="form-select" name="rol_id" aria-label="Default select example">
+                            <option value="1">CLIENTE</option>
+                            <option value="2">ADMIN</option>
                         </select>
 
                         <br />
 
-                        <!-- Name input -->
                         <div class="form-outline mb-4">
                             <input type="text" name="nombre" id="nombre" class="form-control" />
                             <label class="form-label" for="nombre">Nombre</label>
                         </div>
 
-                        <!-- Username input -->
+                        <!-- Lastname input -->
                         <div class="form-outline mb-4">
                             <input type="text" name="apellido" id="apellido" class="form-control" />
                             <label class="form-label" for="apellido">Apellido</label>
+                        </div>
+
+                        <label class="form-label" for="estudiante">Genero</label>
+                        <select class="form-select" name="sexo_id" aria-label="Default select example">
+                            <option value="">--ESCOGE UNA OPCION--</option>
+                            <option value="1">MASCULINO</option>
+                            <option value="2">FEMENINO</option>
+                        </select>
+
+                        <br />
+
+                        <!-- Telefono input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" name="telefono" id="telefono" class="form-control" />
+                            <label class="form-label" for="telefono">Telefono</label>
                         </div>
 
                         <!-- Email input -->
@@ -75,15 +89,15 @@
                         </div>
 
                         <!-- Role input -->
-                        <label class="form-label" for="egresado">¿Eres egresado de la UTEQ?</label>
-                        <select onchange="modSelect('showEgresadoInfo', this)" class="form-select" name="egresado" aria-label="Default select example">
-                            <option value="1">No</option>
-                            <option value="2">Si</option>
+                        <label class="form-label" for="estudiante">¿Eres estudiante de la UTEQ?</label>
+                        <select onchange="modSelect('showEstudianteInfo', this)" class="form-select" name="estudiante" id="estudiante" aria-label="Default select example">
+                            <option value="false">No</option>
+                            <option value="true">Si</option>
                         </select>
 
                         <br />
 
-                        <div style="display:none" id="showEgresadoInfo">
+                        <div style="display:none" id="showEstudianteInfo">
                             <!-- Place input -->
                             <div class="form-outline mb-4">
                                 <input type="text" name="matricula" id="matricula" class="form-control" />
@@ -100,13 +114,15 @@
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Lastname input -->
-                                    <select class="form-select" name="estudios" aria-label="Default select example">
+                                    <select class="form-select" name="nivelEstudios" id="estudios" aria-label="Default select example">
+                                        <option value="">--ESCOGE UNA OPCION--</option>
                                         <option value="TSU">TSU</option>
                                         <option value="INGENIERIA">INGENIERIA</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+
 
                         @if (ViewData["Mensaje"] != null)
                         {
@@ -124,6 +140,17 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        function modSelect(id, elementValue) {
+            var elemento = document.getElementById(id);
+            document.getElementById(id).style.display = elementValue.value == "true" ? 'block' : 'none';
+        }
+
+    </script>
+
+
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
     </script>

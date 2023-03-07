@@ -19,8 +19,8 @@ namespace Cursos.Permisos
             }
             else
             {
-                usuarios u = (usuarios)HttpContext.Current.Session["usuario"];
-                if(u.rol != "ADMIN")
+                usuario u = (usuario)HttpContext.Current.Session["usuario"];
+                if(u.rol_id != 2)
                 {
                     filterContext.Result = new RedirectResult("~/Acceso/Error");
                 }

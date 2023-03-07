@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model List<Cursos.Models.cursoUsuario>
 @{
     ViewBag.Title = "Pagos";
 }
@@ -46,19 +46,28 @@
                             <th>Nombre</th>
                             <th>Usuario</th>
                             <th>Estatus</th>
+                            <th>Factura</th>
                             <th>Accion</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var obj in Model.curso)
+                        @foreach (var obj in Model)
                         {
                             <tr>
                                 <td>@obj.idCurso</td>
                                 <td>@obj.curso.nombre</td>
                                 <td>@obj.usuario.email</td>
-                                <td>@obj.estado1.estatus1</td>
+                                <td>@obj.estatus.estado</td>
+                                @if(obj.factura == true)
+                                {
+                                    <td>SI</td>
+                                }
+                                else
+                                {
+                                    <td>NO</td>
+                                }
                                 <td>
-                                    <a href="" class="edit" onclick="pendiente(@obj.id)"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></a>
+                                    <a class="edit" onclick="pendiente(@obj.id)"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></a>
                                 </td>
                             </tr>
                         }
@@ -71,6 +80,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
         <script type="text/javascript">
             function pendiente(idp) {
@@ -82,7 +92,7 @@
                    url: fullurl,
                    type: 'POST',
                    error: function (result) {
-                       alert(err.statusText);
+                       alert(result.statusText);
                    }
                });
                 window.open(url);

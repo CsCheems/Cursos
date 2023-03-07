@@ -17,7 +17,7 @@ namespace Cursos.Controllers
 
         public ActionResult Index()
         {
-            ViewModelCurso vm = new ViewModelCurso();
+            curso vm = new curso();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos();
             return View(dynModel);
@@ -25,7 +25,7 @@ namespace Cursos.Controllers
 
         public ActionResult CursoDetalle(int id)
         {
-            ViewModelCurso vm = new ViewModelCurso();
+            curso vm = new curso();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
             return View(dynModel);

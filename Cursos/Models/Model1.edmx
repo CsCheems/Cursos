@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="edcouteq1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="idModalidad" Type="int" />
+          <Property Name="lugar" Type="varchar" MaxLength="50" />
+          <Property Name="horas" Type="int" />
+          <Property Name="fechaIni" Type="date" />
+          <Property Name="fechaTer" Type="date" />
+          <Property Name="costo" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="costoPref" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="urlTemario" Type="varchar" MaxLength="255" />
+          <Property Name="requisitos" Type="varchar" MaxLength="255" />
+          <Property Name="criterioEval" Type="varchar" MaxLength="100" />
+          <Property Name="imgUrl" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="cursoUsuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idCurso" Type="int" />
+          <Property Name="idEstatus" Type="int" />
+        </EntityType>
+        <EntityType Name="estatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="estudiante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="matricula" Type="varchar" MaxLength="20" />
+          <Property Name="carrera" Type="varchar" MaxLength="50" />
+          <Property Name="nivelEstudios" Type="varchar" MaxLength="20" />
+          <Property Name="usuario_id" Type="int" />
+        </EntityType>
+        <EntityType Name="modalidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="modalidad" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rol" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="sexo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sexo" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="situacionFiscal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rfc" Type="varchar" MaxLength="13" />
+          <Property Name="documento" Type="varbinary(max)" />
+          <Property Name="idUsuario" Type="int" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" />
+          <Property Name="telefono" Type="varchar" MaxLength="10" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="pass" Type="varchar" MaxLength="20" />
+          <Property Name="estudiante" Type="bit" />
+          <Property Name="documento" Type="varbinary(max)" />
+          <Property Name="sexo_id" Type="int" />
+          <Property Name="rol_id" Type="int" />
+        </EntityType>
+        <Association Name="fk_curso_modalidad">
+          <End Role="modalidad" Type="Self.modalidad" Multiplicity="0..1" />
+          <End Role="curso" Type="Self.curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modalidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="curso">
+              <PropertyRef Name="idModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_curso">
+          <End Role="curso" Type="Self.curso" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="curso">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_estatus">
+          <End Role="estatus" Type="Self.estatus" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_estudiante_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="estudiante" Type="Self.estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="estudiante">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_situacionFiscal_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="situacionFiscal" Type="Self.situacionFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="situacionFiscal">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuarios_rol">
+          <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="rol_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuarios_sexo">
+          <End Role="sexo" Type="Self.sexo" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sexo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="sexo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="edcouteq1ModelStoreContainer">
+          <EntitySet Name="curso" EntityType="Self.curso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cursoUsuario" EntityType="Self.cursoUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estatus" EntityType="Self.estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="estudiante" EntityType="Self.estudiante" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="modalidad" EntityType="Self.modalidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="roles" EntityType="Self.roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sexo" EntityType="Self.sexo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="situacionFiscal" EntityType="Self.situacionFiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_curso_modalidad" Association="Self.fk_curso_modalidad">
+            <End Role="modalidad" EntitySet="modalidad" />
+            <End Role="curso" EntitySet="curso" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_curso" Association="Self.fk_cursoUsuario_curso">
+            <End Role="curso" EntitySet="curso" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_estatus" Association="Self.fk_cursoUsuario_estatus">
+            <End Role="estatus" EntitySet="estatus" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_usuario" Association="Self.fk_cursoUsuario_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_estudiante_usuario" Association="Self.fk_estudiante_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="estudiante" EntitySet="estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="fk_situacionFiscal_usuario" Association="Self.fk_situacionFiscal_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="situacionFiscal" EntitySet="situacionFiscal" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuarios_rol" Association="Self.fk_usuarios_rol">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuarios_sexo" Association="Self.fk_usuarios_sexo">
+            <End Role="sexo" EntitySet="sexo" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="edcouteq1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="curso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idModalidad" Type="Int32" />
+          <Property Name="lugar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="horas" Type="Int32" />
+          <Property Name="fechaIni" Type="DateTime" Precision="0" />
+          <Property Name="fechaTer" Type="DateTime" Precision="0" />
+          <Property Name="costo" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="costoPref" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="urlTemario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="requisitos" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="criterioEval" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="imgUrl" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="modalidad" Relationship="Self.fk_curso_modalidad" FromRole="curso" ToRole="modalidad" />
+          <NavigationProperty Name="cursoUsuario" Relationship="Self.fk_cursoUsuario_curso" FromRole="curso" ToRole="cursoUsuario" />
+        </EntityType>
+        <EntityType Name="cursoUsuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idCurso" Type="Int32" />
+          <Property Name="idEstatus" Type="Int32" />
+          <NavigationProperty Name="curso" Relationship="Self.fk_cursoUsuario_curso" FromRole="cursoUsuario" ToRole="curso" />
+          <NavigationProperty Name="estatus" Relationship="Self.fk_cursoUsuario_estatus" FromRole="cursoUsuario" ToRole="estatus" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_cursoUsuario_usuario" FromRole="cursoUsuario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="estatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cursoUsuario" Relationship="Self.fk_cursoUsuario_estatus" FromRole="estatus" ToRole="cursoUsuario" />
+        </EntityType>
+        <EntityType Name="estudiante">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="matricula" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="carrera" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="nivelEstudios" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="usuario_id" Type="Int32" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_estudiante_usuario" FromRole="estudiante" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="modalidad">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="modalidad1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="curso" Relationship="Self.fk_curso_modalidad" FromRole="modalidad" ToRole="curso" />
+        </EntityType>
+        <EntityType Name="roles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rol" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuarios_rol" FromRole="roles" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="sexo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sexo1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_usuarios_sexo" FromRole="sexo" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="situacionFiscal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rfc" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+          <Property Name="documento" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="idUsuario" Type="Int32" />
+          <NavigationProperty Name="usuario" Relationship="Self.fk_situacionFiscal_usuario" FromRole="situacionFiscal" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="estudiante" Type="Boolean" />
+          <Property Name="documento" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="sexo_id" Type="Int32" />
+          <Property Name="rol_id" Type="Int32" />
+          <NavigationProperty Name="cursoUsuario" Relationship="Self.fk_cursoUsuario_usuario" FromRole="usuario" ToRole="cursoUsuario" />
+          <NavigationProperty Name="estudiante1" Relationship="Self.fk_estudiante_usuario" FromRole="usuario" ToRole="estudiante" />
+          <NavigationProperty Name="roles" Relationship="Self.fk_usuarios_rol" FromRole="usuario" ToRole="roles" />
+          <NavigationProperty Name="sexo" Relationship="Self.fk_usuarios_sexo" FromRole="usuario" ToRole="sexo" />
+          <NavigationProperty Name="situacionFiscal" Relationship="Self.fk_situacionFiscal_usuario" FromRole="usuario" ToRole="situacionFiscal" />
+        </EntityType>
+        <Association Name="fk_curso_modalidad">
+          <End Role="modalidad" Type="Self.modalidad" Multiplicity="0..1" />
+          <End Role="curso" Type="Self.curso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modalidad">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="curso">
+              <PropertyRef Name="idModalidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_curso">
+          <End Role="curso" Type="Self.curso" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="curso">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idCurso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_estatus">
+          <End Role="estatus" Type="Self.estatus" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idEstatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cursoUsuario_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="cursoUsuario" Type="Self.cursoUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cursoUsuario">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_estudiante_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="estudiante" Type="Self.estudiante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="estudiante">
+              <PropertyRef Name="usuario_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuarios_rol">
+          <End Role="roles" Type="Self.roles" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="roles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="rol_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usuarios_sexo">
+          <End Role="sexo" Type="Self.sexo" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="sexo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="sexo_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_situacionFiscal_usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="situacionFiscal" Type="Self.situacionFiscal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="situacionFiscal">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="edcouteq1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="curso" EntityType="Self.curso" />
+          <EntitySet Name="cursoUsuario" EntityType="Self.cursoUsuario" />
+          <EntitySet Name="estatus" EntityType="Self.estatus" />
+          <EntitySet Name="estudiante" EntityType="Self.estudiante" />
+          <EntitySet Name="modalidad" EntityType="Self.modalidad" />
+          <EntitySet Name="roles" EntityType="Self.roles" />
+          <EntitySet Name="sexo" EntityType="Self.sexo" />
+          <EntitySet Name="situacionFiscal" EntityType="Self.situacionFiscal" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="fk_curso_modalidad" Association="Self.fk_curso_modalidad">
+            <End Role="modalidad" EntitySet="modalidad" />
+            <End Role="curso" EntitySet="curso" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_curso" Association="Self.fk_cursoUsuario_curso">
+            <End Role="curso" EntitySet="curso" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_estatus" Association="Self.fk_cursoUsuario_estatus">
+            <End Role="estatus" EntitySet="estatus" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cursoUsuario_usuario" Association="Self.fk_cursoUsuario_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cursoUsuario" EntitySet="cursoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_estudiante_usuario" Association="Self.fk_estudiante_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="estudiante" EntitySet="estudiante" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuarios_rol" Association="Self.fk_usuarios_rol">
+            <End Role="roles" EntitySet="roles" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usuarios_sexo" Association="Self.fk_usuarios_sexo">
+            <End Role="sexo" EntitySet="sexo" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_situacionFiscal_usuario" Association="Self.fk_situacionFiscal_usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="situacionFiscal" EntitySet="situacionFiscal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="edcouteq1ModelStoreContainer" CdmEntityContainer="edcouteq1Entities">
+          <EntitySetMapping Name="curso">
+            <EntityTypeMapping TypeName="edcouteq1Model.curso">
+              <MappingFragment StoreEntitySet="curso">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idModalidad" ColumnName="idModalidad" />
+                <ScalarProperty Name="lugar" ColumnName="lugar" />
+                <ScalarProperty Name="horas" ColumnName="horas" />
+                <ScalarProperty Name="fechaIni" ColumnName="fechaIni" />
+                <ScalarProperty Name="fechaTer" ColumnName="fechaTer" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="costoPref" ColumnName="costoPref" />
+                <ScalarProperty Name="urlTemario" ColumnName="urlTemario" />
+                <ScalarProperty Name="requisitos" ColumnName="requisitos" />
+                <ScalarProperty Name="criterioEval" ColumnName="criterioEval" />
+                <ScalarProperty Name="imgUrl" ColumnName="imgUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cursoUsuario">
+            <EntityTypeMapping TypeName="edcouteq1Model.cursoUsuario">
+              <MappingFragment StoreEntitySet="cursoUsuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idCurso" ColumnName="idCurso" />
+                <ScalarProperty Name="idEstatus" ColumnName="idEstatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estatus">
+            <EntityTypeMapping TypeName="edcouteq1Model.estatus">
+              <MappingFragment StoreEntitySet="estatus">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="estudiante">
+            <EntityTypeMapping TypeName="edcouteq1Model.estudiante">
+              <MappingFragment StoreEntitySet="estudiante">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="matricula" ColumnName="matricula" />
+                <ScalarProperty Name="carrera" ColumnName="carrera" />
+                <ScalarProperty Name="nivelEstudios" ColumnName="nivelEstudios" />
+                <ScalarProperty Name="usuario_id" ColumnName="usuario_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modalidad">
+            <EntityTypeMapping TypeName="edcouteq1Model.modalidad">
+              <MappingFragment StoreEntitySet="modalidad">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="modalidad1" ColumnName="modalidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="edcouteq1Model.roles">
+              <MappingFragment StoreEntitySet="roles">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rol" ColumnName="rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sexo">
+            <EntityTypeMapping TypeName="edcouteq1Model.sexo">
+              <MappingFragment StoreEntitySet="sexo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sexo1" ColumnName="sexo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="situacionFiscal">
+            <EntityTypeMapping TypeName="edcouteq1Model.situacionFiscal">
+              <MappingFragment StoreEntitySet="situacionFiscal">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="edcouteq1Model.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="estudiante" ColumnName="estudiante" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="sexo_id" ColumnName="sexo_id" />
+                <ScalarProperty Name="rol_id" ColumnName="rol_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -12,18 +12,14 @@ namespace Cursos.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class estatus
+    public partial class estudiante
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public estatus()
-        {
-            this.cursoUsuario = new HashSet<cursoUsuario>();
-        }
-    
         public int id { get; set; }
-        public string estado { get; set; }
+        public string matricula { get; set; }
+        public string carrera { get; set; }
+        public string nivelEstudios { get; set; }
+        public int usuario_id { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cursoUsuario> cursoUsuario { get; set; }
+        public virtual usuario usuario { get; set; }
     }
 }

@@ -38,15 +38,17 @@
 
 
 
-                    <form action="@Url.Action("RegistraCursoUsuario", "Cursos", new { id = Model.curso.id })" method="post">
+                    <form action="@Url.Action("RegistraCursoUsuario", "Cursos")" method="post">
 
                         @{
                             bool isLogged = true;
-                            Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+                            Cursos.Models.usuario credenciales = (Cursos.Models.usuario)Session["usuario"];
                             if (credenciales == null)
                             {
                                 isLogged = false;
                             }
+
+                            <input type="text" hidden name="idUsuario" id="idUsuario" class="form-control" value="@Model.usuario[0].id" readonly/>
 
                             <h3>Universidad Tecnológica de Querétaro</h3>
                             <h4>Resumen de solicitud de pago.</h4>
@@ -55,14 +57,14 @@
                                 <div class="col-md-6">
                                     <!-- Name input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="Nombre" id="Nombre" class="form-control" value="@credenciales.nombre" disabled />
+                                        <input type="text" name="nombre" id="Nombre" class="form-control" value="@Model.usuario[0].nombre" disabled />
                                         <label class="form-label" for="Nombre">Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <!-- Lastname input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="Apellido" id="Apellido" class="form-control" value="@credenciales.apellido" disabled />
+                                        <input type="text" name="apellido" id="Apellido" class="form-control" value="@Model.usuario[0].apellido" disabled />
                                         <label class="form-label" for="Apellido">Apellido</label>
                                     </div>
                                 </div>
@@ -72,7 +74,7 @@
                                 <div class="col-md-4">
                                     <!-- Name input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="Curso" id="Curso" class="form-control" value="@Model.curso.nombre" disabled />
+                                        <input type="text" name="curso" id="Curso" class="form-control" value="@Model.curso.nombre" disabled />
                                         <label class="form-label" for="Curso">Curso</label>
                                     </div>
                                 </div>
@@ -92,9 +94,12 @@
                                 </div>
                             </div>
 
+                            <input type="text" hidden name="idCurso" id="idCurso" class="form-control" value="@Model.curso.id" readonly/>
+
                             <table class="table table-striped table-hover">
                                 <thead>
                                     <tr>
+                                        <th hidden>id</th>
                                         <th>Concepto</th>
                                         <th>Modalidad</th>
                                         <th>Total</th>
@@ -103,9 +108,10 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <th hidden>@Model.curso.id</th>
                                         <th>@Model.curso.nombre</th>
-                                        <th>@Model.curso.modalidad</th>
-                                        @if (isLogged && credenciales.matricula != null)
+                                        <th>@Model.curso.modalidad.modalidad1</th>
+                                        @if (isLogged && @Model.usuario[0].estudiante == true)
                                         {
                                             <th>$@Model.curso.costoPref</th>
                                         }
@@ -122,10 +128,10 @@
                             </table>
 
                             <!-- Role input -->
-                            <select onchange="modSelect('showFacturaInfo', this)" class="form-select" name="Modalidad" aria-label="Default select example">
-                                <option selected>¿Requiere Factura?</option>
-                                <option value="1">Si</option>
-                                <option value="2">No</option>
+                            <label class="form-label" for="factura">¿Requiere factura?</label>
+                            <select onchange="modSelect('showFacturaInfo', this)" class="form-select" name="factura" id="factura" aria-label="Default select example">
+                                <option value="false">No</option>
+                                <option value="true">Si</option>
                             </select>
 
                             <br />
@@ -133,7 +139,7 @@
                             <div style="display:none" id="showFacturaInfo">
                                 <!-- Place input -->
                                 <div class="form-outline mb-4">
-                                    <input type="text" name="RFC" id="RFC" class="form-control" />
+                                    <input type="text" name="rfc" id="RFC" class="form-control" />
                                     <label class="form-label" for="RFC">RFC</label>
                                 </div>
 
@@ -155,28 +161,23 @@
                                     <div class="col-md-4">
                                         <!-- Lastname input -->
                                         <div class="form-outline mb-4">
-                                            <input type="text" name="confirmaEmail" id="confirmaEmail" class="form-control" />
-                                            <label class="form-label" for="confirmaEmail">Confirmar Email</label>
+                                            <input type="number" name="telefono" id="telefono" class="form-control" />
+                                            <label class="form-label" for="telefono">Telefono de Contato (10 digitos - Solo numeros)</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <!-- Place input -->
-                                <div style="display:none" class="form-outline mb-4" id="showLugar">
-                                    <input type="number" name="telefono" id="telefono" class="form-control" />
-                                    <label class="form-label" for="telefono">Telefono de Contato (10 digitos - Solo numeros)</label>
-                                </div>
+                               
+
+                                    <div class="form-outline mb-6">
+                                        <label for="img">Situacion Fiscal:</label>
+                                        <input type="file" id="documento" name="documento" accept="application/pdf">
+                                        <input type="button" id="upload" value="Guardar Documento" />
+                                    </div>
+
+                               
 
                             </div>
-
-                            <!-- Place input -->
-                            <div style="display:none" class="form-outline mb-4" id="showLugar">
-                                <input type="text" name="Lugar" id="Lugar" class="form-control" />
-                                <label class="form-label" for="Lugar">Lugar del Curso</label>
-                            </div>
-
-
-
                             <br />
 
                             <!-- Submit button -->
@@ -199,7 +200,7 @@
                 elemento.setAttribute("hidden");
             }*/
 
-            document.getElementById(id).style.display = elementValue.value == 1 ? 'block' : 'none';
+            document.getElementById(id).style.display = elementValue.value == "true" ? 'block' : 'none';
         }
 
     </script>
@@ -212,7 +213,7 @@
         document.getElementById("fechaSolicitud").value = today.toDateString();
 
         // Add three days to today's date
-        var future = new Date(today.getTime() + (3 * 24 * 60 * 60 * 1000));
+        var future = new Date(today.getTime() + (5 * 24 * 60 * 60 * 1000));
 
         // Display the date three days from now
         document.getElementById("fechaVenc").value = future.toDateString();

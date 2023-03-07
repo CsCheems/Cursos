@@ -47,14 +47,14 @@
                 <!-- Name input -->
                 <div class="form-outline mb-4">
                     <input type="text" name="nombre" id="Nombre" class="form-control" value="@Model.course[0].nombre" disabled />
-                    <label class="form-label" for="Nombre">Nombre</label>
+                    <label class="form-label" for="Nombre">Curso</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <!-- Lastname input -->
                 <div class="form-outline mb-4">
-                    <input type="text" name="modalidad" id="Apellido" class="form-control" value="@Model.course[0].modalidad.modalidad1" disabled />
-                    <label class="form-label" for="Apellido">Apellido</label>
+                    <input type="text" name="modalidad" id="modalidad" class="form-control" value="@Model.course[0].modalidad.modalidad1" disabled />
+                    <label class="form-label" for="modalidad">Modalidad</label>
                 </div>
             </div>
         </div>
@@ -63,22 +63,22 @@
             <div class="col-md-4">
                 <!-- Name input -->
                 <div class="form-outline mb-4">
-                    <input type="text" name="curso" id="Curso" class="form-control" value="@Model.course[0].fechaIni" disabled />
-                    <label class="form-label" for="Curso">Curso</label>
+                    <input type="text" name="fechaIni" id="fechaIni" class="form-control" value="@Model.course[0].fechaIni" disabled />
+                    <label class="form-label" for="fechaIni">Fecha de Inicio</label>
                 </div>
             </div>
             <div class="col-md-4">
                 <!-- Lastname input -->
                 <div class="form-outline mb-4">
-                    <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" value="@Model.course[0].fechaTer" disabled />
-                    <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
+                    <input type="text" name="fechaTer" id="fechaTer" class="form-control" value="@Model.course[0].fechaTer" disabled />
+                    <label class="form-label" for="fechaTer">Fecha de Conclusion</label>
                 </div>
             </div>
             <div class="col-md-4">
                 <!-- Lastname input -->
                 <div class="form-outline mb-4">
-                    <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" value="@Model.course[0].horas horas"  disabled />
-                    <label class="form-label" for="fechaVenc">Fecha de Vencimiento</label>
+                    <input type="text" name="horas" id="horas" class="form-control" value="@Model.course[0].horas horas" disabled />
+                    <label class="form-label" for="horas">Duracion de curso</label>
                 </div>
             </div>
         </div>
@@ -99,15 +99,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var obj in Model.user)
+                        @for( int i= 0 ; i < Model.user.Count; i++)
                         {
+                            var user = Model.user[i];
+                            var student = Model.student.ElementAtOrDefault(i);
                             <tr>
-                                <td>@obj.id</td>
-                                <td>@obj.nombre @obj.apellido</td>
-                                <td>@obj.email</td>
-                                <td>@obj.telefono</td>
-                                <td></td>
-
+                                <td>@user.id</td>
+                                <td>@user.nombre @user.apellido</td>
+                                <td>@user.email</td>
+                                <td>@user.telefono</td>
+                                @if (user.estudiante == true && student != null)
+                                {
+                                    <td>@student.matricula</td>
+                                    <td>@student.carrera</td>
+                                }
                                 <td></td>
                             </tr>
                         }

@@ -1,4 +1,4 @@
-﻿@model List<Cursos.Models.cursos>
+﻿@model List<Cursos.Models.curso>
 
 @{
     ViewBag.Title = "Tablas";
@@ -48,15 +48,11 @@
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-6">
                             <h2>Administar <b>Cursos</b></h2>
                         </div>
-                        <div class="col-sm-5">
-
-                            <a href="@Url.Action("VerCursosDetalles", "Cursos")" class="btn btn-warning"><i class="material-icons">&#xef42;</i> <span>Detalles de cursos</span></a>
-
-                        </div>
-                        <div class="col-sm-3">
+                        
+                        <div class="col-sm-6">
                             <a href="@Url.Action("RegistrarCurso", "Cursos")" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>Agregar nuevo curso</span></a>
 
                         </div>
@@ -82,15 +78,17 @@
                             <tr>
                                 <td>@obj.id</td>
                                 <td>@obj.nombre</td>
-                                <td>@obj.modalidad</td>
+                                <td>@obj.modalidad.modalidad1</td>
                                 <td>@obj.lugar</td>
                                 <td>@obj.horas horas</td>
                                 <td>$@obj.costo</td>
                                 <td>$@obj.costoPref</td>
                                 <td><a href="@obj.urlTemario">Recurso</a></td>
                                 <td>
+                                    <a href="@Url.Action("verCursoDetalles", "Cursos", new {id = obj.id})"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xf22e;</i></a>
                                     <a href="@Url.Action("EditaCurso", "Cursos", new {id = obj.id})" class="edit"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                                     <a href="@Url.Action("EliminaCurso", "Cursos", new {id = obj.id})" onclick="return confirm('¿Seguro quiere borrar este curso?')" class="delete"><i class="material-icons" data-toggle="tooltip" title="Borrar">&#xE872;</i></a>
+
                                 </td>
                             </tr>
                         }
@@ -103,7 +101,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
        
 
 

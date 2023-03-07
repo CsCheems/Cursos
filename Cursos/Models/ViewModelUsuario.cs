@@ -10,12 +10,12 @@ namespace Cursos.Models
     public class ViewModelUsuario
     {
         static string cadenaConexion = SQL_DB_Connection.cadenaConexion;
-        public IEnumerable<usuarios> usuario { get; set; }
+        public IEnumerable<usuario> usuario { get; set; }
         //public IEnumerable<rol> roles { get; set; }
-        public List<usuarios> GetCurrentUsuario()
+        public List<usuario> GetCurrentUsuario()
         {
-            List<usuarios> usuarios = new List<usuarios>();
-            usuarios usuario = (usuarios)HttpContext.Current.Session["usuario"];
+            List<usuario> usuarios = new List<usuario>();
+            usuario usuario = (usuario)HttpContext.Current.Session["usuario"];
             string sql = "select * from usuarios where usuarios.id = " +usuario.id +";";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
@@ -25,16 +25,9 @@ namespace Cursos.Models
                 {
                     while (dr.Read())
                     {
-                        usuarios u = new usuarios();
-                        u.id = dr.GetInt32(0);
-                        u.rol = dr.GetString(1);
-                        u.nombre = dr.GetString(2);
-                        u.apellido = dr.GetString(3);
-                        u.email = dr.GetString(4);
-                        u.pass = dr.GetString(5);
-                        u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
-                        u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
-                        u.estudios = dr.IsDBNull(8) ? null : dr.GetString(8);
+                        usuario u = new usuario();
+                        
+                        
                         usuarios.Add(u);
                     }
                 }
@@ -42,12 +35,12 @@ namespace Cursos.Models
             return usuarios;
         }
 
-        public List<usuarios> GetUsuarios()
+        public List<usuario> GetUsuarios()
         {
-            List<usuarios> usuarios = new List<usuarios>();
+            List<usuario> usuarios = new List<usuario>();
             
 
-            string sql = "select * from usuarios;";
+            string sql = "select * from usuario;";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 SqlCommand cmd = new SqlCommand(sql, cn);
@@ -57,16 +50,8 @@ namespace Cursos.Models
                 {
                     while (dr.Read())
                     {
-                        usuarios u = new usuarios();
-                        u.id = dr.GetInt32(0);
-                        u.rol = dr.GetString(1);
-                        u.nombre = dr.GetString(2);
-                        u.apellido = dr.GetString(3);
-                        u.email = dr.GetString(4);
-                        u.pass = dr.GetString(5);
-                        u.matricula = dr.IsDBNull(6) ? null : dr.GetString(6);
-                        u.carrera = dr.IsDBNull(7) ? null : dr.GetString(7);
-                        u.estudios =  dr.IsDBNull(8) ? null : dr.GetString(8);
+                        usuario u = new usuario();
+                        
                         usuarios.Add(u);
                     }
                 }

@@ -2,7 +2,7 @@
 
 @{
     bool isLogged = true;
-    Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+    Cursos.Models.usuario credenciales = (Cursos.Models.usuario)Session["usuario"];
     if (credenciales == null)
     {
         isLogged = false;
@@ -25,7 +25,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.css"
           rel="stylesheet" />
     <link href="~/Recursos/CSS/FooterStyle.css" rel="stylesheet" />
-    <link href="~/Recursos/CSS/NavStyle.css" rel="stylesheet" />
+    <link href="~/Recursos/CSS/NavHead.css" rel="stylesheet" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -34,7 +34,7 @@
     <div class="container">
         <ul>
             @{
-                if (isLogged && credenciales.rol == "ADMIN")
+                if (isLogged && credenciales.rol_id == 2)
                 {
                     <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
                     <li id="menu"><a href="@Url.Action("Pagos","Admin")">Pagos</a></li>

@@ -146,17 +146,56 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\cursos.cs" />
-    <Compile Include="Models\cursosUsuario.cs" />
-    <Compile Include="Models\estatus.cs" />
-    <Compile Include="Models\estudios.cs" />
-    <Compile Include="Models\modalidad.cs" />
+    <Compile Include="Models\curso.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\cursoUsuario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\estatus.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\estudiante.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InscritosGlobalViewModel.cs" />
+    <Compile Include="Models\modalidad.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model.cs" />
-    <Compile Include="Models\rol.cs" />
-    <Compile Include="Models\usuarios.cs" />
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelViewCursoUsuarios.cs" />
+    <Compile Include="Models\roles.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sexo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\situacionFiscal.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usuario.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModelCurso.cs" />
     <Compile Include="Models\ViewModelCursoUsuario.cs" />
     <Compile Include="Models\ViewModelUsuario.cs" />
+    <Compile Include="Models\ViewModelUsuarioCurso.cs" />
+    <Compile Include="Models\ViewModelUsuarioEstudiante.cs" />
     <Compile Include="Permisos\ValidarSesion.cs" />
     <Compile Include="Permisos\ValidarSesionAdmin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -170,6 +209,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
     <Content Include="Recursos\bootstrap\bootstrap.min.css" />
     <Content Include="Recursos\bootstrap\glightbox.min.css" />
     <Content Include="Recursos\bootstrap\LineIcons.3.0.css" />
@@ -177,11 +226,18 @@
     <Content Include="Recursos\bootstrap\tiny-slider.css" />
     <Content Include="Recursos\CSS\EstilosForm.css" />
     <Content Include="Recursos\CSS\FooterStyle.css" />
-    <Content Include="Recursos\CSS\NavStyle.css" />
+    <Content Include="Recursos\CSS\NavHead.css" />
     <Content Include="Recursos\CSS\reel.css" />
     <Content Include="Recursos\CSS\tableStyle.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -217,8 +273,9 @@
     <Content Include="Views\Admin\Pagos.cshtml" />
     <Content Include="Views\Cursos\FichaDePago.cshtml" />
     <Content Include="Views\Cursos\EditaCurso.cshtml" />
-    <Content Include="Views\Cursos\VerCursosDetalles.cshtml" />
     <Content Include="Views\Cursos\VerUsuariosCurso.cshtml" />
+    <Content Include="Views\Cursos\VerCursoDetalles.cshtml" />
+    <Content Include="Views\Cursos\usuariosInscritos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -236,6 +293,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,7 +1,6 @@
 ﻿@model dynamic
 
 
-
 <head>
     <title>EDCOUTEQ Inicio</title>
     <meta charset="utf-8">
@@ -27,13 +26,6 @@
     <section class="trending-product section" style="margin-top: 12px;">
         <div class="container">
             
-            <div class="slider">
-                <ul>
-                    <li><img src="~/Recursos/imagenes/" ></li>
-                    <li><img src="~/Recursos/imagenes/UTEQ-2"/></li>
-                    <li><img src="~/Recursos/imagenes/UTEQ-3"/></li>
-                </ul>
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="section-title">
@@ -48,7 +40,7 @@
             <div class="row">
                 @{
                     bool isLogged = true;
-                    Cursos.Models.usuarios credenciales = (Cursos.Models.usuarios)Session["usuario"];
+                    Cursos.Models.usuario credenciales = (Cursos.Models.usuario)Session["usuario"];
                     if (credenciales == null)
                     {
                         isLogged = false;
@@ -70,7 +62,7 @@
                                     <h4 class="title">
                                         <a href="@Url.Action("CursoDetalle", "Home", new {id = curso.id})">@curso.nombre</a>
                                     </h4>
-                                    @if (isLogged && credenciales.matricula != null)
+                                    @if (isLogged && credenciales.estudiante == true)
                                     {
                                         <div class="price">
                                             <span>$@curso.costoPref</span>

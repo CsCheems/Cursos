@@ -1,4 +1,10 @@
-﻿@model dynamic
+﻿@using Cursos.Models
+
+@{ 
+    var curso = ViewBag.curso;
+}
+
+
 <html>
 <head>
 
@@ -37,19 +43,19 @@
 
                         <!-- ID input -->
                         <div class="form-outline mb-4">
-                            <input type="hidden" name="id" id="id" class="form-control" value="@Model.curso.id" />
+                            <input type="hidden" name="id" id="id" class="form-control" value="@curso.id" />
                         </div>
 
 
                         <!-- Name input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Nombre" id="Nombre" class="form-control" value="@Model.curso.nombre" />
-                            <label class="form-label" for="Nombre">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="form-control" value="@curso.nombre" />
+                            <label class="form-label" for="nombre">Nombre</label>
                         </div>
 
                         <!-- Mod input -->
-                        <select class="form-select" name="Modalidad" aria-label="Default select example">
-                            <option value="@Model.curso.modalidad">@Model.curso.modalidad.modalidad1</option>
+                        <select class="form-select" name="idModaliad" aria-label="Default select example">
+                            <option value="@curso.modalidad">@curso.modalidad.modalidad1</option>
                             <option value="1">PRESENCIAL</option>
                             <option value="2">REMOTO</option>
                         </select>
@@ -57,49 +63,60 @@
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Lugar" id="Lugar" class="form-control" value="@Model.curso.lugar" />
-                            <label class="form-label" for="Lugar">Lugar</label>
+                            <input type="text" name="lugar" id="lugar" class="form-control" value="@curso.lugar" />
+                            <label class="form-label" for="lugar">Lugar</label>
                         </div>
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Horas" id="Horas" class="form-control" value="@Model.curso.horas" />
-                            <label class="form-label" for="Horas">Horas</label>
+                            <input type="number" name="horas" id="horas" class="form-control" value="@curso.horas" />
+                            <label class="form-label" for="horas">Horas</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="date" name="fechaIni" id="fechaIni" class="form-control" value="@curso.fechaIni.ToString("dd-mm-yyyy")"/>
+                            <label class="form-label" for="fechaIni">Fecha de Inicio</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="date" name="fechaTer" id="fechaTer" class="form-control" value="@curso.fechaTer.ToString("dd-mm-yyyy")" />
+                            <label class="form-label" for="fechaTer">Fecha de Conclusion</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="Costo" id="Costo" class="form-control" value="@Model.curso.costo" />
+                            <input type="number" name="costo" id="costo" class="form-control" value="@curso.costo" />
                             <label class="form-label" for="Costo">Costo</label>
                         </div>
 
                         <!-- Confirm Password input -->
                         <div class="form-outline mb-4">
-                            <input type="number" name="CostoPref" id="CostoPref" class="form-control" value="@Model.curso.costoPref" />
+                            <input type="number" name="costoPref" id="costoPref" class="form-control" value="@curso.costoPref" />
                             <label class="form-label" for="CostoPref">Costo Preferencial</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="url" name="UrlTemario" id="UrlTemario" class="form-control" value="@Model.curso.urlTemario" />
-                            <label class="form-label" for="UrlTemario">Temario</label>
+                            <input type="url" name="urlTemario" id="urlTemario" class="form-control" value="@curso.urlTemario" />
+                            <label class="form-label" for="urlTemario">Temario</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="Requisitos" id="Requisitos" class="form-control" value="@Model.curso.requisitos" />
-                            <label class="form-label" for="Requisitos">Requisitos</label>
+                            <input type="text" name="requisitos" id="requisitos" class="form-control" value="@curso.requisitos" />
+                            <label class="form-label" for="requisitos">Requisitos</label>
                         </div>
 
                         <!-- Username input -->
                         <div class="form-outline mb-4">
-                            <input type="text" name="CriterioEval" id="CriterioEval" class="form-control" value="@Model.curso.criterioEval" />
+                            <input type="text" name="criterioEval" id="criterioEval" class="form-control" value="@curso.criterioEval" />
                             <label class="form-label" for="CriterioEval">Criterio de Evaluacion</label>
                         </div>
 
                         <div class="form-outline mb-4">
                             <label for="img">Seleccione una imagen:</label>
-                            <input type="file" id="ImgUrl" name="ImgUrl" accept="image/*">
+                            <input type="file" id="imgUrl" name="imgUrl" accept="image/*">
+                            <input type="button" id="upload" value="Guardar Imagen" />
                         </div>
 
                         @if (ViewData["Mensaje"] != null)

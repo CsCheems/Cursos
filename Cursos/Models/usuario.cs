@@ -41,7 +41,7 @@ namespace Cursos.Models
         public string pass { get; set; }
         public string passConfirm { get; set; }
         public bool estudiante { get; set; }
-        public string documento { get; set; }
+        public byte[] documentoID { get; set; }
         public int sexo_id { get; set; }
         public int rol_id { get; set; }
     
@@ -61,7 +61,7 @@ namespace Cursos.Models
             List<usuario> usu = new List<usuario>();
 
             string sql = "select usuario.id, usuario.nombre, usuario.apellido, usuario.telefono, usuario.email, usuario.pass," +
-                " usuario.estudiante, usuario.documento, usuario.sexo_id, sexo.id, sexo.sexo1, usuario.rol_id, roles.id, roles.rol " +
+                " usuario.estudiante, usuario.documentoID, usuario.sexo_id, sexo.id, sexo.sexo1, usuario.rol_id, roles.id, roles.rol " +
                 "from usuario inner join sexo on sexo.id = usuario.sexo_id" +
                 "inner join roles on roles.id = usuario.rol_id";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
@@ -82,7 +82,7 @@ namespace Cursos.Models
                         u.telefono= dr.GetString(3);
                         u.email= dr.GetString(4);
                         u.estudiante = dr.GetBoolean(6);
-                        u.documento = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        u.documentoID = (byte[])dr["documentoID"];
                         u.sexo_id= dr.GetInt32(8);
                         s.id = dr.GetInt32(9);
                         s.sexo1 = dr.GetString(10);
@@ -102,7 +102,7 @@ namespace Cursos.Models
             List<usuario> usu = new List<usuario>();
             usuario usuario = (usuario)HttpContext.Current.Session["usuario"];
             string sql = "select usuario.id, usuario.nombre, usuario.apellido, usuario.telefono, usuario.email, usuario.pass," +
-                " usuario.estudiante, usuario.documento, usuario.sexo_id, sexo.id, sexo.sexo, usuario.rol_id, roles.id, roles.rol " +
+                " usuario.estudiante, usuario.documentoID, usuario.sexo_id, sexo.id, sexo.sexo, usuario.rol_id, roles.id, roles.rol " +
                 "from usuario inner join sexo on sexo.id = usuario.sexo_id " +
                 "inner join roles on roles.id = usuario.rol_id " +
                 "where usuario.id = " + usuario.id + ";";
@@ -124,7 +124,10 @@ namespace Cursos.Models
                         u.telefono = dr.GetString(3);
                         u.email = dr.GetString(4);
                         u.estudiante = dr.GetBoolean(6);
-                        u.documento = dr.IsDBNull(7) ? null : dr.GetString(7);
+                        if (!dr.IsDBNull(dr.GetOrdinal("documentoID")))
+                        {
+                            u.documentoID = (byte[])dr["documentoID"];
+                        }
                         u.sexo_id = dr.GetInt32(8);
                         s.id = dr.GetInt32(9);
                         s.sexo1 = dr.GetString(10);

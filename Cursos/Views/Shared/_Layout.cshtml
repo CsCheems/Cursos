@@ -38,8 +38,11 @@
                 {
                     <li id="menu"><a href="@Url.Action("Logout", "Acceso")">Salir</a></li>
                     <li id="menu"><a href="@Url.Action("Pagos","Admin")">Pagos</a></li>
-                    <li id="menu"><a href="@Url.Action("Tablas","Admin")">Administrador</a></li>
+                    <li id="menu"><a href="@Url.Action("Tablas","Admin")">Administrador Back</a></li>
+                    <li id="menu"><a href="@Url.Action("AdministrarImagenes","Admin")">Administrador Front</a></li>
                     <li id="menu"><a href="">Bienvenido @credenciales.nombre</a></li>
+                    
+
                 }
                 else if (isLogged)
                 {

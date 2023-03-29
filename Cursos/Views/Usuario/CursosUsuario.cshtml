@@ -1,12 +1,16 @@
-﻿@model dynamic
+﻿@using Cursos.Models
+@using System.IO
+@using System.Text
 
 @{
     ViewBag.Title = "CursosUsuario";
+
+    var cursos = ViewBag.cursos;
 }
 
 <html>
 <head>
-    <title>Administrador</title>
+    <title>Mis Cursos</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -28,6 +32,24 @@
           rel="stylesheet" />
 
     <link href="~/Recursos/CSS/tableStyle.css" rel="stylesheet" />
+
+    <style>
+        input[type="file"] {
+            display: none;
+        }
+
+        .custom-file-upload {
+            border: 1px solid #ccc;
+            display: inline-block;
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+
+            .custom-file-upload:hover {
+                background-color: #ddd;
+            }
+    </style>
+
 </head>
 <body>
     <div class="container">
@@ -36,11 +58,90 @@
                 <div class="section-title">
                     <h2>Mis Cursos</h2>
                     <p>
-                        Aqui puedes observar todos los cursos que has adquirido
+                        Aqui puedes observar todos los cursos que has adquirido y los que estan pendientes de pago.
                     </p>
                 </div>
             </div>
         </div>
+
+        <h4>
+            <b>Pendientes de pago</b>
+        </h4>
+        <div class="tab-content">
+            <div class="table-wrapper">
+                <form action="@Url.Action("CargaDocumentos", "Cursos")" method="post" enctype="multipart/form-data">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th hidden>IdCursoUsuario</th>
+                                <th hidden>Id</th>
+                                <th>Nombre</th>
+                                <th>Modalidad</th>
+                                <th>Lugar</th>
+                                <th>Horas</th>
+                                <th>Comprobante de Pago</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var obj in cursos)
+                            {
+
+                                if (obj.idEstatus == 2)
+                                {
+
+                                    <tr>
+                                        <td hidden>@obj.id</td>
+                                        <td hidden>@obj.idCurso</td>
+                                        <td>@obj.nombreCurso</td>
+                                        <td>@obj.modalidad1</td>
+                                        <td>@obj.lugar</td>
+                                        <td>@obj.horas horas</td>
+                                        <td>
+                                            <label for="comprobante" class="custom-file-upload">Subir</label>
+                                            <input id="comprobante" type="file" name="comprobantePago" accept=".pdf">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-primary btn-block mb-3">Cargar Documentos</button>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            }
+
+                        </tbody>
+                    </table>
+                </form>
+
+                @if (IsPost) 
+                {
+                    HttpPostedFileBase pdf1 = Request.Files["comprobantePago"];
+                    if(pdf1 != null && pdf1.ContentLength > 0)
+                    {
+                        byte[] pdfBytes;
+                        using (var ms = new MemoryStream())
+                        {
+                            pdf1.InputStream.CopyTo(ms);
+                            pdfBytes = ms.ToArray();
+                        }
+                        string base64String = Convert.ToBase64String(pdfBytes);
+                        byte[] requestData = Encoding.UTF8.GetBytes(base64String);
+                    }
+                }
+
+                <div class="clearfix">
+                    <!-- Paginacion -->
+                    <ul class="pagination">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <h4>
+            <b>Disponibles</b>
+        </h4>
         <div class="tab-content">
             <div class="table-wrapper">
                 <table class="table table-striped table-hover">
@@ -57,18 +158,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var obj in Model.cursos)
+                        @foreach (var obj in cursos)
                         {
-                            <tr>
-                                <td hidden>@obj.id</td>
-                                <td>@obj.nombre</td>
-                                <td>@obj.modalidad.modalidad1</td>
-                                <td>@obj.lugar</td>
-                                <td>@obj.horas horas</td>
-                                <td>@obj.fechaIni</td>
-                                <td>@obj.fechaTer</td>
-                                <td><a href="@obj.urlTemario">Recurso</a></td>
-                            </tr>
+                            if (obj.idEstatus == 1)
+                            {
+                                <tr>
+                                    <td hidden>@obj.idCurso</td>
+                                    <td>@obj.nombreCurso</td>
+                                    <td>@obj.modalidad1</td>
+                                    <td>@obj.lugar</td>
+                                    <td>@obj.horas horas</td>
+                                    <td>@obj.fechaIni.ToString("dd/MM/yyyy")</td>
+                                    <td>@obj.fechaTer.ToString("dd/MM/yyyy")</td>
+                                    <td><a href="@obj.urlTemario">Recurso</a></td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -79,15 +183,17 @@
                 </div>
             </div>
         </div>
-        </div>
 
 
 
 
+    </div>
 
-        <script type="text/javascript"
-                src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
-        </script>
+
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">
+    </script>
 
 </body>
 

@@ -58,8 +58,8 @@
                                             <p class="info-text"></p>
                                                 <p>Modalidad:  <b>@Model.curso.modalidad.modalidad1</b> </p>
                                                 <p>Horas:  <b>@Model.curso.horas</b> Horas </p>
-                                                <p>Fecha de Inicio:  <b>@Model.curso.fechaIni</b>  </p>
-                                                <p>Fecha de Conclusion:  <b>@Model.curso.fechaTer</b>  </p>
+                                                <p>Fecha de Inicio:  <b>@Model.curso.fechaIni.ToString("dd-MM-yyyy")</b>  </p>
+                                                <p>Fecha de Termino:  <b>@Model.curso.fechaTer.ToString("dd-MM-yyyy")</b>  </p>
 
                                             <form action="@Url.Action("FichaDePago", "Cursos", new { id = @Model.curso.id })">
                                                 <div class="bottom-content">

@@ -12,6 +12,7 @@ using System.Dynamic;
 using System.Data.Entity.Infrastructure;
 using Cursos.Permisos;
 using Cursos.BDConnection;
+using System.IO;
 
 namespace Cursos.Controllers
 {
@@ -180,6 +181,73 @@ namespace Cursos.Controllers
             }
         }
 
+
+        [ValidarSesion]
+        public ActionResult AdministrarImagenes()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult AdministrarImagenes(HttpPostedFileBase img1, HttpPostedFileBase img2, HttpPostedFileBase img3) 
+        {
+            if(img1 != null && img1.ContentLength > 0)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(img1.FileName);
+                var fileExtension = Path.GetExtension(img1.FileName);
+                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
+
+                // Save file to disk
+                var filePath = Server.MapPath("~/Recursos/imagenes/" + newFileName);
+                img1.SaveAs(filePath);
+
+                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+                System.IO.File.Move(filePath, oldFilePath);
+            }
+
+            if (img2 != null && img2.ContentLength > 0)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(img2.FileName);
+                var fileExtension = Path.GetExtension(img2.FileName);
+                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
+                
+                // Save file to disk
+                var filePath = Server.MapPath("~/Recursos/imagenes/"+ newFileName);
+                img2.SaveAs(filePath);
+
+                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+                System.IO.File.Move(filePath, oldFilePath);
+            }
+
+            if (img3 != null && img3.ContentLength > 0)
+            {
+                var fileName = Path.GetFileNameWithoutExtension(img3.FileName);
+                var fileExtension = Path.GetExtension(img3.FileName);
+                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
+
+                // Save file to disk
+                var filePath = Server.MapPath("~/Recursos/imagenes/" + newFileName);
+                img3.SaveAs(filePath);
+
+                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
+                System.IO.File.Move(filePath, oldFilePath);
+            }
+
+            return RedirectToAction("Index");
+        }
 
     }
 }

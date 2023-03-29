@@ -276,6 +276,7 @@
     <Content Include="Views\Cursos\VerUsuariosCurso.cshtml" />
     <Content Include="Views\Cursos\VerCursoDetalles.cshtml" />
     <Content Include="Views\Cursos\usuariosInscritos.cshtml" />
+    <Content Include="Views\Admin\AdministrarImagenes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

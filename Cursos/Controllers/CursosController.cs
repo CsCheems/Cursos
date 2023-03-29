@@ -98,33 +98,91 @@ namespace Cursos.Controllers
         [HttpGet]
         public ActionResult EditaCurso(int id)
         {
-            ViewModelCurso vm = new ViewModelCurso();
-            dynamic dynModel = new ExpandoObject();
-            dynModel.curso = vm.GetCursos().Find(cmodel => cmodel.id == id);
 
-            if(dynModel == null)
+            curso c = new curso();
+            modalidad m = new modalidad();
+            string sql = "select curso.id, curso.nombre, curso.idModalidad, modalidad.id, modalidad.modalidad, curso.lugar, curso.horas, " +
+                "curso.fechaIni, curso.fechaTer, curso.costo, curso.costoPref, curso.urlTemario, curso.requisitos, curso.criterioEval, curso.imgUrl from curso " +
+                "inner join modalidad on modalidad.id = curso.idModalidad;";
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
-                return View();
-            }
-            else if(dynModel.curso == null)
-            {
-                return View("Empty View");
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    { 
+                        c.id = dr.GetInt32(0);
+                        c.nombre = dr.GetString(1);
+                        c.idModalidad = dr.GetInt32(2);
+                        m.id = dr.GetInt32(3);
+                        m.modalidad1 = dr.GetString(4);
+                        c.modalidad = m;
+                        c.lugar = dr.GetString(5);
+                        c.horas = dr.GetInt32(6);
+                        c.fechaIni = dr.GetDateTime(7);
+                        c.fechaTer = dr.GetDateTime(8);
+                        c.costo = dr.GetDecimal(9);
+                        c.costoPref = dr.GetDecimal(10);
+                        c.urlTemario = dr.GetString(11);
+                        c.requisitos = dr.GetString(12);
+                        c.criterioEval = dr.GetString(13);
+                        c.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
+                    }
+                }
             }
 
-            return View(dynModel);
+            ViewBag.curso = c;
+
+            return View();
         }
 
         [HttpPost]
-        public ActionResult EditaCurso(curso cmodel)
+        public ActionResult EditaCurso(curso cursosInfo)
         {
+            ViewBag.curso = cursosInfo;
             try
             {
-                curso cdb = new curso();
-                if (cdb.editaCurso(cmodel))
+                bool editado;
+                string mensaje;
+                int i;
+                using (SqlConnection cn = new SqlConnection(cadenaConexion))
                 {
-                    ViewBag.AlertMsg = "El curso ha sido editado";
+                    SqlCommand cmd = new SqlCommand("SP_editaCurso", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("Id", cursosInfo.id);
+                    cmd.Parameters.AddWithValue("Nombre", cursosInfo.nombre);
+                    cmd.Parameters.AddWithValue("Modalidad", cursosInfo.modalidad);
+                    cmd.Parameters.AddWithValue("Lugar", cursosInfo.lugar);
+                    cmd.Parameters.AddWithValue("Horas", cursosInfo.horas);
+                    cmd.Parameters.AddWithValue("FechaIni", cursosInfo.fechaIni);
+                    cmd.Parameters.AddWithValue("FechaTer", cursosInfo.fechaTer);
+                    cmd.Parameters.AddWithValue("Costo", cursosInfo.costo);
+                    cmd.Parameters.AddWithValue("CostoPref", cursosInfo.costoPref);
+                    cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
+                    cmd.Parameters.AddWithValue("Requisitos", cursosInfo.requisitos);
+                    cmd.Parameters.AddWithValue("CriterioEval", cursosInfo.criterioEval);
+                    cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
+                    cmd.Parameters.Add("Editado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+
+                    cn.Open();
+                    i = cmd.ExecuteNonQuery();
+
+                    editado = Convert.ToBoolean(cmd.Parameters["Editado"].Value);
+                    mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                    cn.Close();
                 }
-                return RedirectToAction("Tablas", "Admin");
+
+                if (i >= 1)
+                {
+                    return RedirectToAction("Tablas", "Admin");
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
@@ -182,6 +240,8 @@ namespace Cursos.Controllers
                     {
                         cmd.Parameters.AddWithValue("Factura", 0);
                     }
+
+                    cmd.Parameters.AddWithValue("FechaVenc", cu.fechaVenc);
                     cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                     cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
 
@@ -218,6 +278,22 @@ namespace Cursos.Controllers
             bool registrado;
             string mensaje;
             int i;
+            string sql = "select id from cursoUsuario " +
+                "where idUsuario = " + cu.idUsuario + " and idCurso =" + cu.idCurso + ";"; 
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            {
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        cu.id = dr.GetInt32(0);
+                    }
+                }
+            }
+
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
 
@@ -228,7 +304,7 @@ namespace Cursos.Controllers
                 {
                     cmd.Parameters.AddWithValue("Documento", sf.documento);
                 }
-                cmd.Parameters.AddWithValue("idCursoUsuario", sf.idUsuario);
+                cmd.Parameters.AddWithValue("idCursoUsuario", cu.id);
                 cmd.Parameters.AddWithValue("Email", sf.email);
                 cmd.Parameters.AddWithValue("CP", sf.codigoPostal);
                 cmd.Parameters.AddWithValue("Activado", sf.activado);
@@ -255,6 +331,38 @@ namespace Cursos.Controllers
             dynModel.curso = vc.GetCursos().Find(cmodel => cmodel.id == id);
             dynModel.usuario = u.GetUsuario();
             return View(dynModel);
+        }
+
+
+        //*****************CARGA DOCUMENTOS****************************
+        [ValidarSesion]
+        [HttpPost]
+        public bool CargaDocumentos(ViewModelUsuarioCurso cu, HttpPostedFileBase comprobantePago)
+        {
+            int i;
+            string extension = Path.GetExtension(comprobantePago.FileName);
+            MemoryStream ms = new MemoryStream();
+            comprobantePago.InputStream.CopyTo(ms);
+            byte[] data = ms.ToArray();
+            string sql = "UPDATE cursoUsuario SET comprobantePago = @ComprobantePago WHERE id = " + cu.id;          
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            {
+                cn.Open();
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cmd.Parameters.AddWithValue("@comprobantePago", data);
+                 i = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+
+            if(i > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         //******************VER DETALLES DE CURSO*******************
@@ -380,8 +488,7 @@ namespace Cursos.Controllers
         [HttpGet]
         public ActionResult usuariosInscritos()
         {
-            List<curso> clista = new List<curso>();
-            List<usuario> ulista = new List<usuario>();  
+            List<ViewModelUsuarioCurso> list = new List<ViewModelUsuarioCurso>();  
             /*string sql = "SELECT usuario.id, usuario.nombre,  usuario.apellido, " +
                 "usuario.telefono,  STRING_AGG(curso.nombre, ','), cursoUsuario.idUsuario" +
                 "FROM cursoUsuario " +
@@ -400,28 +507,24 @@ namespace Cursos.Controllers
                 {
                     while (dr.Read())
                     {
-                        usuario u = new usuario();
-                        curso c = new curso();
+                        ViewModelUsuarioCurso vmuc = new ViewModelUsuarioCurso();
 
-                        u.id = dr.GetInt32(0);
-                        u.nombre = dr.GetString(1);
-                        u.apellido = dr.GetString(2);
-                        u.telefono = dr.GetString(3);
-                        c.nombre = string.Join(", ", dr.GetString(4).Split(','));
+
+                        vmuc.idUsuario = dr.GetInt32(0);
+                        vmuc.nombreUsuario = dr.GetString(1);
+                        vmuc.apellido = dr.GetString(2);
+                        vmuc.telefono = dr.GetString(3);
+                        vmuc.nombreCurso = string.Join(", ", dr.GetString(4).Split(','));
                         
-                        ulista.Add(u);
-                        clista.Add(c);
+                        list.Add(vmuc);
                     }
                 cn.Close();                    
                 }
             }
-            ModelViewCursoUsuarios modelView= new ModelViewCursoUsuarios()
-            {
-                course = clista,
-                user = ulista
-            };
+            
+            ViewBag.UsuarioCurso = list;
 
-            return View(modelView);
+            return View();
         }
     }
 

@@ -1,8 +1,8 @@
-﻿@model Cursos.Models.ModelViewCursoUsuarios
+﻿@using Cursos.Models
+
 
 @{ 
-    var usuarios = Model.user;
-    var cursos = Model.course;
+    var dato = ViewBag.UsuarioCurso;
 }
 
 
@@ -51,7 +51,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-4">
-                            <h2>Administar <b>Usuarios</b></h2>
+                            <h2>Usuarios <b>Inscritos</b></h2>
                         </div>
                     </div>
                 </div>
@@ -68,14 +68,16 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var inscritos in usuarios)
+                        @foreach (var inscritos in dato)
                         {
                             <tr>
-                                <td>@inscritos.id</td>
-                                <td>@inscritos.nombre</td>
+                                <td>@inscritos.idUsuario</td>
+                                <td>@inscritos.nombreUsuario</td>
                                 <td>@inscritos.apellido</td>
                                 <td>@inscritos.telefono</td>
-                                
+                                <td>
+                                    
+                                </td>
                                 
                             </tr>
                         }

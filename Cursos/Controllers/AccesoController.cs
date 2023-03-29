@@ -51,24 +51,9 @@ namespace Cursos.Controllers
                         credenciales.pass = dr.GetString(5);
                         credenciales.estudiante = dr.GetBoolean(6);
                         //credenciales.documento
-                        credenciales.sexo_id= dr.GetInt32(8);
-                        credenciales.rol_id= dr.GetInt32(9);
-                        /*sexo s = new sexo();
-                        s.id = dr.GetInt32(10);
-                        s.sexo1 = dr.GetString(11);
-                        credenciales.sexo = s;
-                        roles r = new roles();
-                        r.id = dr.GetInt32(12);
-                        r.rol = dr.GetString(13);
-                        credenciales.roles = r;
-                        if (credenciales.estudiante == true)
-                        {
-                            estudiante e = new estudiante();
-                            e.matricula = dr.IsDBNull(14) ? null : dr.GetString(14);
-                            e.carrera = dr.IsDBNull(15) ? null : dr.GetString(15);
-                            e.nivelEstudios = dr.IsDBNull(16) ? null : dr.GetString(16);
-                            credenciales.estudiante1 = (ICollection<estudiante>)e;
-                        }*/
+                        credenciales.sexo_id= dr.GetInt32(7);
+                        credenciales.rol_id= dr.GetInt32(8);
+                        
                         user.Add(credenciales);
                     }
                 }

@@ -1,5 +1,10 @@
 ﻿@model dynamic
 
+@{ 
+    DateTime date = DateTime.Now;
+    DateTime dueDate = date.AddDays(5);
+}
+
 
 <html>
 <head>
@@ -81,18 +86,20 @@
                                 <div class="col-md-4">
                                     <!-- Lastname input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" value="" disabled />
+                                        <input type="text" name="fechaSolicitud" id="fechaSolicitud" class="form-control" value="@date" readonly />
                                         <label class="form-label" for="fechaSolicitud">Fecha de Solicitud</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <!-- Lastname input -->
                                     <div class="form-outline mb-4">
-                                        <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" value="" disabled />
+                                        <input type="text" name="fechaVenc" id="fechaVenc" class="form-control" value="@dueDate" readonly />
                                         <label class="form-label" for="fechaVenc">Fecha de Vencimiento</label>
                                     </div>
                                 </div>
                             </div>
+
+                            <p>Nota: Si la ficha de pago expira, tendra que solicitar otra.</p>
 
                             <input type="text" hidden name="idCurso" id="idCurso" class="form-control" value="@Model.curso.id" readonly/>
 
@@ -207,16 +214,16 @@
 
     <script>
         // Get today's date
-        var today = new Date();
+        //var today = new Date();
 
         // Display today's date
-        document.getElementById("fechaSolicitud").value = today.toDateString();
+        //document.getElementById("fechaSolicitud").value = today.toDateString();
 
         // Add three days to today's date
-        var future = new Date(today.getTime() + (5 * 24 * 60 * 60 * 1000));
+        //var future = new Date(today.getTime() + (5 * 24 * 60 * 60 * 1000));
 
         // Display the date three days from now
-        document.getElementById("fechaVenc").value = future.toDateString();
+        //document.getElementById("fechaVenc").value = future.toDateString();
     </script>
 
     <!-- MDB -->

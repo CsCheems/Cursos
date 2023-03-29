@@ -30,26 +30,5 @@ namespace Cursos.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usuario> usuario { get; set; }
 
-        public List<roles> Listar()
-        {
-            var roles = new List<roles>();
-            string query = "SELECT * FROM rol";
-            try
-            {
-                using (var container = new Model())
-                {
-                    roles = container.Database.SqlQuery<roles>(query).ToList();
-                }
-            }
-            catch (Exception)
-            {
-                //throw;
-            }
-
-            return roles;
-
-        }
-
-
     }
 }

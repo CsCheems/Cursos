@@ -227,7 +227,10 @@ namespace Cursos.Controllers
         [HttpGet]
         public ActionResult EditaUsuario(int id)
         {
-            List<usuario> user = new List<usuario>();
+            //ViewModelUsuarioEstudiante vmue = new ViewModelUsuarioEstudiante();
+            usuario user = new usuario();
+            roles r = new roles();
+            sexo s = new sexo();
             string sql = "select usuario.id, usuario.rol_id, roles.id, roles.rol, usuario.nombre, usuario.apellido, " +
                          "usuario.sexo_id, sexo.id, sexo.sexo, usuario.telefono, usuario.email, " +
                          "usuario.estudiante " +
@@ -243,30 +246,27 @@ namespace Cursos.Controllers
                 {
                     while (dr.Read())
                     {
-                        usuario u = new usuario();
-                        roles r = new roles();
-                        sexo s =new sexo();
-                        u.id = dr.GetInt32(0);
-                        u.rol_id = dr.GetInt32(1);
-                        r.id= dr.GetInt32(2);
-                        r.rol=dr.GetString(3);
-                        u.roles= r;
-                        u.nombre= dr.GetString(4);
-                        u.apellido= dr.GetString(5);
-                        u.sexo_id= dr.GetInt32(6);
+                        user.id = dr.GetInt32(0);
+                        user.rol_id= dr.GetInt32(1);
+                        r.id = dr.GetInt32(2);
+                        r.rol = dr.GetString(3);
+                        user.roles = r;
+                        user.nombre= dr.GetString(4);
+                        user.apellido = dr.GetString(5);
+                        user.sexo_id= dr.GetInt32(6);
                         s.id = dr.GetInt32(7);
                         s.sexo1 = dr.GetString(8);
-                        u.sexo = s;
-                        u.telefono = dr.GetString(9);
-                        u.email= dr.GetString(10);
-                        u.estudiante =dr.GetBoolean(11);
-                        
-                        user.Add(u);
+                        user.sexo = s;
+                        user.telefono = dr.GetString(9);
+                        user.email = dr.GetString(10);
+                        user.estudiante = dr.GetBoolean(11);
                     }
                 }
             }
 
-            List<estudiante> estudiante= new List<estudiante>();
+
+           /* List<estudiante> estudiante= new List<estudiante>();*/
+            estudiante est = new estudiante();
             string sqlEstudiante = "SELECT * FROM estudiante WHERE usuario_id = " + id + ";";
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
@@ -276,43 +276,20 @@ namespace Cursos.Controllers
                 {
                     while (drEstudiante.Read())
                     {
-                        estudiante e = new estudiante();
-                        e.id = drEstudiante.GetInt32(0);
-                        e.matricula = drEstudiante.GetString(1);
-                        e.carrera = drEstudiante.GetString(2);
-                        e.nivelEstudios = drEstudiante.GetString(3);
-                        e.usuario_id = drEstudiante.GetInt32(4);
-                        estudiante.Add(e);
+
+                        est.id= drEstudiante.GetInt32(0);
+                        est.matricula= drEstudiante.GetString(1);
+                        est.carrera= drEstudiante.GetString(2);
+                        est.nivelEstudios = drEstudiante.GetString(3);
+                        est.usuario_id = drEstudiante.GetInt32(4); 
                     }
                 }
             }
-
-            ViewModelUsuarioEstudiante viewModel = new ViewModelUsuarioEstudiante()
-            {
-                user = user,
-                student = estudiante
-            };
-
-            if (viewModel == null)
-            {
-                return View("NULL");
-            }
-            else if (viewModel.user == null || viewModel.student == null)
-            {
-                return View("EmptyView");
-            }
-
+            ViewBag.usuario = user;
+            ViewBag.estudiante = est;
             if (id >= 0)
             {
-                if (ModelState.IsValid)
-                {
-                    return View(viewModel);
-                }
-                else
-                {
-
-                    return View();
-                }
+                return View();
             }
             else
             {
@@ -320,14 +297,73 @@ namespace Cursos.Controllers
             } 
         }
 
+
+
         [HttpPost]
-        public ActionResult EditaUsuario(usuario umodel)
+        public ActionResult EditaUsuario(usuario user, estudiante est)
         {
+            ViewBag.usuario = user;
+            ViewBag.estudiante = est;
             try
             {
-                usuario udb = new usuario();
-                udb.EditarUsuario(umodel);
-                return RedirectToAction("TablasUsuarios", "Admin");
+                bool editado;
+                string mensaje;
+                int i;
+                if (user.pass == user.passConfirm)
+                {
+                    user.pass = EncriptarSha256(user.pass);
+                }
+                else
+                {
+                    return View();
+                }
+                using (SqlConnection cn = new SqlConnection(cadenaConexion))
+                {
+                    SqlCommand cmd = new SqlCommand("SP_editaUsuario", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("Id", user.id);
+                    cmd.Parameters.AddWithValue("Rol", user.rol_id);
+                    cmd.Parameters.AddWithValue("Nombre", user.nombre);
+                    cmd.Parameters.AddWithValue("Apellido", user.apellido);
+                    cmd.Parameters.AddWithValue("Sexo", user.sexo_id);
+                    cmd.Parameters.AddWithValue("Telefono", user.telefono);
+                    cmd.Parameters.AddWithValue("Email", user.email);
+                    cmd.Parameters.AddWithValue("Pass", user.pass);
+                    cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                    cn.Open();
+                    i = cmd.ExecuteNonQuery();
+                    editado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
+                    mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                    cn.Close();
+                }
+
+                if (user.estudiante == true)
+                {
+                    using (SqlConnection cn = new SqlConnection(cadenaConexion))
+                    {
+                        SqlCommand cmd = new SqlCommand("", cn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        //...
+
+                        cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
+                        cn.Open();
+                        i = cmd.ExecuteNonQuery();
+                        editado = Convert.ToBoolean(cmd.Parameters["Registrado"].Value);
+                        mensaje = cmd.Parameters["Mensaje"].Value.ToString();
+                        cn.Close();
+                    }
+                }
+
+                if (i >= 1)
+                {
+                    return RedirectToAction("TablasUsuarios", "Admin");
+                }
+                else
+                {
+                    return View();
+                }               
             }
             catch
             {
@@ -372,10 +408,11 @@ namespace Cursos.Controllers
         }
 
         //*****************CURSOS USUARIO****************************
+        [ValidarSesion]
         public ActionResult CursosUsuario()
         {
 
-            List<curso> listCursos = new List<curso>();
+            List<ViewModelUsuarioCurso> listCursos = new List<ViewModelUsuarioCurso>();
             usuario u = (usuario)HttpContext.Session["usuario"];
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
@@ -388,21 +425,34 @@ namespace Cursos.Controllers
                 {
                     while (dr.Read())
                     {
-                        curso c = new curso();
-                        modalidad m = new modalidad();
-                        
-                        listCursos.Add(c);
+                        ViewModelUsuarioCurso usuarioCurso= new ViewModelUsuarioCurso();
+
+                        usuarioCurso.idCurso = dr.GetInt32(0);
+                        usuarioCurso.nombreCurso = dr.GetString(1);
+                        usuarioCurso.idModalidad = dr.GetInt32(2);
+                        usuarioCurso.modalidad1 = dr.GetString(4);
+                        usuarioCurso.lugar = dr.GetString(5);
+                        usuarioCurso.horas = dr.GetInt32(6);
+                        usuarioCurso.fechaIni = dr.GetDateTime(7);
+                        usuarioCurso.fechaTer = dr.GetDateTime(8);
+                        usuarioCurso.costo = dr.GetDecimal(9);
+                        usuarioCurso.costoPref = dr.GetDecimal(10);
+                        usuarioCurso.urlTemario = dr.GetString(11);
+                        usuarioCurso.requisitos = dr.GetString(12);
+                        usuarioCurso.criterioEval = dr.GetString(13);
+                        usuarioCurso.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
+                        usuarioCurso.idEstatus = dr.GetInt32(15);
+
+                        listCursos.Add(usuarioCurso);
                     }
                 }
 
             }
 
+            ViewBag.cursos = listCursos;
 
-
-            ViewModelCursoUsuario vmcu = new ViewModelCursoUsuario();
-            dynamic dynModel = new ExpandoObject();
-            dynModel.cursos = vmcu.GetMisCursos();
-            return View(dynModel);
+            
+            return View();
         }
 
     }

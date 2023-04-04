@@ -80,7 +80,8 @@
                                 <th>Lugar</th>
                                 <th>Horas</th>
                                 <th>Comprobante de Pago</th>
-                                <th>Accion</th>
+                                <th>Identificacion</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,7 +93,8 @@
                                 {
 
                                     <tr>
-                                        <td hidden>@obj.id</td>
+                                        <td hidden><input type="text" name="id" value="@obj.id" readonly /></td>
+                                        <td hidden><input type="text" name="curso" value="@obj.nombreCurso" readonly /></td>
                                         <td hidden>@obj.idCurso</td>
                                         <td>@obj.nombreCurso</td>
                                         <td>@obj.modalidad1</td>
@@ -103,7 +105,11 @@
                                             <input id="comprobante" type="file" name="comprobantePago" accept=".pdf">
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-primary btn-block mb-3">Cargar Documentos</button>
+                                            <label for="comprobanteId" class="custom-file-upload">Subir</label>
+                                            <input id="comprobanteId" type="file" name="comprobanteId" accept=".pdf">
+                                        </td>
+                                        <td>
+                                            <button type="submit" class="btn btn-secondary btn-block mb-3">Guardar</button>
                                         </td>
                                     </tr>
 
@@ -114,22 +120,6 @@
                         </tbody>
                     </table>
                 </form>
-
-                @if (IsPost) 
-                {
-                    HttpPostedFileBase pdf1 = Request.Files["comprobantePago"];
-                    if(pdf1 != null && pdf1.ContentLength > 0)
-                    {
-                        byte[] pdfBytes;
-                        using (var ms = new MemoryStream())
-                        {
-                            pdf1.InputStream.CopyTo(ms);
-                            pdfBytes = ms.ToArray();
-                        }
-                        string base64String = Convert.ToBase64String(pdfBytes);
-                        byte[] requestData = Encoding.UTF8.GetBytes(base64String);
-                    }
-                }
 
                 <div class="clearfix">
                     <!-- Paginacion -->
@@ -188,8 +178,6 @@
 
 
     </div>
-
-
 
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/5.0.0/mdb.min.js">

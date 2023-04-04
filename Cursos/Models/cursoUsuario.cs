@@ -19,8 +19,8 @@ namespace Cursos.Models
         public int idCurso { get; set; }
         public int idEstatus { get; set; }
         public DateTime fechaVenc { get; set; }
-        public byte[] dIdUsuario { get; set; }
-        public byte[] comprobantePago { get; set; }
+        public string dIdUsuario { get; set; }
+        public string comprobantePago { get; set; }
         public Boolean factura { get; set; }
         public virtual curso curso { get; set; }
         public virtual estatus estatus { get; set; }

@@ -13,6 +13,7 @@ using Cursos.Permisos;
 using Cursos.BDConnection;
 using System.Security.Cryptography;
 using System.Data.Entity.Infrastructure;
+using System.Web.Services.Description;
 
 namespace Cursos.Controllers
 {
@@ -337,25 +338,86 @@ namespace Cursos.Controllers
         //*****************CARGA DOCUMENTOS****************************
         [ValidarSesion]
         [HttpPost]
-        public bool CargaDocumentos(ViewModelUsuarioCurso cu, HttpPostedFileBase comprobantePago)
+        public ActionResult CargaDocumentos(int id, HttpPostedFileBase comprobantePago, HttpPostedFileBase comprobanteId)
         {
+            usuario u = (usuario)HttpContext.Session["usuario"];
+            string hash1 = "";
+            string hash2 = "";
             int i;
-            string extension = Path.GetExtension(comprobantePago.FileName);
-            MemoryStream ms = new MemoryStream();
-            comprobantePago.InputStream.CopyTo(ms);
-            byte[] data = ms.ToArray();
-            string sql = "UPDATE cursoUsuario SET comprobantePago = @ComprobantePago WHERE id = " + cu.id;          
+
+            if (comprobanteId != null && comprobanteId.ContentLength > 0)
+            {
+                using (var md5 = MD5.Create())
+                {
+                    using (var stream = comprobanteId.InputStream)
+                    {
+                        hash1 = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                    }
+                }
+
+                var nombreArchivo = hash1 + ".pdf";
+                var rutaArchivo = Path.Combine(Server.MapPath("~/Archivos/DocumentosUsuario"), nombreArchivo);
+                comprobantePago.SaveAs(rutaArchivo);
+
+            }
+
+            if (comprobantePago != null && comprobantePago.ContentLength > 0)
+            {
+                using(var md5 = MD5.Create())
+                {
+                    using(var stream = comprobantePago.InputStream)
+                    {
+                        hash2 = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-","").ToLower();
+                    }
+                }
+
+                var nombreArchivo = hash2 + ".pdf";
+                var rutaArchivo = Path.Combine(Server.MapPath("~/Archivos/Comprobantes"), nombreArchivo);
+                comprobantePago.SaveAs(rutaArchivo);
+                
+            }
+            string sql = "UPDATE cursoUsuario SET comprobantePago = @hash1, dIdUsuario = @hash2  WHERE id = " + id;
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            {
+
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cmd.Parameters.AddWithValue("@hash1", hash1);
+                cmd.Parameters.AddWithValue("@hash2", hash2);
+                cn.Open();
+                i = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+
+            return RedirectToAction("CursosUsuario", "Usuario"); ;
+
+        }
+
+        //******************OBTEN DATOS PARA ARCHVIO*******************
+        [ValidarSesion]
+        [HttpPost]
+        public bool obtenDatos(ViewModelUsuarioCurso cu)
+        {
+            string curso;
+            string usuario;
+            int i;
+          
+            string sql = "SELECT curso.nombre, usuario.nombre FROM cursoUsuario " +
+            "INNER JOIN curso ON curso.id = cursoUsuario.idCurso " +
+            "INNER JOIN usuario ON usuario.id = cursoUsuario.idUsuario " +
+            "WHERE cursoUsuario.id = " + cu.id;
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
             {
                 cn.Open();
                 SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.AddWithValue("@comprobantePago", data);
-                 i = cmd.ExecuteNonQuery();
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    curso = dr.GetString(0);
+                    usuario = dr.GetString(1);
+                }
+                i = cmd.ExecuteNonQuery();
                 cn.Close();
             }
-
-            if(i > 0)
-            {
+            if(i > 0){
                 return true;
             }
             else
@@ -364,6 +426,7 @@ namespace Cursos.Controllers
             }
 
         }
+
 
         //******************VER DETALLES DE CURSO*******************
         [ValidarSesionAdmin]

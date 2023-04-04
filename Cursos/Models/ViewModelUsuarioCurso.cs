@@ -45,7 +45,7 @@ namespace Cursos.Models
 
         //ESTATUS
         public int idEstatus { get; set; }
-        public byte[] dIdUsuario { get; set; }
-        public byte[] comprobantePago { get; set; }
+        public string dIdUsuario { get; set; }
+        public string comprobantePago { get; set; }
     }
 }

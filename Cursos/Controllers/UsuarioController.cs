@@ -427,21 +427,22 @@ namespace Cursos.Controllers
                     {
                         ViewModelUsuarioCurso usuarioCurso= new ViewModelUsuarioCurso();
 
-                        usuarioCurso.idCurso = dr.GetInt32(0);
-                        usuarioCurso.nombreCurso = dr.GetString(1);
-                        usuarioCurso.idModalidad = dr.GetInt32(2);
-                        usuarioCurso.modalidad1 = dr.GetString(4);
-                        usuarioCurso.lugar = dr.GetString(5);
-                        usuarioCurso.horas = dr.GetInt32(6);
-                        usuarioCurso.fechaIni = dr.GetDateTime(7);
-                        usuarioCurso.fechaTer = dr.GetDateTime(8);
-                        usuarioCurso.costo = dr.GetDecimal(9);
-                        usuarioCurso.costoPref = dr.GetDecimal(10);
-                        usuarioCurso.urlTemario = dr.GetString(11);
-                        usuarioCurso.requisitos = dr.GetString(12);
-                        usuarioCurso.criterioEval = dr.GetString(13);
-                        usuarioCurso.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
-                        usuarioCurso.idEstatus = dr.GetInt32(15);
+                        usuarioCurso.id = dr.GetInt32(0);
+                        usuarioCurso.idCurso = dr.GetInt32(1);
+                        usuarioCurso.nombreCurso = dr.GetString(2);
+                        usuarioCurso.idModalidad = dr.GetInt32(3);
+                        usuarioCurso.modalidad1 = dr.GetString(5);
+                        usuarioCurso.lugar = dr.GetString(6);
+                        usuarioCurso.horas = dr.GetInt32(7);
+                        usuarioCurso.fechaIni = dr.GetDateTime(8);
+                        usuarioCurso.fechaTer = dr.GetDateTime(9);
+                        usuarioCurso.costo = dr.GetDecimal(10);
+                        usuarioCurso.costoPref = dr.GetDecimal(11);
+                        usuarioCurso.urlTemario = dr.GetString(12);
+                        usuarioCurso.requisitos = dr.GetString(13);
+                        usuarioCurso.criterioEval = dr.GetString(14);
+                        usuarioCurso.imgUrl = dr.IsDBNull(15) ? null : dr.GetString(15);
+                        usuarioCurso.idEstatus = dr.GetInt32(16);
 
                         listCursos.Add(usuarioCurso);
                     }

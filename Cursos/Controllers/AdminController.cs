@@ -13,6 +13,7 @@ using System.Data.Entity.Infrastructure;
 using Cursos.Permisos;
 using Cursos.BDConnection;
 using System.IO;
+using System.Security.Policy;
 
 namespace Cursos.Controllers
 {
@@ -155,6 +156,27 @@ namespace Cursos.Controllers
                 }
             }
             return View(userCourse);
+        }
+
+        public FileResult verPdf(int id)
+        {
+            string hash ="";
+            string sql = "SELECT comprobantePago FROM cursoUsuario WHERE id = " + id;
+            using (SqlConnection cn = new SqlConnection(cadenaConexion))
+            {
+                SqlCommand cmd = new SqlCommand(sql, cn);
+                cn.Open();
+
+                using (SqlDataReader dr = cmd.ExecuteReader())
+                {
+                    if (dr.Read())
+                    {
+                        hash = dr.GetString(0);
+                    } 
+                } 
+            }
+            var rutaArchivo = Path.Combine(Server.MapPath("~/Archivos/Comprobantes"), hash + ".pdf");
+            return File(rutaArchivo, "application/pdf");
         }
 
         [HttpPost]

@@ -47,6 +47,7 @@
                             <th>Usuario</th>
                             <th>Estatus</th>
                             <th>Factura</th>
+                            <th>Comprobante de Pago</th>
                             <th>Accion</th>
                         </tr>
                     </thead>
@@ -67,7 +68,10 @@
                                     <td>NO</td>
                                 }
                                 <td>
-                                    <a href="" class="edit" onclick="pendiente(@obj.id)"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></a>
+                                    <a href="@Url.Action("VerPdf", "Admin", new {id = obj.id})" target="_blank">Ver PDF</a>
+                                </td>
+                                <td>
+                                    <button type="submit" style="border:0; background:none"><i class="material-icons" data-toggle="tooltip" title="Validar">&#xE254;</i></button>
                                 </td>
                             </tr>
                         }

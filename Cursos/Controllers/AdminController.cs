@@ -72,7 +72,7 @@ namespace Cursos.Controllers
         {
             List<usuario> usuario = new List<usuario>();
             string sql = "select usuario.id, usuario.nombre, usuario.apellido, usuario.telefono, usuario.email, usuario.pass, " +
-                "usuario.estudiante, usuario.documento, usuario.sexo_id, usuario.rol_id, " +
+                "usuario.estudiante, usuario.documentoID, usuario.sexo_id, usuario.rol_id, " +
                 "sexo.id, sexo.sexo, roles.id, roles.rol, estudiante.matricula, estudiante.carrera, " +
                 "estudiante.nivelEstudios, estudiante.usuario_id from usuario " +
                 "left join sexo on sexo.id = usuario.sexo_id " +

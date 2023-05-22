@@ -344,6 +344,7 @@ namespace Cursos.Controllers
             string hash1 = "";
             string hash2 = "";
             int i;
+            //Encriptar nombre
 
             if (comprobanteId != null && comprobanteId.ContentLength > 0)
             {
@@ -552,14 +553,7 @@ namespace Cursos.Controllers
         public ActionResult usuariosInscritos()
         {
             List<ViewModelUsuarioCurso> list = new List<ViewModelUsuarioCurso>();  
-            /*string sql = "SELECT usuario.id, usuario.nombre,  usuario.apellido, " +
-                "usuario.telefono,  STRING_AGG(curso.nombre, ','), cursoUsuario.idUsuario" +
-                "FROM cursoUsuario " +
-                "JOIN usuario ON usuario.id = cursoUsuario.idUsuario " +
-                "JOIN curso ON cursoUsuario.idCurso = curso.id " +
-                "WHERE cursoUsuario.idUsuario = usuario.id " +
-                "GROUP BY usuario.id, usuario.nombre, usuario.apellido, usuario.telefono, cursoUsuario.idUsuario;";
-            */
+            
             string sql = "select * from inscritosGlobal_view";
 
             using (SqlConnection cn = new SqlConnection(cadenaConexion))
@@ -577,7 +571,11 @@ namespace Cursos.Controllers
                         vmuc.nombreUsuario = dr.GetString(1);
                         vmuc.apellido = dr.GetString(2);
                         vmuc.telefono = dr.GetString(3);
-                        vmuc.nombreCurso = string.Join(", ", dr.GetString(4).Split(','));
+                        vmuc.nombreCurso = dr.GetString(4);
+                        /*string[] cursos = dr.GetString(4).Split(',');
+                        foreach(string curso in  cursos) { 
+                            vmuc.nombreCurso.Add(curso.Trim());
+                        }*/
                         
                         list.Add(vmuc);
                     }

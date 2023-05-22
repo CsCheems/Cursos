@@ -62,7 +62,7 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Telefono</th>
-                            <th>Cursos</th>
+                            <th style="width:50%">Cursos</th>
                            
                         </tr>
                     </thead>
@@ -76,7 +76,7 @@
                                 <td>@inscritos.apellido</td>
                                 <td>@inscritos.telefono</td>
                                 <td>
-                                    
+                                    @string.Join(", ", inscritos.nombreCurso) 
                                 </td>
                                 
                             </tr>

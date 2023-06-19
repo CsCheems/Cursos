@@ -39,6 +39,11 @@
 
         <form action="@Url.Action("AdministrarImagenes", "Admin")" method="post" enctype="multipart/form-data">
 
+            @if (ViewBag.Message != null)
+            {
+                <p>@ViewBag.Message</p>
+            }
+
             <label for="img">Seleccione una imagen:</label>
             <div class="form-outline mb-4">
                 <input type="file" id="img1" name="img1" accept="image/*">
@@ -58,7 +63,6 @@
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mb-3">Guardar Imagenes</button>
-
 
         </form>
     </div>

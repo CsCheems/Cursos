@@ -193,6 +193,7 @@
     </Compile>
     <Compile Include="Models\ViewModelCurso.cs" />
     <Compile Include="Models\ViewModelCursoUsuario.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="Models\ViewModelUsuario.cs" />
     <Compile Include="Models\ViewModelUsuarioCurso.cs" />
     <Compile Include="Models\ViewModelUsuarioEstudiante.cs" />
@@ -229,6 +230,13 @@
     <Content Include="Recursos\CSS\NavHead.css" />
     <Content Include="Recursos\CSS\reel.css" />
     <Content Include="Recursos\CSS\tableStyle.css" />
+    <Content Include="Recursos\imagenes\Flyer_ Huertos Oficial.png" />
+    <Content Include="Recursos\imagenes\Flyer_Autocad.png" />
+    <Content Include="Recursos\imagenes\FLYER_Ceneval Oficial.png" />
+    <Content Include="Recursos\imagenes\Flyer_CV Oficial.png" />
+    <Content Include="Recursos\imagenes\Flyer_Excel Oficial.png" />
+    <Content Include="Recursos\imagenes\Flyer_Ingles Oficial.jpg" />
+    <Content Include="Recursos\imagenes\Flyer_Mecanica Oficial.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Models\Model1.edmx">
@@ -282,7 +290,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Archivos\Comprobantes\" />
     <Folder Include="Archivos\DocumentosUsuario\" />
-    <Folder Include="Recursos\imagenes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

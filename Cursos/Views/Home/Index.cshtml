@@ -37,16 +37,17 @@
 
             <div class="carousel">
                 <div class="carousel-container">
-                    <div class="carousel-item">
-                        <img src="@Url.Content(fullPath+"Flyer_Mecanica Oficial.jpg")" alt="Imagen 1" width="1700" height="2200">
-                    </div>
-                    <div class="carousel-item">
-                        <img src=""@Url.Content(fullPath+"Flyer_ Huertos Oficial.png")" alt="Imagen 2" width="1700" height="2200">
-                    </div>
-                    <div class="carousel-item">
-                        <img src=""@Url.Content(fullPath+"Flyer_Autocad.png")" alt="Imagen 3" width="1700" height="2200">
-                    </div>
-                    <!-- Agrega más imágenes si es necesario -->
+
+                    @{
+                        foreach (var image in Model.img)
+                        {
+                            <div class="carousel-item">
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.imagen)" alt="@image.nombre" width="1700" height="2200">
+                            </div>
+                        }
+                    }
+
+    <!-- Agrega más imágenes si es necesario -->
                 </div>
             </div>
 

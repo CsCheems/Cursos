@@ -210,65 +210,116 @@ namespace Cursos.Controllers
             return View();
         }
 
-
+        //*****************ADMIN IMAGENES****************************
         [HttpPost]
         public ActionResult AdministrarImagenes(HttpPostedFileBase img1, HttpPostedFileBase img2, HttpPostedFileBase img3) 
         {
-            if(img1 != null && img1.ContentLength > 0)
+            if (img1 != null && img1.ContentLength > 0)
             {
-                var fileName = Path.GetFileNameWithoutExtension(img1.FileName);
-                var fileExtension = Path.GetExtension(img1.FileName);
-                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
-
-                // Save file to disk
-                var filePath = Server.MapPath("~/Recursos/imagenes/" + newFileName);
-                img1.SaveAs(filePath);
-
-                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
-                if (System.IO.File.Exists(oldFilePath))
+                if (img1.ContentLength > 1048576)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    ViewBag.Message = "La imagen 1 no debe exceder de 1MB.";
+                    return View();
                 }
-                System.IO.File.Move(filePath, oldFilePath);
+
+                try
+                {
+                    string nombre = Path.GetFileName(img1.FileName);
+                    MemoryStream ms = new MemoryStream();
+                    img1.InputStream.CopyTo(ms);
+                    byte[] data = ms.ToArray();
+
+                    using (SqlConnection cn = new SqlConnection(cadenaConexion))
+                    {
+                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+
+                        // Asigna los valores a los parámetros
+                        cmd.Parameters.AddWithValue("@nombre", nombre);
+                        cmd.Parameters.AddWithValue("@imagen", data);
+                        cmd.CommandType = CommandType.Text;
+                        // Abre la conexión y ejecuta la consulta
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return View();
+                } 
             }
 
             if (img2 != null && img2.ContentLength > 0)
             {
-                var fileName = Path.GetFileNameWithoutExtension(img2.FileName);
-                var fileExtension = Path.GetExtension(img2.FileName);
-                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
-                
-                // Save file to disk
-                var filePath = Server.MapPath("~/Recursos/imagenes/"+ newFileName);
-                img2.SaveAs(filePath);
-
-                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
-                if (System.IO.File.Exists(oldFilePath))
+                if (img2.ContentLength > 1048576)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    ViewBag.Message = "La imagen 2 no debe exceder de 1MB.";
+                    return View();
                 }
-                System.IO.File.Move(filePath, oldFilePath);
+                try
+                {
+                    string nombre = Path.GetFileName(img2.FileName);
+                    MemoryStream ms = new MemoryStream();
+                    img2.InputStream.CopyTo(ms);
+                    byte[] data = ms.ToArray();
+
+                    using (SqlConnection cn = new SqlConnection(cadenaConexion))
+                    {
+                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+
+                        // Asigna los valores a los parámetros
+                        cmd.Parameters.AddWithValue("@nombre", nombre);
+                        cmd.Parameters.AddWithValue("@imagen", data);
+                        cmd.CommandType = CommandType.Text;
+                        // Abre la conexión y ejecuta la consulta
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return View();
+                }
+                
             }
 
             if (img3 != null && img3.ContentLength > 0)
             {
-                var fileName = Path.GetFileNameWithoutExtension(img3.FileName);
-                var fileExtension = Path.GetExtension(img3.FileName);
-                var newFileName = fileName + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + fileExtension;
-
-                // Save file to disk
-                var filePath = Server.MapPath("~/Recursos/imagenes/" + newFileName);
-                img3.SaveAs(filePath);
-
-                var oldFilePath = Server.MapPath("~/Recursos/imagenes/");
-                if (System.IO.File.Exists(oldFilePath))
+                if (img3.ContentLength > 1048576)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    ViewBag.Message = "La imagen 3 no debe exceder de 1MB.";
+                    return View();
                 }
-                System.IO.File.Move(filePath, oldFilePath);
+                try
+                {
+                    string nombre = Path.GetFileName(img3.FileName);
+                    MemoryStream ms = new MemoryStream();
+                    img3.InputStream.CopyTo(ms);
+                    byte[] data = ms.ToArray();
+
+                    using (SqlConnection cn = new SqlConnection(cadenaConexion))
+                    {
+                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        SqlCommand cmd = new SqlCommand(query, cn);
+
+                        // Asigna los valores a los parámetros
+                        cmd.Parameters.AddWithValue("@nombre", nombre);
+                        cmd.Parameters.AddWithValue("@imagen", data);
+                        cmd.CommandType = CommandType.Text;
+                        // Abre la conexión y ejecuta la consulta
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return View();
+                }
+              
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
     }

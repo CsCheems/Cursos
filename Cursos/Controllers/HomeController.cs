@@ -18,8 +18,10 @@ namespace Cursos.Controllers
         public ActionResult Index()
         {
             curso vm = new curso();
+            Image img = new Image();
             dynamic dynModel = new ExpandoObject();
             dynModel.curso = vm.GetCursos();
+            dynModel.img = img.GetImages();
             return View(dynModel);
         }
 
@@ -31,12 +33,12 @@ namespace Cursos.Controllers
             return View(dynModel);
         }
 
-        public ActionResult CursoFormulario()
+        /*public ActionResult CursoFormulario()
         {
             ViewModelCurso vmc = new ViewModelCurso();
             dynamic dynModel = new ExpandoObject();
             return View(dynModel);
-        }
+        }*/
         
     }
 }

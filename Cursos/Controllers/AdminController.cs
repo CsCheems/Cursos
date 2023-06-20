@@ -231,7 +231,9 @@ namespace Cursos.Controllers
 
                     using (SqlConnection cn = new SqlConnection(cadenaConexion))
                     {
-                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        //string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        string query = "update imagenesFront set nombre = @nombre, imagen = @imagen where id = 1";
+                        
                         SqlCommand cmd = new SqlCommand(query, cn);
 
                         // Asigna los valores a los parámetros
@@ -265,7 +267,8 @@ namespace Cursos.Controllers
 
                     using (SqlConnection cn = new SqlConnection(cadenaConexion))
                     {
-                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        //string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        string query = "update imagenesFront set nombre = @nombre, imagen = @imagen where id = 2";
                         SqlCommand cmd = new SqlCommand(query, cn);
 
                         // Asigna los valores a los parámetros
@@ -300,7 +303,8 @@ namespace Cursos.Controllers
 
                     using (SqlConnection cn = new SqlConnection(cadenaConexion))
                     {
-                        string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        //string query = "INSERT INTO imagenesFront (nombre, imagen) VALUES(@nombre, @imagen)";
+                        string query = "update imagenesFront set nombre = @nombre, imagen = @imagen where id = 3";
                         SqlCommand cmd = new SqlCommand(query, cn);
 
                         // Asigna los valores a los parámetros

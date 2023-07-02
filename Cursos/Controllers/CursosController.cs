@@ -32,7 +32,7 @@ namespace Cursos.Controllers
 
 
         [HttpPost]
-        public ActionResult RegistrarCurso(curso cmodel)
+        public ActionResult RegistrarCurso(curso cmodel, HttpPostedFileBase imgUrl)
         {
 
             try
@@ -40,7 +40,7 @@ namespace Cursos.Controllers
                 if (ModelState.IsValid)
                 {
                     curso cdb = new curso();
-                    if (cdb.agregarCurso(cmodel))
+                    if (cdb.agregarCurso(cmodel, imgUrl))
                     {
                         ViewBag.Message = "Se agrego el curso";
                         ModelState.Clear();
@@ -129,7 +129,7 @@ namespace Cursos.Controllers
                         c.urlTemario = dr.GetString(11);
                         c.requisitos = dr.GetString(12);
                         c.criterioEval = dr.GetString(13);
-                        c.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
+                        c.imgUrl = dr.IsDBNull(14) ? null : (byte[])dr.GetValue(14);
                     }
                 }
             }

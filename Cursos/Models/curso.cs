@@ -17,7 +17,9 @@ namespace Cursos.Models
     using System.Data;
     using System.Data.Entity.Spatial;
     using System.Data.SqlClient;
+    using System.IO;
     using System.Linq;
+    using System.Web;
     using System.Web.Services.Description;
 
     public partial class curso
@@ -40,7 +42,7 @@ namespace Cursos.Models
         public string urlTemario { get; set; }
         public string requisitos { get; set; }
         public string criterioEval { get; set; }
-        public string imgUrl { get; set; }
+        public byte[] imgUrl { get; set; }
     
         public virtual modalidad modalidad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -81,7 +83,7 @@ namespace Cursos.Models
                         c.urlTemario = dr.GetString(11);
                         c.requisitos = dr.GetString(12);
                         c.criterioEval = dr.GetString(13);
-                        c.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
+                        c.imgUrl = dr.IsDBNull(14) ? null : (byte[])dr.GetValue(14);
                         listCursos.Add(c);
                     }
                 }
@@ -91,8 +93,13 @@ namespace Cursos.Models
         }
 
         //Metodo para agregar cursos
-        public bool agregarCurso(curso cursosInfo)
+        public bool agregarCurso(curso cursosInfo, HttpPostedFileBase imgUrl)
         {
+            string nombre = Path.GetFileName(imgUrl.FileName);
+            MemoryStream ms = new MemoryStream();
+            imgUrl.InputStream.CopyTo(ms);
+            byte[] data = ms.ToArray();
+
             bool registrado;
             string mensaje;
             int i;
@@ -111,10 +118,9 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
                 cmd.Parameters.AddWithValue("Requisitos", cursosInfo.requisitos);
                 cmd.Parameters.AddWithValue("CriterioEval", cursosInfo.criterioEval);
-                cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
+                cmd.Parameters.AddWithValue("ImgUrl", data);
                 cmd.Parameters.Add("Registrado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
-
 
                 cn.Open();
                 i = cmd.ExecuteNonQuery();
@@ -135,8 +141,13 @@ namespace Cursos.Models
 
 
         //Metodo para editar cursos
-        public bool editaCurso(curso cursosInfo)
+        public bool editaCurso(curso cursosInfo, HttpPostedFileBase imgUrl)
         {
+            string nombre = Path.GetFileName(imgUrl.FileName);
+            MemoryStream ms = new MemoryStream();
+            imgUrl.InputStream.CopyTo(ms);
+            byte[] data = ms.ToArray();
+
             bool editado;
             string mensaje;
             int i;
@@ -155,7 +166,7 @@ namespace Cursos.Models
                 cmd.Parameters.AddWithValue("UrlTemario", cursosInfo.urlTemario);
                 cmd.Parameters.AddWithValue("Requisitos", cursosInfo.requisitos);
                 cmd.Parameters.AddWithValue("CriterioEval", cursosInfo.criterioEval);
-                cmd.Parameters.AddWithValue("ImgUrl", cursosInfo.imgUrl);
+                cmd.Parameters.AddWithValue("ImgUrl",data);
                 cmd.Parameters.Add("Editado", SqlDbType.Bit).Direction = ParameterDirection.Output;
                 cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 100).Direction = ParameterDirection.Output;
 

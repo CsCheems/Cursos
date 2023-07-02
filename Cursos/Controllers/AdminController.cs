@@ -58,7 +58,7 @@ namespace Cursos.Controllers
                             c.urlTemario = dr.GetString(11);
                             c.requisitos = dr.GetString(12);
                             c.criterioEval = dr.GetString(13);
-                            c.imgUrl = dr.IsDBNull(14) ? null : dr.GetString(14);
+                            c.imgUrl = dr.IsDBNull(14) ? null : (byte[])dr.GetValue(14);
                             obj.Add(c);
                         }
                     }

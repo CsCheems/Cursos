@@ -1,13 +1,6 @@
 ﻿@model dynamic
 
 
-@{ 
-    /*  var projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-      string filePath = Path.Combine(projectPath, "Recurso/imagenes");*/
-    string basePath = Server.MapPath("~");
-    string imagesFolder = "\\Recursos\\imagenes\\";
-    string fullPath = basePath + imagesFolder;
-}
 
 <head>
     <title>EDCOUTEQ Inicio</title>
@@ -27,7 +20,30 @@
     <link rel="stylesheet" href="~/Recursos/bootstrap/tiny-slider.css" />
     <link rel="stylesheet" href="~/Recursos/bootstrap/glightbox.min.css" />
     <link rel="stylesheet" href="~/Recursos/bootstrap/main.css" />
-    <link href="~/Recursos/CSS/reel.css" rel="stylesheet" />
+    <!-- <link href="~/Recursos/CSS/reel.css" rel="stylesheet" />-->
+    <style>
+        .carousel {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .carousel img {
+                width: 100%;
+                height: auto;
+            }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            width: 100%;
+        }
+    </style>
+
 </head>
 <body>
     <!-- Start Trending Product Area -->
@@ -41,7 +57,7 @@
                         foreach (var image in Model.img)
                         {
                             <div class="carousel-item">
-                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.imagen)" alt="@image.nombre" width="1700" height="2200">
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.imagen)" alt="@image.nombre" width="850" height="1100">
                             </div>
                         }
                     }
